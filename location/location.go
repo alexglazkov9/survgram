@@ -10,6 +10,12 @@ type Location struct {
 	Destinations []primitive.ObjectID
 }
 
+type LocationModel struct {
+	ID           primitive.ObjectID `bson:"_id"`
+	Name         string
+	Destinations []Location
+}
+
 // New - Creates a new character
 func New(name string) *Location {
 	return &Location{ID: primitive.NewObjectID(), Name: name}

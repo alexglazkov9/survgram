@@ -15,6 +15,7 @@ func (d Database) GetAllCharacters() []*character.Character {
 	defer cancel()
 
 	cur, err := d.client.Database("survgram_dev").Collection("characters").Find(ctx, bson.D{})
+
 	if err != nil {
 		log.Fatalln(err)
 	}

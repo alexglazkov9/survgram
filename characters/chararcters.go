@@ -3,39 +3,31 @@ package characters
 import (
 	"log"
 
-	"sync"
-
 	"github.com/alexglazkov9/survgram/character"
 	"github.com/alexglazkov9/survgram/database"
 )
 
-var once sync.Once
-
-// Manager - Singleton Character Manager that provides characters
-type Manager struct {
+// CharacterManager - Singleton Character CharacterManager that provides characters
+type CharacterManager struct {
 	characters []*character.Character
 }
 
-var instance *Manager
-
 // GetInstance - returns instance of Character Manager
-func GetInstance() *Manager {
-	once.Do(func() {
-		instance = &Manager{}
-		instance.characters = database.GetInstance().GetAllCharacters()
-		log.Printf("Characters fetched from the database. Count: %d\n", len(instance.characters))
-	})
+func New() *CharacterManager {
+	var instance = &CharacterManager{}
+	instance.characters = database.GetInstance().GetAllCharacters()
+	log.Printf("Characters fetched from the database. Count: %d\n", len(instance.characters))
 
 	return instance
 }
 
 //Characters - Fetches all characters
-func (m Manager) Characters() []*character.Character {
+func (m CharacterManager) Characters() []*character.Character {
 	return m.characters
 }
 
 //GetCharacter - Fetches a charcter by telegramID
-func (m Manager) GetCharacter(telegramID int) *character.Character {
+func (m CharacterManager) GetCharacter(telegramID int) *character.Character {
 	for _, chrctr := range m.characters {
 		if telegramID == chrctr.TelegramID {
 			return chrctr
@@ -45,8 +37,9 @@ func (m Manager) GetCharacter(telegramID int) *character.Character {
 }
 
 //CreateCharacter - Creates a new charcter and writes it to db
-func (m Manager) CreateCharacter(telegramID int, name string) bool {
-	chrctr := character.New(telegramID, name)
+func (m *CharacterManager) CreateCharacter(telegramID int, chatID int64, name string) bool {
+	startLocation := database.GetInstance().GetStartLocation()
+	chrctr := character.New(telegramID, chatID, name, startLocation.ID)
 	if database.GetInstance().AddCharacter(chrctr) {
 		m.characters = append(m.characters, chrctr)
 		return true

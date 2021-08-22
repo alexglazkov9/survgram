@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/alexglazkov9/survgram/characters"
+	"github.com/alexglazkov9/survgram/game"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
@@ -15,11 +15,10 @@ const (
 )
 
 //Register - Verifies and creates a character
-func Register(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	characterManager := characters.GetInstance()
+func Register(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
 	if update.Message.Chat.IsPrivate() {
 		// Check if the player already has a character
-		if characterManager.GetCharacter(update.Message.From.ID) != nil {
+		if game.CharacterManager.GetCharacter(update.Message.From.ID) != nil {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "You already have a character")
 			bot.Send(msg)
 			return
@@ -28,7 +27,7 @@ func Register(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		// Fetch and validate name
 		name := update.Message.CommandArguments()
 		if isNameValid(name) {
-			if characterManager.CreateCharacter(update.Message.From.ID, name) {
+			if game.CharacterManager.CreateCharacter(update.Message.From.ID, update.Message.Chat.ID, name) {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, fmt.Sprintf("Welcome to the game %s", name))
 				bot.Send(msg)
 				return

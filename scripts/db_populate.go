@@ -42,7 +42,7 @@ func main() {
 	thecollcavern.Destinations = append(thecollcavern.Destinations, wimborne.ID)
 	whispvalley.Destinations = append(whispvalley.Destinations, wimborne.ID)
 	oldforest.Destinations = append(oldforest.Destinations, buxpier.ID, stokefallpier.ID, wimborne.ID)
-	buxpier.Destinations = append(buxpier.Destinations, wimborne.ID, oldforest.ID)
+	buxpier.Destinations = append(buxpier.Destinations, wimborne.ID, oldforest.ID, buxlake.ID)
 	buxlake.Destinations = append(buxlake.Destinations, buxpier.ID, neverharbor.ID)
 	neverharbor.Destinations = append(neverharbor.Destinations, buxlake.ID)
 	stokefallpier.Destinations = append(stokefallpier.Destinations, oldforest.ID, wimborne.ID, stokefallfalls.ID)

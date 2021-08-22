@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/alexglazkov9/survgram/commands"
+	"github.com/alexglazkov9/survgram/game"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/joho/godotenv"
 )
@@ -28,14 +29,22 @@ func main() {
 		log.Panic(err)
 	}
 
+	game := game.New(bot)
+
 	for update := range updates {
-		log.Printf(update.Message.Text)
+		//log.Printf(update.Message.Text)
 
 		if update.Message != nil && update.Message.IsCommand() {
 			switch update.Message.Command() {
 			case "reg": // Create character
-				go commands.Register(bot, update)
+				commands.Register(bot, update, *game)
+			case "menu": // Create character
+				commands.Menu(bot, update, *game)
 			}
+		}
+
+		if update.CallbackQuery != nil {
+			game.HandleInput(update)
 		}
 	}
 }

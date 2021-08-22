@@ -1,7 +1,6 @@
 package character
 
 import (
-	"github.com/alexglazkov9/survgram/location"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -9,14 +8,15 @@ import (
 type Character struct {
 	ID              primitive.ObjectID `bson:"_id"`
 	TelegramID      int
+	ChatID          int64
 	Name            string
 	HealthPoints    int
-	CurrentLocation location.Location
+	CurrentLocation primitive.ObjectID
 }
 
 // New - Creates a new character
-func New(telegramID int, name string) *Character {
-	return &Character{TelegramID: telegramID, Name: name, HealthPoints: 10}
+func New(telegramID int, chatID int64, name string, current_location primitive.ObjectID) *Character {
+	return &Character{ID: primitive.NewObjectID(), TelegramID: telegramID, ChatID: chatID, Name: name, HealthPoints: 10, CurrentLocation: current_location}
 }
 
 // // New - Creates a new character
