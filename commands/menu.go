@@ -12,6 +12,7 @@ func Menu(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
 			replyMarkup := tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(
 					tgbotapi.NewInlineKeyboardButtonData("Go to...", "goto"),
+					tgbotapi.NewInlineKeyboardButtonData("Do...", "do"),
 				),
 			)
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Menu")
