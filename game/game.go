@@ -78,7 +78,7 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 		g.Bot.Send(textEdit)
 		g.Bot.Send(markupEdit)
 	case "do":
-		g.ActivitiyManager.Add(activity.New(*g.Bot, *chrctr))
+		g.ActivitiyManager.Add(activity.New(*g.Bot, chrctr))
 	}
 
 	//Moves character to a new location
