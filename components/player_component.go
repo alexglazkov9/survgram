@@ -6,10 +6,13 @@ import (
 )
 
 type PlayerComponent struct {
-	parent entity.Entity
+	Parent *entity.Entity `bson:"-"`
 
-	ID              primitive.ObjectID `bson:"_id"`
 	TelegramID      int
 	ChatID          int64
 	CurrentLocation primitive.ObjectID
+}
+
+func (pc PlayerComponent) Update(dt float64) {
+
 }

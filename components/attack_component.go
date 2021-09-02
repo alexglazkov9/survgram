@@ -5,13 +5,12 @@ import (
 
 	"github.com/alexglazkov9/survgram/attacks"
 	"github.com/alexglazkov9/survgram/entity"
-	"github.com/alexglazkov9/survgram/interfaces"
 )
 
 const ATTACK_SPEED float64 = 1.5
 
 type AttackComponent struct {
-	parent entity.Entity
+	Parent *entity.Entity `bson:"-"`
 
 	AttackDamage int
 
@@ -26,14 +25,14 @@ func (ac AttackComponent) GetBasicAttackDamage() int {
 	return ac.AttackDamage
 }
 
-func (ac *AttackComponent) Attack(targets []interfaces.Battler) attacks.AttackDetails {
+func (ac *AttackComponent) Attack(targets []*entity.Entity) attacks.AttackDetails {
 	ac.nextAttackTimer = 0
 
 	var attackDetails attacks.AttackDetails
 	target := targets[rand.Intn(len(targets))]
-	attackDetails.Damage = target.ApplyDamage(ac.GetBasicAttackDamage())
+	attackDetails.Damage = target.GetComponent("HealthComponent").(*HealthComponent).ApplyDamage(ac.GetBasicAttackDamage())
 	attackDetails.AttackType = attacks.PhysicalAttack
-	attackDetails.Target = target.GetName()
+	attackDetails.Target = target.GetComponent("NameComponent").(*NameComponent).GetName()
 
 	return attackDetails
 }

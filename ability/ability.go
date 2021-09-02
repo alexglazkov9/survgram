@@ -1,13 +1,12 @@
 package ability
 
-type Effect struct {
-	Effect_type string
-	Damage      int
-}
+import (
+	"github.com/alexglazkov9/survgram/interfaces"
+)
 
 type Ability struct {
 	name        string
 	tier        int
 	Energy_cost int
-	Effects     []Effect
+	Effects     []interfaces.IEffect
 }

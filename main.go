@@ -32,9 +32,9 @@ func main() {
 	game := game.New(bot)
 
 	for update := range updates {
-		//log.Printf(update.Message.Text)
 
 		if update.Message != nil && update.Message.IsCommand() {
+
 			switch update.Message.Command() {
 			case "reg": // Create character
 				commands.Register(bot, update, *game)

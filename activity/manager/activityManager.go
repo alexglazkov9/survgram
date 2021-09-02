@@ -1,4 +1,4 @@
-package activitymanager
+package manager
 
 import (
 	"log"

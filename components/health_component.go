@@ -7,10 +7,14 @@ import (
 )
 
 type HealthComponent struct {
-	parent entity.Entity
-	
+	Parent *entity.Entity `bson:"-"`
+
 	MaxHealthPoints int
 	HealthPoints    int
+}
+
+func (hc HealthComponent) Update(dt float64) {
+
 }
 
 func (hc *HealthComponent) ApplyDamage(dmg int) int {
