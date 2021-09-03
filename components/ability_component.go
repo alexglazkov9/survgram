@@ -8,7 +8,7 @@ import (
 )
 
 type AbilityComponent struct {
-	Parent *entity.Entity `bson:"-"`
+	BaseComponent
 
 	energy  int `bson:"-"`
 	Ability ability.Ability

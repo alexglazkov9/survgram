@@ -70,6 +70,7 @@ func newCharacter(telegramID int, chatID int64, name string) *entity.Entity {
 		HealthPoints:    100,
 	})
 	chrctr.AddComponent(&components.AbilityComponent{})
+	chrctr.AddComponent(&components.InventoryComponent{})
 
 	return chrctr
 }

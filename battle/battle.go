@@ -6,6 +6,7 @@ import (
 
 	"github.com/alexglazkov9/survgram/components"
 	"github.com/alexglazkov9/survgram/entity"
+	"github.com/alexglazkov9/survgram/lootmanager"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -20,7 +21,7 @@ const (
 const UPDATE_PERIOD float64 = 2
 
 type Battle struct {
-	Bot     tgbotapi.BotAPI
+	Bot     *tgbotapi.BotAPI
 	enemies []*entity.Entity
 	players []*entity.Entity
 
@@ -29,7 +30,7 @@ type Battle struct {
 	nextUpdateTimer float64
 	messages        map[int]tgbotapi.Message
 
-	rewards map[int]string
+	LootManager *lootmanager.LootManager
 
 	Ended bool
 }
@@ -63,8 +64,7 @@ func (b *Battle) Update(dt float64) {
 			b.battleLog = append(b.battleLog, fmt.Sprintf("%s attacks %s for %d damage", attackDetails.Attacker, attackDetails.Target, attackDetails.Damage))
 			if !b.isAnyoneAlive(PLAYERS) {
 				log.Println("players lost")
-				b.Ended = true
-				b.sendUpdate()
+				b.endBattle()
 			}
 		}
 	}
@@ -88,8 +88,7 @@ func (b *Battle) Update(dt float64) {
 			b.battleLog = append(b.battleLog, fmt.Sprintf("%s attacks %s for %d damage", attackDetails.Attacker, attackDetails.Target, attackDetails.Damage))
 			if !b.isAnyoneAlive(ENEMIES) {
 				log.Println("players won")
-				b.Ended = true
-				b.sendUpdate()
+				b.endBattle()
 			}
 		}
 	}
@@ -184,21 +183,34 @@ func (b Battle) GetAllEnemies(args ...bool) []*entity.Entity {
 		return result
 	}
 
-	return b.players
+	return b.enemies
+}
+
+func (b *Battle) endBattle() {
+	b.Ended = true
+	b.sendUpdate()
+	for _, e := range b.getAllEntities() {
+		e.RemoveComponent("LogComponent")
+	}
+	for _, e := range b.GetAllEnemies() {
+		log.Println(e.Components)
+		npc_C := e.GetComponent("NPCComponent").(*components.NPCComponent)
+		for _, p := range b.GetAllPlayers(true) {
+			b.LootManager.Add(p, npc_C.PossibleLoot)
+		}
+	}
 }
 
 func (b *Battle) AddToEnemies(e *entity.Entity) {
 	e.AddComponent(&components.LogComponent{
-		Parent: e,
-		Log:    &b.battleLog,
+		Log: &b.battleLog,
 	})
 	b.enemies = append(b.enemies, e)
 }
 
 func (b *Battle) AddToPlayers(e *entity.Entity) {
 	e.AddComponent(&components.LogComponent{
-		Parent: e,
-		Log:    &b.battleLog,
+		Log: &b.battleLog,
 	})
 	b.players = append(b.players, e)
 }

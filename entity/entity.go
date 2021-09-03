@@ -9,6 +9,7 @@ import (
 
 type IComponent interface {
 	Update(dt float64)
+	SetParent(e *Entity)
 }
 
 /*
@@ -21,6 +22,7 @@ type Entity struct {
 
 func New() *Entity {
 	return &Entity{
+		ID:         primitive.NewObjectID(),
 		Components: make(map[string]IComponent),
 	}
 }
@@ -32,11 +34,16 @@ func (e Entity) GetComponent(comp_type string) IComponent {
 
 func (e *Entity) AddComponent(components ...IComponent) {
 	for _, c := range components {
+		c.SetParent(e)
 		component_type := reflect.TypeOf(c).String()
 		component_type = component_type[strings.IndexByte(component_type, '.')+1:]
 		e.Components[component_type] = c
 	}
 
+}
+
+func (e *Entity) RemoveComponent(comp_type string) {
+	delete(e.Components, comp_type)
 }
 
 func (e *Entity) Update(dt float64) {

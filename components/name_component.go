@@ -1,9 +1,7 @@
 package components
 
-import "github.com/alexglazkov9/survgram/entity"
-
 type NameComponent struct {
-	Parent *entity.Entity `bson:"-"`
+	BaseComponent
 
 	Name string
 }

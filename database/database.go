@@ -20,7 +20,7 @@ type Database struct {
 
 var instance *Database
 
-// GetInstance - returns instance of Character Manager
+// GetInstance - returns instance of database
 func GetInstance() *Database {
 	once.Do(func() {
 		instance = &Database{}

@@ -70,10 +70,13 @@ func (d Database) GetAllCharacters() []*entity.Entity {
 				} else {
 					chrctr.AddComponent(&components.AbilityComponent{})
 				}
-
+			case "InventoryComponent":
+				chrctr.AddComponent(&components.InventoryComponent{})
 			}
 		}
 		chrctr.AddComponent(&components.EffectsComponent{})
+		//REMOVE!!!!
+		chrctr.AddComponent(&components.InventoryComponent{Slots: 6})
 
 		fireball := &ability.Ability{
 			Energy_cost: 15,

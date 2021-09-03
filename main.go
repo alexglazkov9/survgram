@@ -38,8 +38,10 @@ func main() {
 			switch update.Message.Command() {
 			case "reg": // Create character
 				commands.Register(bot, update, *game)
-			case "menu": // Create character
+			case "menu": // Show menu
 				commands.Menu(bot, update, *game)
+			case "inventory": // Show menu
+				commands.Inventory(bot, update, *game)
 			}
 		}
 

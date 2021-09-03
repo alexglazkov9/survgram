@@ -10,7 +10,7 @@ import (
 const ATTACK_SPEED float64 = 1.5
 
 type AttackComponent struct {
-	Parent *entity.Entity `bson:"-"`
+	BaseComponent
 
 	AttackDamage int
 

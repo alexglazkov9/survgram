@@ -2,12 +2,10 @@ package components
 
 import (
 	"log"
-
-	"github.com/alexglazkov9/survgram/entity"
 )
 
 type HealthComponent struct {
-	Parent *entity.Entity `bson:"-"`
+	BaseComponent
 
 	MaxHealthPoints int
 	HealthPoints    int

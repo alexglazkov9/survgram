@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/alexglazkov9/survgram/ability"
 	"github.com/joho/godotenv"
 )
 
@@ -56,13 +55,4 @@ func main() {
 	// database.GetInstance().AddLocation(stokefallpier)
 	// database.GetInstance().AddLocation(stokefallfalls)
 
-	fireball := &ability.Ability{
-		Energy_cost: 15,
-		Effects: [1]ability.Effect{
-			ability.Effect{
-				Effect_type: "magical_damage",
-				Damage: 15,
-			},
-		},
-	}
 }

@@ -1,11 +1,7 @@
 package components
 
-import (
-	"github.com/alexglazkov9/survgram/entity"
-)
-
 type LogComponent struct {
-	Parent *entity.Entity
+	BaseComponent
 
 	Log *[]string
 }
