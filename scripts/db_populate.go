@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/joho/godotenv"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 )
 
 func main() {
-	godotenv.Load()
+	//godotenv.Load()
 
 	//var locations []*location.Location
 
@@ -54,5 +56,11 @@ func main() {
 	// database.GetInstance().AddLocation(neverharbor)
 	// database.GetInstance().AddLocation(stokefallpier)
 	// database.GetInstance().AddLocation(stokefallfalls)
-
+	file, _ := ioutil.ReadFile("../resources/items.json")
+	var items interface{}
+	_ = json.Unmarshal([]byte(file), &items)
+	for _, item := range items.([]interface{}) {
+		//log.Print(item.(map[string]interface{})["name"])
+		fmt.Println(item.(map[string]interface{})["name"].(string))
+	}
 }

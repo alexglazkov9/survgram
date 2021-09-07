@@ -1,0 +1,475 @@
+@startuml
+namespace ability {
+    class Ability << (S,Aquamarine) >> {
+        - name string
+        - tier int
+
+        + Energy_cost int
+        + Effects []interfaces.IEffect
+
+    }
+}
+
+
+namespace activity {
+    class ActivityConfig << (S,Aquamarine) >> {
+        + ActivityType ActivityType
+        + ActivityChance float64
+        + SpawnChances <font color=blue>map</font>[int]float64
+
+    }
+    interface IActivity  {
+        + Start() 
+        + Update(dt float64) 
+        + IsComplete() bool
+        + GetDescription() string
+        + AddPlayer(player *entity.Entity) 
+
+    }
+    class activity.ActivityType << (T, #FF7700) >>  {
+    }
+}
+
+
+namespace attacks {
+    class AttackDetails << (S,Aquamarine) >> {
+        + AttackType AttackType
+        + Damage int
+        + Target string
+        + Attacker string
+
+    }
+    class attacks.AttackType << (T, #FF7700) >>  {
+    }
+}
+
+
+namespace battle {
+    class Battle << (S,Aquamarine) >> {
+        - enemies []*entity.Entity
+        - players []*entity.Entity
+        - battleLog []string
+        - nextUpdateTimer float64
+        - messages <font color=blue>map</font>[int]telegram-bot-api.Message
+        - battleEnded bool
+
+        + Bot *telegram-bot-api.BotAPI
+        + IsBattleComplete bool
+        + LootManager *lootmanager.LootManager
+
+        - sendUpdate() 
+        - generateStatusText() string
+        - getAllEntities() []*entity.Entity
+        - isAnyoneAlive(side Side) bool
+        - endBattle() 
+
+        + Update(dt float64) 
+        + Start() 
+        + GetAllPlayers(args ...bool) []*entity.Entity
+        + GetAllEnemies(args ...bool) []*entity.Entity
+        + AddToEnemies(e *entity.Entity) 
+        + AddPlayer(e *entity.Entity) 
+        + IsComplete() bool
+        + GetDescription() string
+
+    }
+    class battle.Side << (T, #FF7700) >>  {
+    }
+}
+
+"activity.IActivity" <|-- "battle.Battle"
+
+namespace charactermanager {
+    class CharacterManager << (S,Aquamarine) >> {
+        - characters []*entity.Entity
+        - database interfaces.IDatabase
+
+        - newCharacter(telegramID int, chatID int64, name string) *entity.Entity
+
+        + Characters() []*entity.Entity
+        + GetCharacter(telegramID int) *entity.Entity
+        + CreateCharacter(telegramID int, chatID int64, name string) bool
+        + UpdateCharacter(e *entity.Entity) 
+
+    }
+}
+
+
+namespace components {
+    class AbilityComponent << (S,Aquamarine) >> {
+        - energy int
+
+        + Ability ability.Ability
+
+        + Update(dt float64) 
+        + GainEnergy(amt int) 
+        + CastAbility(allies []*entity.Entity, enemies []*entity.Entity) 
+        + IsReadyToCast() bool
+
+    }
+    class AttackComponent << (S,Aquamarine) >> {
+        - nextAttackTimer float64
+
+        + AttackDamage int
+
+        + Update(dt float64) 
+        + GetBasicAttackDamage() int
+        + Attack(targets []*entity.Entity) attacks.AttackDetails
+        + GetAttackComponent() *AttackComponent
+        + IsReadyToAttack() bool
+
+    }
+    class BaseComponent << (S,Aquamarine) >> {
+        + Parent *entity.Entity
+
+        + SetParent(e *entity.Entity) 
+
+    }
+    class EffectsComponent << (S,Aquamarine) >> {
+        + Effects []interfaces.IEffect
+
+        + Update(dt float64) 
+        + RemoveEffect(effect interfaces.IEffect) 
+        + ApplyEffect(effects []interfaces.IEffect) 
+
+    }
+    class HealthComponent << (S,Aquamarine) >> {
+        + MaxHealthPoints int
+        + HealthPoints int
+
+        + Update(dt float64) 
+        + ApplyDamage(dmg int) int
+        + GetHealth() int
+        + GetMaxHealth() int
+        + IsAlive() bool
+        + GetHealthComponent() *HealthComponent
+
+    }
+    class InventoryComponent << (S,Aquamarine) >> {
+        + Items []items.IItem
+        + Slots int
+
+        + Update( float64) 
+        + AddItems(items ...items.IItem) 
+
+    }
+    class LogComponent << (S,Aquamarine) >> {
+        + Log *[]string
+
+        + Update(dt float64) 
+        + AddRecord(record string) 
+
+    }
+    class NPCComponent << (S,Aquamarine) >> {
+        + PossibleLoot []items.IItem
+
+        + Update( float64) 
+
+    }
+    class NameComponent << (S,Aquamarine) >> {
+        + Name string
+
+        + Update(dt float64) 
+        + GetName() string
+
+    }
+    class PlayerComponent << (S,Aquamarine) >> {
+        + TelegramID int
+        + ChatID int64
+        + CurrentLocation primitive.ObjectID
+
+        + Update(dt float64) 
+        + Save(dt float64) 
+
+    }
+}
+"components.BaseComponent" *-- "components.AbilityComponent"
+"components.BaseComponent" *-- "components.AttackComponent"
+"components.BaseComponent" *-- "components.EffectsComponent"
+"components.BaseComponent" *-- "components.HealthComponent"
+"components.BaseComponent" *-- "components.InventoryComponent"
+"components.BaseComponent" *-- "components.LogComponent"
+"components.BaseComponent" *-- "components.NPCComponent"
+"components.BaseComponent" *-- "components.NameComponent"
+"components.BaseComponent" *-- "components.PlayerComponent"
+
+
+namespace database {
+    class Database << (S,Aquamarine) >> {
+        - client *mongo.Client
+
+        + GetAllCharacters() []*entity.Entity
+        + AddCharacter(c *entity.Entity) bool
+        + UpdateCharacter(c *entity.Entity) bool
+        + GetAllLocations() []*location.LocationModel
+        + GetStartLocation() interfaces.ILocation
+        + AddLocation(l *location.Location) bool
+        + UpdateLocation(l *location.Location) bool
+
+    }
+}
+
+"interfaces.IDatabase" <|-- "database.Database"
+
+namespace effect {
+    class MagicalDamageEffect << (S,Aquamarine) >> {
+        + Source *entity.Entity
+        + Damage int
+
+        + Update(dt float64) 
+        + Apply(target *entity.Entity) bool
+
+    }
+    class PeriodicEffect << (S,Aquamarine) >> {
+        - timeTotal float64
+        - timePeriod float64
+
+        + Source *entity.Entity
+        + Damage int
+        + Duration float64
+        + Period float64
+
+        + Update(dt float64) 
+        + Apply(target *entity.Entity) bool
+
+    }
+}
+
+"interfaces.IEffect" <|-- "effect.MagicalDamageEffect"
+"interfaces.IEffect" <|-- "effect.PeriodicEffect"
+
+namespace entity {
+    class Entity << (S,Aquamarine) >> {
+        + ID primitive.ObjectID
+        + Components <font color=blue>map</font>[string]IComponent
+
+        + GetComponent(comp_type string) IComponent
+        + AddComponent(components ...IComponent) 
+        + RemoveComponent(comp_type string) 
+        + Update(dt float64) 
+
+    }
+    interface IComponent  {
+        + Update(dt float64) 
+        + SetParent(e *Entity) 
+
+    }
+}
+
+
+namespace expedition {
+    class Expedition << (S,Aquamarine) >> {
+        - currentActivity activity.IActivity
+        - activityOptions []activity.IActivity
+
+        + Bot *telegram-bot-api.BotAPI
+        + Host *entity.Entity
+        + Message *telegram-bot-api.Message
+        + LootManager *lootmanager.LootManager
+        + IsComplete bool
+        + IsReadyForNext bool
+        + Location location.Location
+
+        - next() 
+        - sendNextKeyboard() 
+
+        + Update(dt float64) 
+        + SetSelectedActivity(i int) 
+
+    }
+    class Expeditions << (S,Aquamarine) >> {
+        + Expeditions []*Expedition
+        + LootManager *lootmanager.LootManager
+        + CharacterManager *manager.CharacterManager
+
+        + Update(dt float64) 
+        + Add(ac *Expedition) 
+        + HandleInput(update telegram-bot-api.Update) 
+
+    }
+}
+
+
+namespace game {
+    class Game << (S,Aquamarine) >> {
+        + LocationManager *manager.LocationManager
+        + CharacterManager *manager.CharacterManager
+        + Expeditions *expedition.Expeditions
+        + LootManager *lootmanager.LootManager
+        + Bot *telegram-bot-api.BotAPI
+        + Engine *go-gameloop.GameLoop
+
+        + HandleInput(update telegram-bot-api.Update) 
+
+    }
+}
+
+
+namespace interfaces {
+    interface IDatabase  {
+        + UpdateCharacter(c *entity.Entity) bool
+        + GetAllCharacters() []*entity.Entity
+        + AddCharacter(c *entity.Entity) bool
+        + GetStartLocation() ILocation
+
+    }
+    interface IEffect  {
+        + Apply(target *entity.Entity) bool
+        + Update(dt float64) 
+
+    }
+    interface ILocation  {
+        + GetID() primitive.ObjectID
+
+    }
+}
+
+
+namespace items {
+    class BaseItem << (S,Aquamarine) >> {
+        + ID int
+        + Name string
+        + Type ItemType
+        + Tier int
+        + Rarity Rarity
+
+        + GetName() string
+        + GetType() ItemType
+        + GetID() int
+
+    }
+    interface IItem  {
+        + GetID() int
+        + GetName() string
+        + GetType() ItemType
+
+    }
+    class ItemCollection << (S,Aquamarine) >> {
+        - items <font color=blue>map</font>[int]IItem
+
+        + GetItemById(id int) IItem
+
+    }
+    class Weapon << (S,Aquamarine) >> {
+        + BaseDamage int
+        + BaseAttackSpeed float64
+        + Intellect int
+        + Strength int
+        + Agility int
+        + MinLvlReq int
+
+    }
+    class items.ItemType << (T, #FF7700) >>  {
+    }
+    class items.Rarity << (T, #FF7700) >>  {
+    }
+}
+"items.BaseItem" *-- "items.Weapon"
+
+"items.IItem" <|-- "items.BaseItem"
+
+namespace location {
+    class Location << (S,Aquamarine) >> {
+        + ID primitive.ObjectID
+        + Name string
+        + Destinations []primitive.ObjectID
+        + PossibleActivities []activity.ActivityConfig
+
+        + GetActivity(bot *telegram-bot-api.BotAPI, lm *lootmanager.LootManager) activity.IActivity
+        + GetID() primitive.ObjectID
+
+    }
+    class LocationModel << (S,Aquamarine) >> {
+        + ID primitive.ObjectID
+        + Name string
+        + Destinations []Location
+
+    }
+}
+
+"interfaces.ILocation" <|-- "location.Location"
+
+namespace locationmanager {
+    class LocationManager << (S,Aquamarine) >> {
+        - locations []*location.LocationModel
+
+        + Locations() []*location.LocationModel
+        + GetLocation(objectID primitive.ObjectID) *location.LocationModel
+
+    }
+}
+
+
+namespace loot {
+    class Loot << (S,Aquamarine) >> {
+        - message *telegram-bot-api.Message
+        - selectedItem items.IItem
+        - isExpired bool
+
+        + Bot telegram-bot-api.BotAPI
+        + Target *entity.Entity
+        + Items []items.IItem
+        + ExpirationTime float64
+
+        - generateInlineKeyboard() telegram-bot-api.InlineKeyboardMarkup
+
+        + SendLoot() 
+        + UpdateMessage() 
+        + Expire() 
+        + SetSelectedItem(item_name string) 
+        + PickUp() 
+        + IsExpired() bool
+
+    }
+}
+
+
+namespace lootmanager {
+    class LootManager << (S,Aquamarine) >> {
+        - pendingLoot <font color=blue>map</font>[int]*loot.Loot
+
+        + Bot telegram-bot-api.BotAPI
+
+        + Update(dt float64) 
+        + Add(target *entity.Entity, items []items.IItem) 
+        + Remove(key int) 
+        + HandleInput(cbData misc.CallbackData, telegramIdFrom int) 
+        + IsPlayerLooting(telegram_id int) bool
+
+    }
+}
+
+
+namespace misc {
+    class CallbackData << (S,Aquamarine) >> {
+        + Action string
+        + ID int
+        + Payload string
+
+        + JSON() string
+        + FromJSON(jsonStr string) 
+
+    }
+    class TGInlineKeyboard << (S,Aquamarine) >> {
+        - headerButtons []telegram-bot-api.InlineKeyboardButton
+        - buttons []telegram-bot-api.InlineKeyboardButton
+        - footerButtons []telegram-bot-api.InlineKeyboardButton
+
+        + Columns int
+
+        + Generate() telegram-bot-api.InlineKeyboardMarkup
+        + SetColNumber(n int) 
+        + AddButton(text string, data string) 
+        + AddHeaderButton(text string, data string) 
+        + AddFooterButton(text string, data string) 
+
+    }
+}
+
+
+"__builtin__.int" #.. "attacks.AttackType"
+"__builtin__.int" #.. "battle.Side"
+"__builtin__.string" #.. "activity.ActivityType"
+"__builtin__.string" #.. "items.ItemType"
+"__builtin__.string" #.. "items.Rarity"
+@enduml

@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/alexglazkov9/survgram/interfaces"
 	"github.com/alexglazkov9/survgram/location"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -53,7 +54,7 @@ func (d Database) GetAllLocations() []*location.LocationModel {
 }
 
 //GetAllLocations - Returns array of all locations from database
-func (d Database) GetStartLocation() *location.Location {
+func (d Database) GetStartLocation() interfaces.ILocation {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 

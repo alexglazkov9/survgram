@@ -30,11 +30,13 @@ const (
 )
 
 type IItem interface {
+	GetID() int
 	GetName() string
 	GetType() ItemType
 }
 
 type BaseItem struct {
+	ID     int
 	Name   string
 	Type   ItemType
 	Tier   int
@@ -47,6 +49,10 @@ func (i BaseItem) GetName() string {
 
 func (i BaseItem) GetType() ItemType {
 	return i.Type
+}
+
+func (i BaseItem) GetID() int {
+	return i.ID
 }
 
 type Weapon struct {

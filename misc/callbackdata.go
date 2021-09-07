@@ -12,13 +12,10 @@ const (
 	PICK_UP_ALL_ITEMS = "PUAI"
 	SELECT_LOOT_ITEM  = "SLI"
 	DISMISS_LOOT      = "DL"
-	//Activity actions
-	ACTIVITY_CONTINUE = "AN"
-	ACTIVITY_LEAVE    = "AL"
-	// ACTION_JOIN              = "join"
-	// ACTION_ATTACK            = "attack"
-	// ACTION_PRIMARY_ABILITY   = "pr_a"
-	// ACTION_SECONDARY_ABILITY = "se_a"
+	//Expedition actions
+	EXPEDITION_CONTINUE = "EC"
+	EXPEDITION_LEAVE    = "EL"
+	ACTIVITY_SELECTED   = "AS"
 )
 
 //CallbackData - type used to wrap data for inline keyboard buttons

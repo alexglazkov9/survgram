@@ -1,13 +1,11 @@
 package components
 
-import (
-	"github.com/alexglazkov9/survgram/interfaces"
-)
+import "github.com/alexglazkov9/survgram/interfaces"
 
 type EffectsComponent struct {
 	BaseComponent
 
-	Effects []interfaces.IEffect
+	Effects []interfaces.IEffect `bson:"-"`
 }
 
 func (ec *EffectsComponent) Update(dt float64) {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/alexglazkov9/survgram/components"
 	"github.com/alexglazkov9/survgram/entity"
+	"github.com/alexglazkov9/survgram/items"
 	"github.com/alexglazkov9/survgram/lootmanager"
-
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
@@ -25,6 +25,8 @@ type Battle struct {
 	enemies []*entity.Entity
 	players []*entity.Entity
 
+	IsBattleComplete bool
+
 	battleLog []string
 
 	nextUpdateTimer float64
@@ -32,14 +34,51 @@ type Battle struct {
 
 	LootManager *lootmanager.LootManager
 
-	Ended bool
+	battleEnded bool
+}
+
+func NewBattle(bot *tgbotapi.BotAPI, lm *lootmanager.LootManager) *Battle {
+	enem := entity.New()
+	enem.AddComponent(&components.NameComponent{
+		Name: "Sobaka",
+	})
+	enem.AddComponent(&components.AttackComponent{
+		AttackDamage: 1,
+	})
+	enem.AddComponent(&components.HealthComponent{
+		MaxHealthPoints: 150,
+		HealthPoints:    5,
+	})
+	enem.AddComponent(&components.EffectsComponent{})
+	possibleLoot := make([]items.IItem, 0)
+	possibleLoot = append(possibleLoot, items.GetInstance().GetItemById(1))
+	possibleLoot = append(possibleLoot, items.GetInstance().GetItemById(2))
+	enem.AddComponent(&components.NPCComponent{
+		PossibleLoot: possibleLoot,
+	})
+
+	battle := &Battle{Bot: bot, LootManager: lm}
+	battle.AddToEnemies(enem)
+
+	return battle
 }
 
 func (b *Battle) Update(dt float64) {
-	//Do i need this?
-	if b.Ended {
-		return
+	if b.battleEnded {
+		//If any of the players still looting do nothing
+		for _, p := range b.GetAllPlayers(true) {
+			player_C := p.GetComponent("PlayerComponent").(*components.PlayerComponent)
+			if b.LootManager.IsPlayerLooting(player_C.TelegramID) {
+				return
+			}
+		}
+		//Otherwise raise battle complete flag and parent class will remove it
+		b.IsBattleComplete = true
 	}
+	//TODO Do i need this?
+	// if b.Ended {
+	// 	return
+	// }
 
 	for _, e := range b.getAllEntities() {
 		e.Update(dt)
@@ -108,7 +147,7 @@ func (b *Battle) Start() {
 		msg := tgbotapi.NewMessage(p.GetComponent("PlayerComponent").(*components.PlayerComponent).ChatID, b.generateStatusText())
 		b.messages[p.GetComponent("PlayerComponent").(*components.PlayerComponent).TelegramID], _ = b.Bot.Send(msg)
 	}
-	b.Ended = false
+	b.battleEnded = false
 }
 
 func (b Battle) sendUpdate() {
@@ -187,7 +226,7 @@ func (b Battle) GetAllEnemies(args ...bool) []*entity.Entity {
 }
 
 func (b *Battle) endBattle() {
-	b.Ended = true
+	b.battleEnded = true
 	b.sendUpdate()
 	for _, e := range b.getAllEntities() {
 		e.RemoveComponent("LogComponent")
@@ -199,6 +238,10 @@ func (b *Battle) endBattle() {
 			b.LootManager.Add(p, npc_C.PossibleLoot)
 		}
 	}
+	// for _, e := range b.GetAllPlayers() {
+	// 	database.GetInstance().UpdateCharacter(e)
+	// }
+
 }
 
 func (b *Battle) AddToEnemies(e *entity.Entity) {
@@ -208,9 +251,17 @@ func (b *Battle) AddToEnemies(e *entity.Entity) {
 	b.enemies = append(b.enemies, e)
 }
 
-func (b *Battle) AddToPlayers(e *entity.Entity) {
+func (b *Battle) AddPlayer(e *entity.Entity) {
 	e.AddComponent(&components.LogComponent{
 		Log: &b.battleLog,
 	})
 	b.players = append(b.players, e)
+}
+
+func (b *Battle) IsComplete() bool {
+	return b.IsBattleComplete
+}
+
+func (b *Battle) GetDescription() string {
+	return "Battle with dog"
 }

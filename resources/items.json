@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Rusty Sword",
+        "type":"melee",
+        "damage": 2,
+        "damage_type": "physical",
+        "weapon_type": "sword",
+        "price": "",
+        "tier": 1,
+        "rarity": "Common",
+        "base_attack_speed": 1.5,
+        "int": 0,
+        "str": 1,
+        "agi": 1,
+        "attack_speed": "",
+        "crit_chance": "",
+        "dodge_chance": "",
+        "min_lvl_req": 1,
+        "item_id": 1
+    },
+    {
+        "name": "Golden Sword",
+        "type":"melee",
+        "damage": 2,
+        "damage_type": "physical",
+        "weapon_type": "sword",
+        "price": "",
+        "tier": 1,
+        "rarity": "Uncommon",
+        "base_attack_speed": 1.5,
+        "int": 0,
+        "str": 1,
+        "agi": 1,
+        "attack_speed": "",
+        "crit_chance": "",
+        "dodge_chance": "",
+        "min_lvl_req": 1,
+        "item_id": 2
+    }
+]

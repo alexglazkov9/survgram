@@ -10,8 +10,8 @@ import (
 type AbilityComponent struct {
 	BaseComponent
 
-	energy  int `bson:"-"`
-	Ability ability.Ability
+	energy  int             `bson:"-"`
+	Ability ability.Ability `bson:"-"`
 }
 
 func (ac AbilityComponent) Update(dt float64) {

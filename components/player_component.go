@@ -15,3 +15,7 @@ type PlayerComponent struct {
 func (pc PlayerComponent) Update(dt float64) {
 
 }
+
+func (pc PlayerComponent) Save(dt float64) {
+
+}

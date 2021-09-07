@@ -3,10 +3,11 @@ package game
 import (
 	"log"
 
-	"github.com/alexglazkov9/survgram/activity"
-	activitymanager "github.com/alexglazkov9/survgram/activity/manager"
 	charactermanager "github.com/alexglazkov9/survgram/character/manager"
 	"github.com/alexglazkov9/survgram/components"
+	"github.com/alexglazkov9/survgram/database"
+	"github.com/alexglazkov9/survgram/expedition"
+	"github.com/alexglazkov9/survgram/location"
 	locationmanager "github.com/alexglazkov9/survgram/location/manager"
 	"github.com/alexglazkov9/survgram/lootmanager"
 	"github.com/alexglazkov9/survgram/misc"
@@ -19,7 +20,7 @@ import (
 type Game struct {
 	LocationManager  *locationmanager.LocationManager
 	CharacterManager *charactermanager.CharacterManager
-	ActivitiyManager *activitymanager.ActivityManager
+	Expeditions      *expedition.Expeditions
 	LootManager      *lootmanager.LootManager
 	Bot              *tgbotapi.BotAPI
 	Engine           *gl.GameLoop
@@ -29,12 +30,12 @@ type Game struct {
 func New(bot *tgbotapi.BotAPI) *Game {
 	instance := &Game{}
 	instance.Bot = bot
-	instance.CharacterManager = charactermanager.New()
+	instance.CharacterManager = charactermanager.New(database.GetInstance())
 	instance.LocationManager = locationmanager.New()
 	instance.LootManager = lootmanager.New(*bot)
-	instance.ActivitiyManager = &activitymanager.ActivityManager{LootManager: instance.LootManager}
+	instance.Expeditions = &expedition.Expeditions{LootManager: instance.LootManager, CharacterManager: instance.CharacterManager}
 	instance.Engine = gl.New(30, func(dt float64) {
-		instance.ActivitiyManager.Update(dt)
+		instance.Expeditions.Update(dt)
 		instance.LootManager.Update(dt)
 	})
 	instance.Engine.Start()
@@ -81,7 +82,7 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 			g.Bot.Send(textEdit)
 			g.Bot.Send(markupEdit)
 		case "do":
-			g.ActivitiyManager.Add(activity.New(g.Bot, chrctr))
+			g.Expeditions.Add(expedition.New(g.Bot, chrctr, *location.New("Test location")))
 		}
 
 		//Moves character to a new location
@@ -99,8 +100,8 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 			g.Bot.Send(msg)
 		case misc.SELECT_LOOT_ITEM, misc.PICK_UP_ITEM, misc.PICK_UP_ALL_ITEMS, misc.DISMISS_LOOT:
 			g.LootManager.HandleInput(callbackData, update.CallbackQuery.From.ID)
-		case misc.ACTIVITY_CONTINUE, misc.ACTIVITY_LEAVE:
-			g.ActivitiyManager.HandleInput(update)
+		case misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE, misc.ACTIVITY_SELECTED:
+			g.Expeditions.HandleInput(update)
 		}
 	}
 }

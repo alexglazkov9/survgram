@@ -123,7 +123,9 @@ func (d Database) UpdateCharacter(c *entity.Entity) bool {
 
 	name_C := c.GetComponent("NameComponent").(*components.NameComponent)
 	log.Println("Updateing character: " + name_C.Name)
-	_, err := d.client.Database("survgram_dev").Collection("characters").UpdateByID(ctx, c.ID, c)
+	_, err := d.client.Database("survgram_dev").Collection("characters").UpdateByID(ctx, c.ID, bson.D{
+		{"$set", c},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

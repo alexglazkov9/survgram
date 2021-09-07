@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	EXPIRATION_TIME float64 = 5
+	EXPIRATION_TIME float64 = 15
 )
 
 type LootManager struct {
