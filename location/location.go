@@ -1,7 +1,7 @@
 package location
 
 import (
-	"github.com/alexglazkov9/survgram/activity"
+	"github.com/alexglazkov9/survgram/activities"
 	"github.com/alexglazkov9/survgram/battle"
 	"github.com/alexglazkov9/survgram/lootmanager"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -12,17 +12,17 @@ type Location struct {
 	ID                 primitive.ObjectID `bson:"_id"`
 	Name               string
 	Destinations       []primitive.ObjectID
-	PossibleActivities []activity.ActivityConfig
+	PossibleActivities []activities.ActivityConfig
 }
 
-func (l Location) GetActivity(bot *tgbotapi.BotAPI, lm *lootmanager.LootManager) activity.IActivity {
-	var act activity.IActivity
+func (l Location) GetActivity(bot *tgbotapi.BotAPI, lm *lootmanager.LootManager) activities.IActivity {
+	var act activities.IActivity
 	//switch l.PossibleActivities[rand.Intn(len(l.PossibleActivities))].ActivityType {
-	switch activity.BATTLE {
-	case activity.FISHING:
-	case activity.BATTLE:
+	switch activities.BATTLE {
+	case activities.FISHING:
+	case activities.BATTLE:
 		act = battle.NewBattle(bot, lm)
-	case activity.GATHERING:
+	case activities.GATHERING:
 	}
 	return act
 }

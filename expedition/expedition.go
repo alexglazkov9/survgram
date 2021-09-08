@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/alexglazkov9/survgram/activity"
+	"github.com/alexglazkov9/survgram/activities"
 	"github.com/alexglazkov9/survgram/components"
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/location"
@@ -27,8 +27,8 @@ type Expedition struct {
 	IsReadyForNext bool
 	Location       location.Location
 
-	currentActivity activity.IActivity
-	activityOptions []activity.IActivity
+	currentActivity activities.IActivity
+	activityOptions []activities.IActivity
 }
 
 func New(bot *tgbotapi.BotAPI, char *entity.Entity, loc location.Location) *Expedition {
