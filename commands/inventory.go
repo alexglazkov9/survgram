@@ -3,7 +3,7 @@ package commands
 import (
 	"log"
 
-	"github.com/alexglazkov9/survgram/components"
+	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/game"
 	"github.com/alexglazkov9/survgram/misc"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"

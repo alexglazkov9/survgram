@@ -5,11 +5,12 @@ import (
 	"log"
 	"time"
 
-	"github.com/alexglazkov9/survgram/ability"
-	"github.com/alexglazkov9/survgram/components"
-	"github.com/alexglazkov9/survgram/effect"
 	"github.com/alexglazkov9/survgram/entity"
+	"github.com/alexglazkov9/survgram/entity/combat"
+	"github.com/alexglazkov9/survgram/entity/combat/effect"
+	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/interfaces"
+	"github.com/alexglazkov9/survgram/items"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -28,72 +29,13 @@ func (d Database) GetAllCharacters() []*entity.Entity {
 
 	var characters []*entity.Entity
 	for cur.Next(ctx) {
-		chrctr := entity.New()
 		var rawChrctr bson.M
 		err := cur.Decode(&rawChrctr)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(rawChrctr)
 
-		//Manually map fields to the character
-		chrctr.ID = rawChrctr["_id"].(primitive.ObjectID)
-		for key, element := range rawChrctr["components"].(primitive.M) {
-			switch key {
-			case "AttackComponent":
-				chrctr.AddComponent(&components.AttackComponent{
-					AttackDamage: int(element.(primitive.M)["attackdamage"].(int32)),
-				})
-			case "HealthComponent":
-				chrctr.AddComponent(&components.HealthComponent{
-					MaxHealthPoints: int(element.(primitive.M)["maxhealthpoints"].(int32)),
-					HealthPoints:    int(element.(primitive.M)["healthpoints"].(int32)),
-				})
-			case "PlayerComponent":
-				chrctr.AddComponent(&components.PlayerComponent{
-					TelegramID:      int(element.(primitive.M)["telegramid"].(int32)),
-					ChatID:          element.(primitive.M)["chatid"].(int64),
-					CurrentLocation: element.(primitive.M)["currentlocation"].(primitive.ObjectID),
-				})
-			case "NameComponent":
-				chrctr.AddComponent(&components.NameComponent{
-					Name: element.(primitive.M)["name"].(string),
-				})
-			case "AbilityComponent":
-				if element.(primitive.M)["ability"] != nil {
-					chrctr.AddComponent(&components.AbilityComponent{
-						Ability: ability.Ability{
-							Energy_cost: int(element.(primitive.M)["ability"].(primitive.M)["energy_cost"].(int32)),
-							Effects:     []interfaces.IEffect{},
-						},
-					})
-				} else {
-					chrctr.AddComponent(&components.AbilityComponent{})
-				}
-			case "InventoryComponent":
-				chrctr.AddComponent(&components.InventoryComponent{})
-			}
-		}
-		chrctr.AddComponent(&components.EffectsComponent{})
-		//REMOVE!!!!
-		chrctr.AddComponent(&components.InventoryComponent{Slots: 6})
-
-		fireball := &ability.Ability{
-			Energy_cost: 15,
-			Effects: []interfaces.IEffect{
-				&effect.MagicalDamageEffect{
-					Source: chrctr,
-					Damage: 15,
-				},
-				&effect.PeriodicEffect{
-					Source:   chrctr,
-					Damage:   3,
-					Duration: 15,
-					Period:   3,
-				},
-			},
-		}
-		chrctr.GetComponent("AbilityComponent").(*components.AbilityComponent).Ability = *fireball
+		chrctr := parseCharacter(rawChrctr)
 		characters = append(characters, chrctr)
 	}
 
@@ -132,4 +74,83 @@ func (d Database) UpdateCharacter(c *entity.Entity) bool {
 	log.Printf("Character updated\n")
 
 	return true
+}
+
+/* Manually map fields to the character */
+func parseCharacter(raw primitive.M) *entity.Entity {
+	chrctr := entity.New()
+	chrctr.ID = raw["_id"].(primitive.ObjectID)
+	for key, element := range raw["components"].(primitive.M) {
+		// To benefit from built-in parses, primitive.M component is converted
+		// to bson and later converted into struct of the proper component type
+		bsonElement, _ := bson.Marshal(element)
+
+		switch key {
+		case "AttackComponent":
+			var comp components.AttackComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "HealthComponent":
+			var comp components.HealthComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "PlayerComponent":
+			var comp components.PlayerComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "NameComponent":
+			var comp components.NameComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "AbilityComponent":
+			if element.(primitive.M)["ability"] != nil {
+				var comp components.AbilityComponent
+				bson.Unmarshal(bsonElement, &comp)
+				chrctr.AddComponent(&comp)
+			} else {
+				chrctr.AddComponent(&components.AbilityComponent{})
+			}
+		case "InventoryComponent":
+			var comp components.InventoryComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+			log.Println(bsonElement)
+			/* Parse items from the inventory */
+			for _, itm := range element.(primitive.M)["items"].(primitive.A) {
+				itmBson, _ := bson.Marshal(itm)
+				// Switch to item's type
+				switch itm.(primitive.M)["baseitem"].(primitive.M)["type"].(string) {
+				case string(items.MELEE):
+					var itm items.Weapon
+					bson.Unmarshal(itmBson, &itm)
+					comp.AddItems(itm)
+				}
+			}
+		}
+	}
+	chrctr.AddComponent(&components.EffectsComponent{})
+
+	fireball := &combat.Ability{
+		Energy_cost: 15,
+		Effects: []interfaces.IEffect{
+			&effect.MagicalDamageEffect{
+				BaseEffect: effect.BaseEffect{
+					Type: "MagicalDamageEffect",
+				},
+				Source: chrctr,
+				Damage: 15,
+			},
+			&effect.PeriodicEffect{
+				BaseEffect: effect.BaseEffect{
+					Type: "PeriodicEffect",
+				},
+				Source:   chrctr,
+				Damage:   3,
+				Duration: 15,
+				Period:   3,
+			},
+		},
+	}
+	chrctr.GetComponent("AbilityComponent").(*components.AbilityComponent).Ability = *fireball
+	return chrctr
 }

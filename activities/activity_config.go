@@ -9,7 +9,7 @@ const (
 )
 
 type ActivityConfig struct {
-	ActivityType   ActivityType
+	Type           ActivityType
 	ActivityChance float64
 	SpawnChances   map[int]float64
 }

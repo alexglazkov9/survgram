@@ -1,0 +1,117 @@
+[
+    {
+        "id": 1,
+        "name": "Wimborne",
+        "destinations": [2, 3, 4, 5, 8]
+    },
+    {
+        "id": 2,
+        "name": "The Collapsing Cavern",
+        "destinations": [1]
+    },
+    {
+        "id": 3,
+        "name": "Whispering Valley",
+        "destinations": [1, 10]
+    },
+    {
+        "id": 4,
+        "name": "Old Forest",
+        "destinations": [1, 5, 8, 15]
+    },
+    {
+        "id": 5,
+        "name": "Buxbourg's Pier",
+        "destinations": [1, 4, 6]
+    },
+    {
+        "id": 6,
+        "name": "Buxbourg Lake",
+        "destinations": [5, 7]
+    },
+    {
+        "id": 7,
+        "name": "Neverharbor",
+        "destinations": [6]
+    },
+    {
+        "id": 8,
+        "name": "Stokefall's Pier",
+        "destinations": [1, 4, 9]
+    },
+    {
+        "id": 9,
+        "name": "Stokefall Falls",
+        "destinations": [10, 19]
+    },
+    {
+        "id": 10,
+        "name": "Whimsical Grasslands",
+        "destinations": [3, 9, 11]
+    },
+    {
+        "id": 11,
+        "name": "Lilypad Abyss",
+        "destinations": [10, 12]
+    },
+    {
+        "id": 12,
+        "name": "The Serpent Swamp",
+        "destinations": [11, 13]
+    },
+    {
+        "id": 13,
+        "name": "Alnora Caverns",
+        "destinations": [12]
+    },
+    {
+        "id": 14,
+        "name": "Rosewind",
+        "destinations": [15, 19]
+    },
+    {
+        "id": 15,
+        "name": "The Oasis of Gardens",
+        "destinations": [14, 16, 22]
+    },
+    {
+        "id": 16,
+        "name": "The Shimmering Aqueduct",
+        "destinations": [15, 17]
+    },
+    {
+        "id": 17,
+        "name": "The Quivering Fields",
+        "destinations": [16, 18]
+    },
+    {
+        "id": 18,
+        "name": "Northville",
+        "destinations": [17]
+    },
+    {
+        "id": 19,
+        "name": "The Thunderstorm Canyon",
+        "destinations": [9, 20]
+    },
+    {
+        "id": 20,
+        "name": "The Sharp-Peaked Mountains",
+        "destinations": [19, 21]
+    },
+    {
+        "id": 21,
+        "name": "The Grave Hollow",
+        "destinations": [20]
+    },
+    {
+        "id": 22,
+        "name": "The Voiceless Savanna",
+        "destinations": [15, 23]
+    },
+    {
+        "id": 23,
+        "name": "Carloy Cavern",
+        "destinations": [22]
+    }
+]
