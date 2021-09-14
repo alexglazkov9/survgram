@@ -3,7 +3,6 @@ package items
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"sync"
 )
 
@@ -27,7 +26,6 @@ func GetInstance() *ItemCollection {
 		for _, itm := range itms.([]interface{}) {
 			switch itm.(map[string]interface{})["type"].(string) {
 			case string(MELEE):
-				log.Println(itm.(map[string]interface{})["name"].(string))
 				item_struct = &Weapon{
 					BaseItem: BaseItem{
 						ID:     int(itm.(map[string]interface{})["item_id"].(float64)),
@@ -43,10 +41,19 @@ func GetInstance() *ItemCollection {
 					Agility:         int(itm.(map[string]interface{})["agi"].(float64)),
 					MinLvlReq:       int(itm.(map[string]interface{})["min_lvl_req"].(float64)),
 				}
+			case string(RESOURCE):
+				item_struct = &Weapon{
+					BaseItem: BaseItem{
+						ID:     int(itm.(map[string]interface{})["id"].(float64)),
+						Name:   itm.(map[string]interface{})["name"].(string),
+						Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
+						Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
+						Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
+					},
+				}
 			}
 			instance.items[item_struct.GetID()] = item_struct
 		}
-		//log.Println(instance.items)
 	})
 
 	return instance

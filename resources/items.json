@@ -1,5 +1,26 @@
 [
     {
+        "id":1,
+        "name": "Birch Logs",
+        "type":   "resource",
+        "tier":  1,
+        "rarity": "Common"
+    },
+    {
+        "id":2,
+        "name": "Pine Logs",
+        "type":   "resource",
+        "tier":  1,
+        "rarity": "Common"
+    },
+    {
+        "id":3,
+        "name": "Oak Logs",
+        "type":   "resource",
+        "tier":  1,
+        "rarity": "Common"
+    },
+    {
         "name": "Rusty Sword",
         "type":"melee",
         "damage": 2,
@@ -16,7 +37,7 @@
         "crit_chance": "",
         "dodge_chance": "",
         "min_lvl_req": 1,
-        "item_id": 1
+        "item_id": 10
     },
     {
         "name": "Golden Sword",
@@ -35,6 +56,6 @@
         "crit_chance": "",
         "dodge_chance": "",
         "min_lvl_req": 1,
-        "item_id": 2
+        "item_id": 11
     }
 ]

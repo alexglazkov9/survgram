@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "components": {
+            "AttackComponent": {
+                "AttackDamage": 7
+            },
+            "HealthComponent": {
+                "MaxHealthPoints": 75,
+                "HealthPoints": 75
+            },
+            "NameComponent": {
+                "Name": "Kuchuk"
+            }
+        }
+    },
+    {
+        "id": 2,
+        "components": {
+            "AttackComponent": {
+                "AttackDamage": 5
+            },
+            "HealthComponent": {
+                "MaxHealthPoints": 30,
+                "HealthPoints": 30
+            },
+            "NameComponent": {
+                "Name": "Mushuq"
+            }
+        }
+    },
+    {
+        "id": 3,
+        "components": {
+            "AttackComponent": {
+                "AttackDamage": 1
+            },
+            "HealthComponent": {
+                "MaxHealthPoints": 50,
+                "HealthPoints": 50
+            },
+            "NameComponent": {
+                "Name": "Sichqon"
+            }
+        }
+    }
+]

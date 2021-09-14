@@ -44,3 +44,8 @@ func (ac *AttackComponent) GetAttackComponent() *AttackComponent {
 func (ac AttackComponent) IsReadyToAttack() bool {
 	return ac.nextAttackTimer >= ATTACK_SPEED
 }
+
+func (ac *AttackComponent) Clone() entity.IComponent {
+	copy := *ac
+	return &copy
+}

@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"sync"
 )
+
+var once sync.Once
 
 /* Locations - provides access to all locations */
 type Locations struct {
@@ -15,10 +18,14 @@ type Locations struct {
 	locations map[int]*Location
 }
 
-func NewLocations() *Locations {
-	var instance = &Locations{}
-	instance.locations = fetchAllLocations()
-	log.Printf("Locations fetched from the database. Count: %d\n", len(instance.locations))
+var instance *Locations
+
+func GetLocations() *Locations {
+	once.Do(func() {
+		instance = &Locations{}
+		instance.locations = fetchAllLocations()
+		log.Printf("Locations fetched from the database. Count: %d\n", len(instance.locations))
+	})
 
 	return instance
 }
@@ -54,14 +61,11 @@ func fetchAllLocations() map[int]*Location {
 	_ = json.Unmarshal([]byte(file), &locs)
 
 	locations := make(map[int]*Location, len(locs.([]interface{})))
+
 	/* Fetch all locations and create a map */
 	for _, loc := range locs.([]interface{}) {
 		loc_id := int(loc.(map[string]interface{})["id"].(float64))
-		loc_name := loc.(map[string]interface{})["name"].(string)
-		locations[loc_id] = NewLocation(
-			loc_id,
-			loc_name,
-		)
+		locations[loc_id] = parseLocation(loc)
 	}
 
 	/* Assign all destinations */
@@ -70,7 +74,6 @@ func fetchAllLocations() map[int]*Location {
 		loc_id := int(loc.(map[string]interface{})["id"].(float64))
 		destinations := loc.(map[string]interface{})["destinations"].([]interface{})
 
-		locations[loc_id].Destinations = make([]*Location, len(destinations))
 		//Loop over destination ids
 		for _, dest := range destinations {
 			dest_id := int(dest.(float64))
@@ -80,4 +83,19 @@ func fetchAllLocations() map[int]*Location {
 	}
 
 	return locations
+}
+
+func parseLocation(raw interface{}) *Location {
+	var loc Location
+	jsonElement, _ := json.Marshal(raw)
+	json.Unmarshal(jsonElement, &loc)
+
+	for _, config := range raw.(map[string]interface{})["possibleactivities"].([]interface{}) {
+		var ac_cfg ActivityConfig
+		jsonElement, _ := json.Marshal(config)
+		json.Unmarshal(jsonElement, &ac_cfg)
+		log.Println(ac_cfg)
+	}
+
+	return &loc
 }

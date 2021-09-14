@@ -8,6 +8,7 @@ import (
 	"github.com/alexglazkov9/survgram/activities"
 	"github.com/alexglazkov9/survgram/database"
 	"github.com/alexglazkov9/survgram/entity/components"
+	"github.com/alexglazkov9/survgram/entity/enemies"
 	"github.com/alexglazkov9/survgram/items/loot"
 	"github.com/alexglazkov9/survgram/misc"
 
@@ -16,10 +17,9 @@ import (
 )
 
 type Game struct {
-	Locations        *activities.Locations
 	CharacterManager *database.CharacterManager
 	Expeditions      *activities.Expeditions
-	LootManager      *loot.LootManager
+	LootManager      *loot.LootDispenser
 	Bot              *tgbotapi.BotAPI
 	Engine           *gl.GameLoop
 }
@@ -28,8 +28,7 @@ type Game struct {
 func New(bot *tgbotapi.BotAPI) *Game {
 	instance := &Game{}
 	instance.Bot = bot
-	instance.Locations = activities.NewLocations()
-	instance.CharacterManager = database.NewCharacterManager(database.GetInstance(), instance.Locations.GetStartLocation())
+	instance.CharacterManager = database.NewCharacterManager(database.GetInstance(), activities.GetLocations().GetStartLocation())
 	instance.LootManager = loot.NewLootManager(*bot)
 	instance.Expeditions = &activities.Expeditions{LootManager: instance.LootManager, CharacterManager: instance.CharacterManager}
 	instance.Engine = gl.New(30, func(dt float64) {
@@ -37,7 +36,7 @@ func New(bot *tgbotapi.BotAPI) *Game {
 		instance.LootManager.Update(dt)
 	})
 	instance.Engine.Start()
-
+	enemies.GetInstance()
 	return instance
 }
 
@@ -52,35 +51,20 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 			chrctr := g.CharacterManager.GetCharacter(update.CallbackQuery.From.ID)
 			player_C := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
 
-			var buttons tgbotapi.InlineKeyboardMarkup
-
-			loc := g.Locations.GetLocation(player_C.CurrentLocation)
-
 			//Add destinations to the keyboard
-			var row []tgbotapi.InlineKeyboardButton
-			i := 0
+			loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
+			kb := misc.TGInlineKeyboard{Columns: 2}
 			for _, dest := range loc.Destinations {
 				cbData := misc.CallbackData{Action: misc.GO_TO, Payload: fmt.Sprint(dest.GetID())}
-				row = append(row, tgbotapi.NewInlineKeyboardButtonData(dest.Name, cbData.JSON()))
-				i++
-				//Change number of columns
-				if i == 2 {
-					buttons.InlineKeyboard = append(buttons.InlineKeyboard, row)
-					row = nil
-					i = 0
-				}
-			}
-			//Add the rest of the destinations
-			if len(row) > 0 {
-				buttons.InlineKeyboard = append(buttons.InlineKeyboard, row)
+				kb.AddButton(dest.Name, cbData.JSON())
 			}
 
 			textEdit := tgbotapi.NewEditMessageText(player_C.ChatID, update.CallbackQuery.Message.MessageID, "Go to ...")
-			markupEdit := tgbotapi.NewEditMessageReplyMarkup(player_C.ChatID, update.CallbackQuery.Message.MessageID, buttons)
+			markupEdit := tgbotapi.NewEditMessageReplyMarkup(player_C.ChatID, update.CallbackQuery.Message.MessageID, kb.Generate())
 			g.Bot.Send(textEdit)
 			g.Bot.Send(markupEdit)
 		case "do":
-			g.Expeditions.Add(activities.NewExpedition(g.Bot, chrctr, *activities.NewLocation(1, "Test location")))
+			g.Expeditions.Add(activities.NewExpedition(g.Bot, chrctr))
 		}
 
 		//Moves character to a new location
@@ -98,7 +82,7 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 			g.Bot.Send(msg)
 		case misc.SELECT_LOOT_ITEM, misc.PICK_UP_ITEM, misc.PICK_UP_ALL_ITEMS, misc.DISMISS_LOOT:
 			g.LootManager.HandleInput(callbackData, update.CallbackQuery.From.ID)
-		case misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE, misc.ACTIVITY_SELECTED:
+		case misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE, misc.ACTIVITY_SELECTED, misc.GATHERING_CORRECT, misc.GATHERING_INCORRECT:
 			g.Expeditions.HandleInput(update)
 		}
 	}

@@ -59,10 +59,13 @@ func (ef *PeriodicEffect) Apply(target *entity.Entity) bool {
 		ef.timePeriod -= ef.Period
 		target.GetComponent("HealthComponent").(*components.HealthComponent).ApplyDamage(ef.Damage)
 
-		log_C := target.GetComponent("LogComponent").(*components.LogComponent)
-		name_C := target.GetComponent("NameComponent").(*components.NameComponent)
-		source_name_C := ef.Source.GetComponent("NameComponent").(*components.NameComponent)
-		log_C.AddRecord(fmt.Sprintf("%s burned %s for %d damage", source_name_C.GetName(), name_C.GetName(), ef.Damage))
+		//TODO figure out whether to remove effects upon battle end or wait till they expire
+		log_C, ok := target.GetComponent("LogComponent").(*components.LogComponent)
+		if ok {
+			name_C := target.GetComponent("NameComponent").(*components.NameComponent)
+			source_name_C := ef.Source.GetComponent("NameComponent").(*components.NameComponent)
+			log_C.AddRecord(fmt.Sprintf("%s burned %s for %d damage", source_name_C.GetName(), name_C.GetName(), ef.Damage))
+		}
 	}
 	return false
 }

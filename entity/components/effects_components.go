@@ -1,6 +1,9 @@
 package components
 
-import "github.com/alexglazkov9/survgram/interfaces"
+import (
+	"github.com/alexglazkov9/survgram/entity"
+	"github.com/alexglazkov9/survgram/interfaces"
+)
 
 type EffectsComponent struct {
 	BaseComponent `bson:"-" json:"-"`
@@ -30,4 +33,9 @@ func (ec *EffectsComponent) RemoveEffect(effect interfaces.IEffect) {
 
 func (ec *EffectsComponent) ApplyEffect(effects []interfaces.IEffect) {
 	ec.Effects = append(ec.Effects, effects...)
+}
+
+func (ac *EffectsComponent) Clone() entity.IComponent {
+	copy := *ac
+	return &copy
 }

@@ -10,6 +10,7 @@ import (
 type IComponent interface {
 	Update(dt float64)
 	SetParent(e *Entity)
+	Clone() IComponent
 }
 
 /*
@@ -50,4 +51,13 @@ func (e *Entity) Update(dt float64) {
 	for _, c := range e.Components {
 		c.Update(dt)
 	}
+}
+
+func (e *Entity) Clone() *Entity {
+	copy := New()
+	for _, comp := range e.Components {
+		cmpnt := comp.Clone()
+		copy.AddComponent(cmpnt)
+	}
+	return copy
 }

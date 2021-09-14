@@ -14,16 +14,16 @@ const (
 	EXPIRATION_TIME float64 = 15
 )
 
-type LootManager struct {
+type LootDispenser struct {
 	Bot         tgbotapi.BotAPI
 	pendingLoot map[int]*Loot
 }
 
-func NewLootManager(bot tgbotapi.BotAPI) *LootManager {
-	return &LootManager{Bot: bot, pendingLoot: make(map[int]*Loot)}
+func NewLootManager(bot tgbotapi.BotAPI) *LootDispenser {
+	return &LootDispenser{Bot: bot, pendingLoot: make(map[int]*Loot)}
 }
 
-func (lm *LootManager) Update(dt float64) {
+func (lm *LootDispenser) Update(dt float64) {
 	for key, elem := range lm.pendingLoot {
 		//Remove already expired elements
 		if elem.IsExpired() {
@@ -38,7 +38,7 @@ func (lm *LootManager) Update(dt float64) {
 	}
 }
 
-func (lm *LootManager) Add(target *entity.Entity, items []items.IItem) {
+func (lm *LootDispenser) Add(target *entity.Entity, items []items.IItem) {
 	//Remove existing
 	player_C := target.GetComponent("PlayerComponent").(*components.PlayerComponent)
 	lm.Remove(player_C.TelegramID)
@@ -49,14 +49,14 @@ func (lm *LootManager) Add(target *entity.Entity, items []items.IItem) {
 	elem.SendLoot()
 }
 
-func (lm *LootManager) Remove(key int) {
+func (lm *LootDispenser) Remove(key int) {
 	if loot, ok := lm.pendingLoot[key]; ok {
 		loot.Expire()
 		delete(lm.pendingLoot, key)
 	}
 }
 
-func (lm *LootManager) HandleInput(cbData misc.CallbackData, telegramIdFrom int) {
+func (lm *LootDispenser) HandleInput(cbData misc.CallbackData, telegramIdFrom int) {
 	switch cbData.Action {
 	case misc.SELECT_LOOT_ITEM:
 		loot := lm.pendingLoot[telegramIdFrom]
@@ -70,7 +70,9 @@ func (lm *LootManager) HandleInput(cbData misc.CallbackData, telegramIdFrom int)
 	}
 }
 
-func (lm *LootManager) IsPlayerLooting(telegram_id int) bool {
+/* Returns true if player hasn't finished
+looting by picking all items or clicking DISMISS*/
+func (lm *LootDispenser) IsPlayerLooting(telegram_id int) bool {
 	if _, ok := lm.pendingLoot[telegram_id]; ok {
 		return true
 	}

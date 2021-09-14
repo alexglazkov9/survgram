@@ -15,10 +15,11 @@ const (
 	NECKLACE ItemType = "necklace"
 	RING     ItemType = "ring"
 
-	LOG   ItemType = "log"
-	ORE   ItemType = "ore"
-	BERRY ItemType = "berry"
-	FISH  ItemType = "fish"
+	RESOURCE ItemType = "resource"
+	LOG      ItemType = "log"
+	ORE      ItemType = "ore"
+	BERRY    ItemType = "berry"
+	FISH     ItemType = "fish"
 )
 
 type Rarity string
@@ -53,6 +54,10 @@ func (i BaseItem) GetType() ItemType {
 
 func (i BaseItem) GetID() int {
 	return i.ID
+}
+
+type Resource struct {
+	BaseItem
 }
 
 type Weapon struct {

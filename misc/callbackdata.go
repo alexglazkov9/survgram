@@ -16,6 +16,9 @@ const (
 	EXPEDITION_CONTINUE = "EC"
 	EXPEDITION_LEAVE    = "EL"
 	ACTIVITY_SELECTED   = "AS"
+	//Gathering Actions
+	GATHERING_CORRECT   = "GC"
+	GATHERING_INCORRECT = "GI"
 )
 
 //CallbackData - type used to wrap data for inline keyboard buttons
@@ -38,6 +41,7 @@ func (cb CallbackData) JSON() string {
 
 //FromJSON - converts JSON string to `CallbackData`
 func (cb *CallbackData) FromJSON(jsonStr string) {
+	log.Println(jsonStr)
 	err := json.Unmarshal([]byte(jsonStr), &cb)
 	if err != nil {
 		log.Println(err)

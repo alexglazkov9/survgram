@@ -114,7 +114,6 @@ func parseCharacter(raw primitive.M) *entity.Entity {
 			var comp components.InventoryComponent
 			bson.Unmarshal(bsonElement, &comp)
 			chrctr.AddComponent(&comp)
-			log.Println(bsonElement)
 			/* Parse items from the inventory */
 			for _, itm := range element.(primitive.M)["items"].(primitive.A) {
 				itmBson, _ := bson.Marshal(itm)

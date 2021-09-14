@@ -31,3 +31,8 @@ func (ac *AbilityComponent) CastAbility(allies []*entity.Entity, enemies []*enti
 func (ac *AbilityComponent) IsReadyToCast() bool {
 	return ac.energy >= ac.Ability.Energy_cost
 }
+
+func (ac *AbilityComponent) Clone() entity.IComponent {
+	copy := *ac
+	return &copy
+}

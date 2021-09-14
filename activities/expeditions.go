@@ -14,22 +14,25 @@ import (
 type Expeditions struct {
 	Expeditions []*Expedition
 
-	LootManager      *loot.LootManager
+	LootManager      *loot.LootDispenser
 	CharacterManager *charactermanager.CharacterManager
 }
 
+/* Updates all existing expeditions and monitors
+when expedition is complete to remove it */
 func (a *Expeditions) Update(dt float64) {
-	for i, journey := range a.Expeditions {
-		if journey.IsComplete {
-			a.CharacterManager.UpdateCharacter(journey.Host)
+	for i, expedition := range a.Expeditions {
+		if expedition.IsComplete {
+			a.CharacterManager.UpdateCharacter(expedition.Host)
 			a.Expeditions = append(a.Expeditions[:i], a.Expeditions[i+1:]...)
 			log.Printf("activities len: %d", len(a.Expeditions))
 			continue
 		}
-		journey.Update(dt)
+		expedition.Update(dt)
 	}
 }
 
+/* Adds expedition to the list of expeditions and starts it */
 func (a *Expeditions) Add(ac *Expedition) {
 	ac.LootManager = a.LootManager
 	a.Expeditions = append(a.Expeditions, ac)
@@ -38,19 +41,20 @@ func (a *Expeditions) Add(ac *Expedition) {
 }
 
 func (a *Expeditions) HandleInput(update tgbotapi.Update) {
-	log.Println("Handling input")
-	for _, act := range a.Expeditions {
-		if act.Host.GetComponent("PlayerComponent").(*components.PlayerComponent).TelegramID == update.CallbackQuery.From.ID {
+	for _, expdtn := range a.Expeditions {
+		if expdtn.Host.GetComponent("PlayerComponent").(*components.PlayerComponent).TelegramID == update.CallbackQuery.From.ID {
 			cbData := misc.CallbackData{}
 			cbData.FromJSON(update.CallbackQuery.Data)
 			switch cbData.Action {
 			case misc.EXPEDITION_CONTINUE:
-				act.IsReadyForNext = true
+				expdtn.IsReadyForNext = true
 			case misc.EXPEDITION_LEAVE:
-				act.IsComplete = true
+				expdtn.EndExpedition()
 			case misc.ACTIVITY_SELECTED:
 				i, _ := strconv.Atoi(cbData.Payload)
-				act.SetSelectedActivity(i)
+				expdtn.SetSelectedActivity(i)
+			case misc.GATHERING_CORRECT, misc.GATHERING_INCORRECT:
+				expdtn.HandleInput(update)
 			}
 			continue
 		}

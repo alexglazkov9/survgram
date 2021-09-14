@@ -21,17 +21,16 @@ type Expedition struct {
 	Host    *entity.Entity
 	Message *tgbotapi.Message
 
-	LootManager    *loot.LootManager
+	LootManager    *loot.LootDispenser
 	IsComplete     bool
 	IsReadyForNext bool
-	Location       Location
 
 	currentActivity IActivity
 	activityOptions []IActivity
 }
 
-func NewExpedition(bot *tgbotapi.BotAPI, char *entity.Entity, loc Location) *Expedition {
-	return &Expedition{Bot: bot, Host: char, IsReadyForNext: false, Location: loc}
+func NewExpedition(bot *tgbotapi.BotAPI, char *entity.Entity) *Expedition {
+	return &Expedition{Bot: bot, Host: char, IsReadyForNext: false}
 }
 
 func (a *Expedition) Update(dt float64) {
@@ -54,15 +53,17 @@ func (a *Expedition) SetSelectedActivity(i int) {
 	log.Printf("%d selected", i)
 	a.currentActivity = a.activityOptions[i]
 	a.activityOptions = nil
-	a.currentActivity.AddPlayer(a.Host)
+	a.currentActivity.AddPlayer(a.Host, a.Message)
 	a.currentActivity.Start()
 }
 
+//TODO move activity generation to this struct and only request ActivityConfigs from the location
 func (a *Expedition) next() {
 	a.IsReadyForNext = false
 	tgkb := misc.TGInlineKeyboard{Columns: 1}
 	for i := 0; i < ACTIVITIES_OPTIONS_NUMBER; i++ {
-		act := a.Location.GetActivity(a.Bot, a.LootManager)
+		act := GetLocations().GetLocation(a.Host.GetComponent("PlayerComponent").(*components.PlayerComponent).CurrentLocation).GetActivity(a.Bot, a.LootManager)
+		//act := a.Location.GetActivity(a.Bot, a.LootManager)
 		a.activityOptions = append(a.activityOptions, act)
 		cbData := misc.CallbackData{Action: misc.ACTIVITY_SELECTED, Payload: fmt.Sprint(i)}
 		tgkb.AddButton(act.GetDescription(), cbData.JSON())
@@ -86,4 +87,22 @@ func (a *Expedition) sendNextKeyboard() {
 	msg.ReplyMarkup = reply_markup
 	message, _ := a.Bot.Send(msg)
 	a.Message = &message
+}
+
+func (a *Expedition) HandleInput(update tgbotapi.Update) {
+	cbData := misc.CallbackData{}
+	cbData.FromJSON(update.CallbackQuery.Data)
+	switch cbData.Action {
+	case misc.GATHERING_CORRECT:
+		a.currentActivity.(*GatheringActivity).SendUpdate()
+	case misc.GATHERING_INCORRECT:
+		a.currentActivity.(*GatheringActivity).WrongActionPicked = true
+	}
+}
+
+/* Marks exspedition as complete and deletes the message from the chat */
+func (a *Expedition) EndExpedition() {
+	a.IsComplete = true
+	msg := tgbotapi.NewDeleteMessage(a.Message.Chat.ID, a.Message.MessageID)
+	a.Bot.Send(msg)
 }
