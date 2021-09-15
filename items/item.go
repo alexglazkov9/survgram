@@ -20,6 +20,8 @@ const (
 	ORE      ItemType = "ore"
 	BERRY    ItemType = "berry"
 	FISH     ItemType = "fish"
+
+	RECIPE ItemType = "recipe"
 )
 
 type Rarity string
@@ -34,6 +36,15 @@ type IItem interface {
 	GetID() int
 	GetName() string
 	GetType() ItemType
+}
+
+type ItemBundle struct {
+	ID  int
+	Qty int
+}
+
+func (ib ItemBundle) GetItem() IItem {
+	return GetItemCollection().GetItemById(ib.ID)
 }
 
 type BaseItem struct {
@@ -71,4 +82,11 @@ type Weapon struct {
 	Agility   int
 
 	MinLvlReq int
+}
+
+type Recipe struct {
+	BaseItem
+
+	Ingridients []ItemBundle
+	Output      int
 }

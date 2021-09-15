@@ -14,7 +14,7 @@ type ItemCollection struct {
 
 var instance *ItemCollection
 
-func GetInstance() *ItemCollection {
+func GetItemCollection() *ItemCollection {
 	once.Do(func() {
 		instance = &ItemCollection{}
 		file, _ := ioutil.ReadFile("./resources/items.json")
@@ -28,7 +28,7 @@ func GetInstance() *ItemCollection {
 			case string(MELEE):
 				item_struct = &Weapon{
 					BaseItem: BaseItem{
-						ID:     int(itm.(map[string]interface{})["item_id"].(float64)),
+						ID:     int(itm.(map[string]interface{})["id"].(float64)),
 						Name:   itm.(map[string]interface{})["name"].(string),
 						Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
 						Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
@@ -50,6 +50,22 @@ func GetInstance() *ItemCollection {
 						Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
 						Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
 					},
+				}
+			case string(RECIPE):
+				jsonElement, _ := json.Marshal(itm.(map[string]interface{})["ingridients"])
+				var ingrs []ItemBundle
+				json.Unmarshal(jsonElement, &ingrs)
+
+				item_struct = &Recipe{
+					BaseItem: BaseItem{
+						ID:     int(itm.(map[string]interface{})["id"].(float64)),
+						Name:   itm.(map[string]interface{})["name"].(string),
+						Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
+						Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
+						Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
+					},
+					Ingridients: ingrs,
+					Output:      int(itm.(map[string]interface{})["output"].(float64)),
 				}
 			}
 			instance.items[item_struct.GetID()] = item_struct

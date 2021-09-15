@@ -8,7 +8,7 @@ import (
 type NPCComponent struct {
 	BaseComponent `bson:"-" json:"-"`
 
-	PossibleLoot []items.IItem
+	PossibleLoot []items.ItemBundle
 }
 
 func (nc NPCComponent) Update(float64) {

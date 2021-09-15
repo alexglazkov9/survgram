@@ -2,6 +2,7 @@ package loot
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/entity/components"
@@ -38,7 +39,7 @@ func (lm *LootDispenser) Update(dt float64) {
 	}
 }
 
-func (lm *LootDispenser) Add(target *entity.Entity, items []items.IItem) {
+func (lm *LootDispenser) Add(target *entity.Entity, items []items.ItemBundle) {
 	//Remove existing
 	player_C := target.GetComponent("PlayerComponent").(*components.PlayerComponent)
 	lm.Remove(player_C.TelegramID)
@@ -60,7 +61,8 @@ func (lm *LootDispenser) HandleInput(cbData misc.CallbackData, telegramIdFrom in
 	switch cbData.Action {
 	case misc.SELECT_LOOT_ITEM:
 		loot := lm.pendingLoot[telegramIdFrom]
-		loot.SetSelectedItem(cbData.Payload)
+		id, _ := strconv.Atoi(cbData.Payload)
+		loot.SetSelectedItem(id)
 	case misc.PICK_UP_ITEM:
 		loot := lm.pendingLoot[telegramIdFrom]
 		loot.PickUp()

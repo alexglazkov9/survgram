@@ -32,7 +32,7 @@ type GatheringActivity struct {
 func NewGatheringActivity(bot *tgbotapi.BotAPI, lm *loot.LootDispenser, spawn_chances []SpawnChance) *GatheringActivity {
 	messages := make(map[int]tgbotapi.Message)
 	itm_id := spawn_chances[rand.Intn(len(spawn_chances))].Id
-	selected_resource := items.GetInstance().GetItemById(itm_id)
+	selected_resource := items.GetItemCollection().GetItemById(itm_id)
 	actvty := &GatheringActivity{Bot: bot, LootDispenser: lm, messages: messages, SelectedResource: selected_resource, currentState: PREACTIVITY}
 
 	return actvty
@@ -113,7 +113,7 @@ func (ga *GatheringActivity) endActivity() {
 			text = "Failed"
 		} else {
 			text = "Success"
-			ga.LootDispenser.Add(p, []items.IItem{ga.SelectedResource})
+			ga.LootDispenser.Add(p, []items.ItemBundle{{ga.SelectedResource.GetID(), 1}})
 		}
 		msg := tgbotapi.NewEditMessageText(player_C.ChatID, ga.messages[player_C.TelegramID].MessageID, text)
 

@@ -36,9 +36,9 @@ type Battle struct {
 func NewBattle(bot *tgbotapi.BotAPI, lm *loot.LootDispenser, spawn_chances []SpawnChance) *Battle {
 	enem := enemies.GetInstance().GetEnemyById(GetSpawneeId(spawn_chances))
 	enem.AddComponent(&components.EffectsComponent{})
-	possibleLoot := make([]items.IItem, 0)
-	possibleLoot = append(possibleLoot, items.GetInstance().GetItemById(1))
-	possibleLoot = append(possibleLoot, items.GetInstance().GetItemById(2))
+	possibleLoot := make([]items.ItemBundle, 0)
+	possibleLoot = append(possibleLoot, items.ItemBundle{ID: 1, Qty: 1})
+	possibleLoot = append(possibleLoot, items.ItemBundle{ID: 2, Qty: 1})
 	enem.AddComponent(&components.NPCComponent{
 		PossibleLoot: possibleLoot,
 	})

@@ -80,8 +80,8 @@ func (m *CharacterManager) newCharacter(telegramID int, chatID int64, name strin
 	})
 	chrctr.AddComponent(&components.AbilityComponent{})
 	chrctr.AddComponent(&components.InventoryComponent{
-		Items: make([]items.IItem, 0),
-		Slots: 3,
+		Items: make([]*items.ItemBundle, 0),
+		Slots: 6,
 	})
 
 	return chrctr

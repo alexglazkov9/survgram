@@ -7,7 +7,7 @@ import (
 )
 
 func Menu(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
-	items.GetInstance()
+	items.GetItemCollection()
 	if update.Message.Chat.IsPrivate() {
 		char := game.CharacterManager.GetCharacter(update.Message.From.ID)
 		if char != nil {

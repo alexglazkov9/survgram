@@ -14,20 +14,21 @@ import (
 type Loot struct {
 	Bot     tgbotapi.BotAPI
 	Target  *entity.Entity
-	Items   []items.IItem
+	Items   []items.ItemBundle
 	message *tgbotapi.Message
 
-	selectedItem   items.IItem
+	selectedItem   *items.ItemBundle
 	ExpirationTime float64
 
 	isExpired bool
 }
 
-func NewLoot(bot tgbotapi.BotAPI, target *entity.Entity, items []items.IItem) *Loot {
+func NewLoot(bot tgbotapi.BotAPI, target *entity.Entity, items []items.ItemBundle) *Loot {
 	return &Loot{
-		Bot:    bot,
-		Target: target,
-		Items:  items,
+		Bot:          bot,
+		Target:       target,
+		Items:        items,
+		selectedItem: nil,
 	}
 }
 
@@ -53,7 +54,8 @@ func (l *Loot) UpdateMessage() {
 
 	var text string
 	if l.selectedItem != nil {
-		text = fmt.Sprintf("Loot\n%s\n%s", l.selectedItem.GetName(), l.selectedItem.GetType())
+		itm := items.GetItemCollection().GetItemById(l.selectedItem.ID)
+		text = fmt.Sprintf("Loot\n%s\n%s", itm.GetName(), itm.GetType())
 	} else {
 		text = "Loot"
 	}
@@ -79,10 +81,10 @@ func (l *Loot) Expire() {
 	l.isExpired = true
 }
 
-func (l *Loot) SetSelectedItem(item_name string) {
-	for _, i := range l.Items {
-		if i.GetName() == item_name {
-			l.selectedItem = i
+func (l *Loot) SetSelectedItem(id int) {
+	for _, item := range l.Items {
+		if item.ID == id {
+			l.selectedItem = &item
 			l.UpdateMessage()
 			return
 		}
@@ -91,9 +93,9 @@ func (l *Loot) SetSelectedItem(item_name string) {
 }
 
 func (l *Loot) PickUp() {
-	l.Target.GetComponent("InventoryComponent").(*components.InventoryComponent).AddItems(l.selectedItem)
+	l.Target.GetComponent("InventoryComponent").(*components.InventoryComponent).AddItems(*l.selectedItem)
 	for i, item := range l.Items {
-		if item == l.selectedItem {
+		if item.ID == l.selectedItem.ID {
 			l.Items[i] = l.Items[len(l.Items)-1]
 			l.Items = l.Items[:len(l.Items)-1]
 			l.selectedItem = nil
@@ -113,15 +115,16 @@ func (l Loot) generateInlineKeyboard() tgbotapi.InlineKeyboardMarkup {
 
 	//Header
 	if l.selectedItem != nil {
-		cbData := misc.CallbackData{Action: misc.PICK_UP_ITEM, Payload: l.selectedItem.GetName()}
+		cbData := misc.CallbackData{Action: misc.PICK_UP_ITEM, Payload: fmt.Sprint(l.selectedItem.ID)}
 		tg_kb.AddHeaderButton("Pick Up Selected", cbData.JSON())
 	}
 	cbData := misc.CallbackData{Action: misc.PICK_UP_ALL_ITEMS}
 	tg_kb.AddHeaderButton("Pick Up All", cbData.JSON())
 	//Loot
-	for _, item := range l.Items {
-		cbData := misc.CallbackData{Action: misc.SELECT_LOOT_ITEM, Payload: item.GetName()}
-		tg_kb.AddButton(item.GetName(), cbData.JSON())
+	for _, item_id := range l.Items {
+		itm := items.GetItemCollection().GetItemById(item_id.ID)
+		cbData := misc.CallbackData{Action: misc.SELECT_LOOT_ITEM, Payload: fmt.Sprint(itm.GetID())}
+		tg_kb.AddButton(itm.GetName(), cbData.JSON())
 	}
 	//Dismiss
 	cbData = misc.CallbackData{Action: misc.DISMISS_LOOT}

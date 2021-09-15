@@ -21,6 +21,24 @@
         "rarity": "Common"
     },
     {
+        "id": 4,
+        "name": "Recipe: Rusty Sword",
+        "type": "recipe",
+        "tier": 1,
+        "rarity": "Common",
+        "ingridients": [
+            {
+                "id": 1,
+                "qty": 2
+            },
+            {
+                "id": 2,
+                "qty": 2
+            }
+        ],
+        "output": 10
+    },
+    {
         "name": "Rusty Sword",
         "type":"melee",
         "damage": 2,
@@ -37,7 +55,7 @@
         "crit_chance": "",
         "dodge_chance": "",
         "min_lvl_req": 1,
-        "item_id": 10
+        "id": 10
     },
     {
         "name": "Golden Sword",
@@ -56,6 +74,6 @@
         "crit_chance": "",
         "dodge_chance": "",
         "min_lvl_req": 1,
-        "item_id": 11
+        "id": 11
     }
 ]

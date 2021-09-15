@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/alexglazkov9/survgram/entity/components"
@@ -16,9 +17,12 @@ func Inventory(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
 		if char != nil {
 			tgkb := &misc.TGInlineKeyboard{Columns: 2}
 			inv_C := char.GetComponent("InventoryComponent").(*components.InventoryComponent)
-			for _, item := range inv_C.Items {
+			for _, item_bundle := range inv_C.GetItems() {
 				cb_data := misc.CallbackData{Action: "", Payload: ""}
-				tgkb.AddButton(item.GetName(), cb_data.JSON())
+				tgkb.AddButton(
+					fmt.Sprintf("%s (%d)", item_bundle.GetItem().GetName(), item_bundle.Qty),
+					cb_data.JSON(),
+				)
 			}
 			for i := len(inv_C.Items); i < inv_C.Slots; i++ {
 				cb_data := misc.CallbackData{Action: "", Payload: ""}

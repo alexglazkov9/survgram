@@ -9,6 +9,7 @@ import (
 	"github.com/alexglazkov9/survgram/database"
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/entity/enemies"
+	"github.com/alexglazkov9/survgram/items"
 	"github.com/alexglazkov9/survgram/items/loot"
 	"github.com/alexglazkov9/survgram/misc"
 
@@ -37,6 +38,7 @@ func New(bot *tgbotapi.BotAPI) *Game {
 	})
 	instance.Engine.Start()
 	enemies.GetInstance()
+	items.GetItemCollection()
 	return instance
 }
 
@@ -79,6 +81,8 @@ func (g Game) HandleInput(update tgbotapi.Update) {
 			}
 			player_C.CurrentLocation = objID
 			msg := tgbotapi.NewMessage(player_C.ChatID, "You have reached the new location")
+			replyMarkup := tgbotapi.NewReplyKeyboard(tgbotapi.NewKeyboardButtonRow(tgbotapi.NewKeyboardButton("⚡Start adventure"), tgbotapi.NewKeyboardButton("😐Character")))
+			msg.ReplyMarkup = replyMarkup
 			g.Bot.Send(msg)
 		case misc.SELECT_LOOT_ITEM, misc.PICK_UP_ITEM, misc.PICK_UP_ALL_ITEMS, misc.DISMISS_LOOT:
 			g.LootManager.HandleInput(callbackData, update.CallbackQuery.From.ID)

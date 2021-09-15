@@ -1,10 +1,15 @@
 package commands
 
-import (
-	"github.com/alexglazkov9/survgram/game"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-)
+// func Crafting(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
+// 	if update.Message.Chat.IsPrivate() {
+// 		char := game.CharacterManager.GetCharacter(update.Message.From.ID)
+// 		//TODO Figure out nil check for not registered users
+// 		if char != nil {
+// 			inv_C := char.GetComponent("InventoryComponent").(*components.InventoryComponent)
+// 			recipes := inv_C.GetItems(items.RECIPE)
+// 			for _, rec := range recipes {
 
-func Crafting(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
-
-}
+// 			}
+// 		}
+// 	}
+// }

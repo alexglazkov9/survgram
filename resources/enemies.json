@@ -11,6 +11,16 @@
             },
             "NameComponent": {
                 "Name": "Kuchuk"
+            },
+            "NPCComponent" : {
+                "Drops" : [
+                    {
+                        "id": 1,
+                        "drop_chance": 0.1,
+                        "qty_min": 1,
+                        "qty_max": 3
+                    }
+                ]
             }
         }
     },
@@ -26,6 +36,16 @@
             },
             "NameComponent": {
                 "Name": "Mushuq"
+            },
+            "NPCComponent" : {
+                "Drops" : [
+                    {
+                        "ID": 1,
+                        "drop_chance": 0.1,
+                        "qty_min": 1,
+                        "qty_max": 3
+                    }
+                ]
             }
         }
     },

@@ -113,18 +113,19 @@ func parseCharacter(raw primitive.M) *entity.Entity {
 		case "InventoryComponent":
 			var comp components.InventoryComponent
 			bson.Unmarshal(bsonElement, &comp)
+			comp.AddItems(items.ItemBundle{ID: 4, Qty: 1})
 			chrctr.AddComponent(&comp)
-			/* Parse items from the inventory */
-			for _, itm := range element.(primitive.M)["items"].(primitive.A) {
-				itmBson, _ := bson.Marshal(itm)
-				// Switch to item's type
-				switch itm.(primitive.M)["baseitem"].(primitive.M)["type"].(string) {
-				case string(items.MELEE):
-					var itm items.Weapon
-					bson.Unmarshal(itmBson, &itm)
-					comp.AddItems(itm)
-				}
-			}
+			// /* Parse items from the inventory */
+			// for _, itm := range element.(primitive.M)["items"].(primitive.A) {
+			// 	itmBson, _ := bson.Marshal(itm)
+			// 	// Switch to item's type
+			// 	switch itm.(primitive.M)["baseitem"].(primitive.M)["type"].(string) {
+			// 	case string(items.MELEE):
+			// 		var itm items.Weapon
+			// 		bson.Unmarshal(itmBson, &itm)
+			// 		comp.AddItems(itm)
+			// 	}
+			// }
 		}
 	}
 	chrctr.AddComponent(&components.EffectsComponent{})
