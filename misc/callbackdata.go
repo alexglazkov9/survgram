@@ -19,13 +19,15 @@ const (
 	//Gathering Actions
 	GATHERING_CORRECT   = "GC"
 	GATHERING_INCORRECT = "GI"
+	//Crafting table
+	CRAFTING_TABLE_RECIPE_SELECTED = "CTRS"
 )
 
 //CallbackData - type used to wrap data for inline keyboard buttons
 //Maximum length - 64b
 type CallbackData struct {
 	Action  string `json:"a"`
-	ID      int    `json:"id"`
+	ID      string `json:"id"`
 	Payload string `json:"p"`
 }
 

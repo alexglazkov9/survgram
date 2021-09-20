@@ -3,22 +3,24 @@
         "id": 1,
         "components": {
             "AttackComponent": {
-                "AttackDamage": 7
+                "AttackDamage": 1
             },
             "HealthComponent": {
-                "MaxHealthPoints": 75,
-                "HealthPoints": 75
+                "MaxHealthPoints": 30,
+                "HealthPoints": 30
             },
             "NameComponent": {
                 "Name": "Kuchuk"
             },
-            "NPCComponent" : {
-                "Drops" : [
+            "NPCComponent": {
+                "PossibleLoot": [
                     {
-                        "id": 1,
-                        "drop_chance": 0.1,
-                        "qty_min": 1,
-                        "qty_max": 3
+                        "possibleLoot": {
+                            "id": 1,
+                            "qty_min": 1,
+                            "qty_max": 3
+                        },
+                        "chance": 1
                     }
                 ]
             }
@@ -28,7 +30,7 @@
         "id": 2,
         "components": {
             "AttackComponent": {
-                "AttackDamage": 5
+                "AttackDamage": 1
             },
             "HealthComponent": {
                 "MaxHealthPoints": 30,
@@ -37,13 +39,15 @@
             "NameComponent": {
                 "Name": "Mushuq"
             },
-            "NPCComponent" : {
-                "Drops" : [
+            "NPCComponent": {
+                "PossibleLoot": [
                     {
-                        "ID": 1,
-                        "drop_chance": 0.1,
-                        "qty_min": 1,
-                        "qty_max": 3
+                        "possibleLoot": {
+                            "id": 1,
+                            "qty_min": 1,
+                            "qty_max": 3
+                        },
+                        "chance": 1
                     }
                 ]
             }
@@ -56,11 +60,23 @@
                 "AttackDamage": 1
             },
             "HealthComponent": {
-                "MaxHealthPoints": 50,
-                "HealthPoints": 50
+                "MaxHealthPoints": 30,
+                "HealthPoints": 30
             },
             "NameComponent": {
                 "Name": "Sichqon"
+            },
+            "NPCComponent": {
+                "PossibleLoot": [
+                    {
+                        "possibleLoot": {
+                            "id": 1,
+                            "qty_min": 1,
+                            "qty_max": 3
+                        },
+                        "chance": 1
+                    }
+                ]
             }
         }
     }

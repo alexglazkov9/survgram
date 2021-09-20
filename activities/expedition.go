@@ -1,7 +1,6 @@
 package activities
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/alexglazkov9/survgram/entity"
@@ -59,20 +58,20 @@ func (a *Expedition) SetSelectedActivity(i int) {
 
 //TODO move activity generation to this struct and only request ActivityConfigs from the location
 func (a *Expedition) next() {
-	a.IsReadyForNext = false
-	tgkb := misc.TGInlineKeyboard{Columns: 1}
-	for i := 0; i < ACTIVITIES_OPTIONS_NUMBER; i++ {
-		act := GetLocations().GetLocation(a.Host.GetComponent("PlayerComponent").(*components.PlayerComponent).CurrentLocation).GetActivity(a.Bot, a.LootManager)
-		//act := a.Location.GetActivity(a.Bot, a.LootManager)
-		a.activityOptions = append(a.activityOptions, act)
-		cbData := misc.CallbackData{Action: misc.ACTIVITY_SELECTED, Payload: fmt.Sprint(i)}
-		tgkb.AddButton(act.GetDescription(), cbData.JSON())
-	}
-	editMsg := tgbotapi.NewEditMessageText(a.Message.Chat.ID, a.Message.MessageID, resources.ACTIVITY_SELECT_TEXT)
-	editMarkup := tgbotapi.NewEditMessageReplyMarkup(a.Message.Chat.ID, a.Message.MessageID, tgkb.Generate())
+	// a.IsReadyForNext = false
+	// tgkb := misc.TGInlineKeyboard{Columns: 1}
+	// for i := 0; i < ACTIVITIES_OPTIONS_NUMBER; i++ {
+	// 	act := GetLocations().GetLocation(a.Host.GetComponent("PlayerComponent").(*components.PlayerComponent).CurrentLocation).GetActivity(a.Bot, a.LootManager)
+	// 	//act := a.Location.GetActivity(a.Bot, a.LootManager)
+	// 	a.activityOptions = append(a.activityOptions, act)
+	// 	cbData := misc.CallbackData{Action: misc.ACTIVITY_SELECTED, Payload: fmt.Sprint(i)}
+	// 	tgkb.AddButton(act.GetDescription(), cbData.JSON())
+	// }
+	// editMsg := tgbotapi.NewEditMessageText(a.Message.Chat.ID, a.Message.MessageID, resources.ACTIVITY_SELECT_TEXT)
+	// editMarkup := tgbotapi.NewEditMessageReplyMarkup(a.Message.Chat.ID, a.Message.MessageID, tgkb.Generate())
 
-	a.Bot.Send(editMsg)
-	a.Bot.Send(editMarkup)
+	// a.Bot.Send(editMsg)
+	// a.Bot.Send(editMarkup)
 }
 
 func (a *Expedition) sendNextKeyboard() {

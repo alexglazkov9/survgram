@@ -11,7 +11,7 @@ type TGInlineKeyboard struct {
 	Columns       int
 }
 
-func (tk TGInlineKeyboard) Generate() tgbotapi.InlineKeyboardMarkup {
+func (tk TGInlineKeyboard) Generate() *tgbotapi.InlineKeyboardMarkup {
 	kb_markup := tgbotapi.NewInlineKeyboardMarkup()
 	kb_markup.InlineKeyboard = make([][]tgbotapi.InlineKeyboardButton, 0)
 	var row []tgbotapi.InlineKeyboardButton
@@ -42,7 +42,7 @@ func (tk TGInlineKeyboard) Generate() tgbotapi.InlineKeyboardMarkup {
 		kb_markup.InlineKeyboard = append(kb_markup.InlineKeyboard, tk.footerButtons)
 	}
 
-	return kb_markup
+	return &kb_markup
 }
 
 //Specify number of columns for keyboard

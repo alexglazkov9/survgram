@@ -102,7 +102,7 @@ func (ga *GatheringActivity) generateReplyMarkup() tgbotapi.InlineKeyboardMarkup
 		}
 	}
 
-	return rm.Generate()
+	return *rm.Generate()
 }
 
 func (ga *GatheringActivity) endActivity() {

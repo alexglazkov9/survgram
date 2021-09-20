@@ -16,7 +16,7 @@ import (
 )
 
 //GetAllCharacters - Returns array of all characters from database
-func (d Database) GetAllCharacters() []*entity.Entity {
+func (d Database) GetAllCharacters(manager *entity.Manager) []*entity.Entity {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -35,7 +35,7 @@ func (d Database) GetAllCharacters() []*entity.Entity {
 			log.Fatal(err)
 		}
 
-		chrctr := parseCharacter(rawChrctr)
+		chrctr := parseCharacter(rawChrctr, manager)
 		characters = append(characters, chrctr)
 	}
 
@@ -77,9 +77,9 @@ func (d Database) UpdateCharacter(c *entity.Entity) bool {
 }
 
 /* Manually map fields to the character */
-func parseCharacter(raw primitive.M) *entity.Entity {
-	chrctr := entity.New()
-	chrctr.ID = raw["_id"].(primitive.ObjectID)
+func parseCharacter(raw primitive.M, manager *entity.Manager) *entity.Entity {
+	chrctr := manager.NewEntity()
+	chrctr.MongoID = raw["_id"].(primitive.ObjectID)
 	for key, element := range raw["components"].(primitive.M) {
 		// To benefit from built-in parses, primitive.M component is converted
 		// to bson and later converted into struct of the proper component type

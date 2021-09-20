@@ -62,7 +62,7 @@ func (l *Loot) UpdateMessage() {
 
 	player_C := l.Target.GetComponent("PlayerComponent").(*components.PlayerComponent)
 	editText := tgbotapi.NewEditMessageText(player_C.ChatID, l.message.MessageID, text)
-	editReplyMarkup := tgbotapi.NewEditMessageReplyMarkup(player_C.ChatID, l.message.MessageID, l.generateInlineKeyboard())
+	editReplyMarkup := tgbotapi.NewEditMessageReplyMarkup(player_C.ChatID, l.message.MessageID, *l.generateInlineKeyboard())
 
 	_, err := l.Bot.Send(editText)
 	if err != nil {
@@ -110,7 +110,7 @@ func (l Loot) IsExpired() bool {
 	return l.isExpired
 }
 
-func (l Loot) generateInlineKeyboard() tgbotapi.InlineKeyboardMarkup {
+func (l Loot) generateInlineKeyboard() *tgbotapi.InlineKeyboardMarkup {
 	tg_kb := misc.TGInlineKeyboard{}
 
 	//Header

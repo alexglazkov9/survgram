@@ -3,18 +3,12 @@ package activities
 import (
 	"log"
 	"math/rand"
-)
 
-type ActivityType string
-
-const (
-	FISHING   ActivityType = "fishing"
-	BATTLE    ActivityType = "battle"
-	GATHERING ActivityType = "gathering"
+	"github.com/alexglazkov9/survgram/entity/components"
 )
 
 type ActivityConfig struct {
-	Type           ActivityType
+	Type           components.ActivityType
 	ActivityChance float64
 	SpawnChances   []SpawnChance
 }

@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/alexglazkov9/survgram/bot"
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/game"
 	"github.com/alexglazkov9/survgram/misc"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func Inventory(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
+func Inventory(update tgbotapi.Update, game game.Game) {
 	if update.Message.Chat.IsPrivate() {
 		char := game.CharacterManager.GetCharacter(update.Message.From.ID)
 		//TODO Figure out nil check for not registered users
@@ -31,7 +32,7 @@ func Inventory(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
 
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Inventory")
 			msg.ReplyMarkup = tgkb.Generate()
-			_, err := bot.Send(msg)
+			_, err := bot.GetInstance().GetBot().Send(msg)
 			if err != nil {
 				log.Println(err)
 			}
@@ -40,6 +41,6 @@ func Inventory(bot *tgbotapi.BotAPI, update tgbotapi.Update, game game.Game) {
 
 	} else {
 		// Delete message if it is sent somwhere other than private chat
-		bot.DeleteMessage(tgbotapi.DeleteMessageConfig{MessageID: update.Message.MessageID, ChatID: update.Message.Chat.ID})
+		bot.GetInstance().GetBot().DeleteMessage(tgbotapi.DeleteMessageConfig{MessageID: update.Message.MessageID, ChatID: update.Message.Chat.ID})
 	}
 }
