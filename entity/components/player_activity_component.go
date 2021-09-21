@@ -1,14 +1,7 @@
 package components
 
-import "github.com/alexglazkov9/survgram/entity"
-
 type PlayerActivityComponent struct {
-	BaseComponent
+	BaseComponent `bson:"-" json:"-"`
 
 	Type string
-}
-
-func (pac *PlayerActivityComponent) Clone() entity.IComponent {
-	copy := *pac
-	return &copy
 }

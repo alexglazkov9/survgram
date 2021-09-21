@@ -29,7 +29,7 @@ func NewHideoutSystem(manager *entity.Manager, characterHelper interfaces.Charac
 
 func (hs *HideoutSystem) Update(dt float64) {
 	for {
-		u := bot.GetInstance().PopUpdate(bot.MENU_OPTION_HIDEOUT, bot.HIDEOUT_CRAFTING_TABLE, bot.HIDEOUT_BACK_TO_MAIN_MENU, misc.CRAFTING_TABLE_RECIPE_SELECTED)
+		u := bot.GetInstance().PopUpdate(bot.HIDEOUT_CRAFTING_TABLE, misc.CRAFTING_TABLE_RECIPE_SELECTED)
 		if u == nil {
 			break
 		}
@@ -50,21 +50,6 @@ func (hs *HideoutSystem) Update(dt float64) {
 		}
 
 		switch option {
-		case bot.MENU_OPTION_HIDEOUT:
-			player_C := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
-
-			msg := tgbotapi.NewMessage(player_C.ChatID, resources.HIDEOUT_WELCOME_TEXT)
-			kb := tgbotapi.NewReplyKeyboard(
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton(bot.HIDEOUT_STORAGE),
-					tgbotapi.NewKeyboardButton(bot.HIDEOUT_CRAFTING_TABLE),
-				),
-				tgbotapi.NewKeyboardButtonRow(
-					tgbotapi.NewKeyboardButton(bot.HIDEOUT_BACK_TO_MAIN_MENU),
-				),
-			)
-			msg.ReplyMarkup = kb
-			bot.GetInstance().GetBot().Send(msg)
 		case bot.HIDEOUT_CRAFTING_TABLE, misc.CRAFTING_TABLE_RECIPE_SELECTED:
 			player_C := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
 			inventory_C := chrctr.GetComponent("InventoryComponent").(*components.InventoryComponent)
@@ -101,9 +86,6 @@ func (hs *HideoutSystem) Update(dt float64) {
 				msg.ReplyMarkup = kb.Generate()
 				bot.GetInstance().GetBot().Send(msg)
 			}
-
-		case bot.HIDEOUT_BACK_TO_MAIN_MENU:
-			SendMainMenuKeyboard(chrctr)
 		}
 	}
 }

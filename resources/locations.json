@@ -2,7 +2,6 @@
     {
         "id": 1,
         "name": "Wimborne",
-        "type": "city",
         "destinations": [
             2,
             3,

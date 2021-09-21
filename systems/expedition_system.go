@@ -36,20 +36,13 @@ func NewExpeditionSystem(manager *entity.Manager, characterHelper interfaces.Cha
 func (es *ExpeditionSystem) Update(dt float64) {
 	/*Handle input*/
 	for {
-		u := bot.GetInstance().PopUpdate(misc.ACTIVITY_SELECTED, misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE, bot.EXPEDITION_BACK_TO_MAIN_MENU)
+		u := bot.GetInstance().PopUpdate(misc.ACTIVITY_SELECTED, misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE)
 		if u == nil {
 			break
 		}
 		cbData := misc.CallbackData{}
 		if u.CallbackQuery != nil {
 			cbData.FromJSON(u.CallbackQuery.Data)
-		} else {
-			switch u.Message.Text {
-			case bot.EXPEDITION_BACK_TO_MAIN_MENU:
-				chrctr := es.characterHelper.GetCharacter(u.Message.From.ID)
-				SendMainMenuKeyboard(chrctr)
-				continue
-			}
 		}
 
 		id, _ := strconv.Atoi(cbData.ID)
@@ -167,7 +160,7 @@ func (es *ExpeditionSystem) Update(dt float64) {
 
 /*Helper function that returns id of the mob to spawn from the list of probabilities*/
 func GetSpawneeId(spawn_chances []activities.SpawnChance) int {
-	cmltv := make([]float64, len(spawn_chances))
+	cmltv := make([]float64, len(spawn_chances)) //cumulative
 	for i, sc := range spawn_chances {
 		if i == 0 {
 			cmltv[i] = sc.Chance

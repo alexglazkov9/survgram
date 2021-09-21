@@ -8,7 +8,7 @@ type MenuComponent struct {
 	Menus Stack
 }
 
-type Stack []tgbotapi.ReplyKeyboardMarkup
+type Stack []tgbotapi.Chattable
 
 // IsEmpty: check if stack is empty
 func (s *Stack) IsEmpty() bool {
@@ -16,18 +16,36 @@ func (s *Stack) IsEmpty() bool {
 }
 
 // Push a new value onto the stack
-func (s *Stack) Push(kb tgbotapi.ReplyKeyboardMarkup) {
+func (s *Stack) Push(kb tgbotapi.Chattable) {
 	*s = append(*s, kb) // Simply append the new value to the end of the stack
 }
 
 // Remove and return top element of stack. Return false if stack is empty.
-func (s *Stack) Pop() (tgbotapi.ReplyKeyboardMarkup, bool) {
+func (s *Stack) Pop() (tgbotapi.Chattable, bool) {
 	if s.IsEmpty() {
-		return tgbotapi.ReplyKeyboardMarkup{}, false
+		return tgbotapi.MessageConfig{}, false
 	} else {
 		index := len(*s) - 1   // Get the index of the top most element.
 		element := (*s)[index] // Index into the slice and obtain the element.
 		*s = (*s)[:index]      // Remove it from the stack by slicing it off.
 		return element, true
+	}
+}
+
+// Return top element of stack. Return false if stack is empty.
+func (s *Stack) Top() (tgbotapi.Chattable, bool) {
+	if s.IsEmpty() {
+		return tgbotapi.MessageConfig{}, false
+	} else {
+		index := len(*s) - 1   // Get the index of the top most element.
+		element := (*s)[index] // Index into the slice and obtain the element.
+		return element, true
+	}
+}
+
+// Return top element of stack. Return false if stack is empty.
+func (s *Stack) Clear() {
+	for !s.IsEmpty() {
+		s.Pop()
 	}
 }

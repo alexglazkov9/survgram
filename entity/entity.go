@@ -15,19 +15,10 @@ type IComponent interface {
 	Use entity.New() to create new entity
 */
 type Entity struct {
-	MongoID    primitive.ObjectID `bson:"_id"`
-	ID         int
-	Components map[string]IComponent `bson:"components"`
+	MongoID primitive.ObjectID `bson:"_id"`
+	ID      int
 
 	manager *Manager
-}
-
-//TODO Remove this function because manager creates entities
-func New() *Entity {
-	return &Entity{
-		ID:         1,
-		Components: make(map[string]IComponent),
-	}
 }
 
 func (entity Entity) GetID() int {

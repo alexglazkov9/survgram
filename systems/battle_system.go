@@ -1,4 +1,4 @@
-package activities
+package systems
 
 import (
 	"fmt"
@@ -19,20 +19,20 @@ const (
 
 const UPDATE_PERIOD float64 = 2
 
-type Battle struct {
+type BattleSystem struct {
 	Bot       *tgbotapi.BotAPI
 	currentDt float64
 
 	manager *entity.Manager
 }
 
-func NewBattle(manager *entity.Manager) *Battle {
-	battle := &Battle{manager: manager}
+func NewBattleSystem(manager *entity.Manager) *BattleSystem {
+	battle := &BattleSystem{manager: manager}
 
 	return battle
 }
 
-func (b *Battle) Update(dt float64) {
+func (b *BattleSystem) Update(dt float64) {
 	b.currentDt = dt
 
 	for _, entity := range b.manager.QueryEntities("SharedBattleComponent") {
@@ -65,7 +65,7 @@ func (b *Battle) Update(dt float64) {
 // }
 
 /* Handles attacks and abilities from all entities in the battle */
-func (b *Battle) handleAttacks(entity *entity.Entity, battle_C *components.SharedBattleComponent) {
+func (b *BattleSystem) handleAttacks(entity *entity.Entity, battle_C *components.SharedBattleComponent) {
 	attack_C := entity.GetComponent("AttackComponent").(*components.AttackComponent)
 	ability_C, ability_C_ok := entity.GetComponent("AbilityComponent").(*components.AbilityComponent)
 	name_C := entity.GetComponent("NameComponent").(*components.NameComponent)
@@ -115,7 +115,7 @@ func (b *Battle) handleAttacks(entity *entity.Entity, battle_C *components.Share
 }
 
 /* Updates the message for all players with battlelog info */
-func (b *Battle) handleMessageUpdate(e *entity.Entity) {
+func (b *BattleSystem) handleMessageUpdate(e *entity.Entity) {
 	battle_C := e.GetComponent("SharedBattleComponent").(*components.SharedBattleComponent)
 	battle_C.NextUpdateTimer += b.currentDt
 	if battle_C.NextUpdateTimer >= UPDATE_PERIOD {

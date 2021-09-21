@@ -9,9 +9,8 @@ import (
 	"github.com/alexglazkov9/survgram/items"
 )
 
-// CharacterManager - Singleton Character CharacterManager that provides characters
+// CharacterManager - CharacterManager that provides characters
 type CharacterManager struct {
-	//characters    []*entity.Entity
 	startLocation interfaces.ILocation
 	manager       *entity.Manager
 
