@@ -64,9 +64,24 @@ func (d Database) UpdateCharacter(c *entity.Entity) bool {
 	defer cancel()
 
 	name_C := c.GetComponent("NameComponent").(*components.NameComponent)
+	health_C := c.GetComponent("HealthComponent").(*components.HealthComponent)
+	player_C := c.GetComponent("PlayerComponent").(*components.PlayerComponent)
+	inventory_C := c.GetComponent("InventoryComponent").(*components.InventoryComponent)
+	attack_C := c.GetComponent("AttackComponent").(*components.AttackComponent)
+	ability_C := c.GetComponent("AbilityComponent").(*components.AbilityComponent)
+
+	var cmpnts map[string]entity.IComponent
+	cmpnts = make(map[string]entity.IComponent)
+	cmpnts["NameComponent"] = name_C
+	cmpnts["HealthComponent"] = health_C
+	cmpnts["PlayerComponent"] = player_C
+	cmpnts["InventoryComponent"] = inventory_C
+	cmpnts["AttackComponent"] = attack_C
+	cmpnts["AbilityComponent"] = ability_C
+
 	log.Println("Updateing character: " + name_C.Name)
-	_, err := d.client.Database("survgram_dev").Collection("characters").UpdateByID(ctx, c.ID, bson.D{
-		{"$set", c},
+	_, err := d.client.Database("survgram_dev").Collection("characters").UpdateByID(ctx, c.MongoID, bson.D{
+		{"$set", bson.D{{"components", cmpnts}}},
 	})
 	if err != nil {
 		log.Fatal(err)

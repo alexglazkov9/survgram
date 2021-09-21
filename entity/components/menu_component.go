@@ -8,6 +8,11 @@ type MenuComponent struct {
 	Menus Stack
 }
 
+type Menu struct {
+	Msg         tgbotapi.Chattable
+	MenuOptions map[string]interface{}
+}
+
 type Stack []tgbotapi.Chattable
 
 // IsEmpty: check if stack is empty

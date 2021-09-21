@@ -1,8 +1,6 @@
 package components
 
 import (
-	"log"
-
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/items"
 )
@@ -24,15 +22,12 @@ func (ic *InventoryComponent) AddItems(itms ...items.ItemBundle) {
 		for _, itm := range ic.Items {
 			if itm.ID == newItm.ID {
 				itm.Qty += newItm.Qty
-				log.Println("exists")
-				log.Println(itm.Qty)
 				itmExists = true
 				break
 			}
 		}
 		if !itmExists {
 			ic.Items = append(ic.Items, &items.ItemBundle{ID: newItm.ID, Qty: newItm.Qty})
-			log.Println("new")
 		}
 	}
 }

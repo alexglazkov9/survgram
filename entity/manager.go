@@ -98,4 +98,10 @@ func (manager *Manager) DisposeEntity(entity *Entity) {
 		}
 	}
 	delete(manager.entitiesByID, EntityID(entity.ID))
+	for i, e := range manager.entities {
+		if e.ID == entity.ID {
+			manager.entities = append(manager.entities[:i], manager.entities[i+1:]...)
+			break
+		}
+	}
 }

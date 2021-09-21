@@ -2,7 +2,6 @@ package systems
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/alexglazkov9/survgram/activities"
@@ -55,6 +54,16 @@ func GetMainMenu(e *entity.Entity) tgbotapi.MessageConfig {
 	))
 	msg := tgbotapi.NewMessage(player_C.ChatID, txt)
 	msg.ReplyMarkup = kb
+	menu := components.Menu{
+		Msg:         msg,
+		MenuOptions: make(map[string]interface{}),
+	}
+	menu.MenuOptions[bot.MENU_OPTION_EXPEDITION] = GetExpeditionMenu(e)
+	menu.MenuOptions[bot.MENU_OPTION_NPCS] = GetExpeditionMenu(e)
+	menu.MenuOptions[bot.MENU_OPTION_CHARACTER] = GetCharacterMenu(e)
+	menu.MenuOptions[bot.MENU_OPTION_HIDEOUT] = GetHideoutMenu(e)
+	menu.MenuOptions[bot.MENU_OPTION_MAP] = nil
+
 	return msg
 }
 
@@ -76,7 +85,6 @@ func GetExpeditionMenu(e *entity.Entity) tgbotapi.MessageConfig {
 }
 
 func GetHideoutMenu(e *entity.Entity) tgbotapi.Chattable {
-	log.Println("Sending hideout")
 	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
 	msg := tgbotapi.NewPhotoUpload(player_C.ChatID, "./resources/images/hideout.png")
 	msg.Caption = resources.HIDEOUT_WELCOME_TEXT
@@ -84,6 +92,24 @@ func GetHideoutMenu(e *entity.Entity) tgbotapi.Chattable {
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton(bot.HIDEOUT_STORAGE),
 			tgbotapi.NewKeyboardButton(bot.HIDEOUT_CRAFTING_TABLE),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton(bot.MENU_BACK),
+		),
+	)
+	msg.ParseMode = "markdown"
+	msg.ReplyMarkup = kb
+	return msg
+}
+
+func GetCharacterMenu(e *entity.Entity) tgbotapi.Chattable {
+	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
+	msg := tgbotapi.NewMessage(player_C.ChatID, "View and customize your character here!")
+	kb := tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton(bot.CHARACTER_CHARACTER),
+			tgbotapi.NewKeyboardButton(bot.CHARACTER_INVENTORY),
+			tgbotapi.NewKeyboardButton(bot.CHARACTER_SKILLS),
 		),
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton(bot.MENU_BACK),

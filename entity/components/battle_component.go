@@ -191,8 +191,6 @@ func (bc *SharedBattleComponent) EndBattle() {
 							drop = append(drop, cfg.PossibleLoot)
 						}
 					}
-					log.Println("DROPPING LOOT")
-					log.Println(drop)
 					lootDispenser_C.AddItems(drop)
 					p.AddComponent(lootDispenser_C)
 				}

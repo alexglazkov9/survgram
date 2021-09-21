@@ -7,14 +7,8 @@ import (
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/entity/combat"
 	"github.com/alexglazkov9/survgram/entity/components"
+	"github.com/alexglazkov9/survgram/interfaces"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-)
-
-type Side int
-
-const (
-	PLAYERS Side = iota
-	ENEMIES
 )
 
 const UPDATE_PERIOD float64 = 2
@@ -23,11 +17,12 @@ type BattleSystem struct {
 	Bot       *tgbotapi.BotAPI
 	currentDt float64
 
-	manager *entity.Manager
+	manager         *entity.Manager
+	characterHelper interfaces.CharacterHelper
 }
 
-func NewBattleSystem(manager *entity.Manager) *BattleSystem {
-	battle := &BattleSystem{manager: manager}
+func NewBattleSystem(manager *entity.Manager, characterHelper interfaces.CharacterHelper) *BattleSystem {
+	battle := &BattleSystem{manager: manager, characterHelper: characterHelper}
 
 	return battle
 }
@@ -50,19 +45,13 @@ func (b *BattleSystem) Update(dt float64) {
 			// Check if anyone still looting and finish battle
 			if !battle_C.IsAnyoneStillLooting() {
 				entity.GetComponent("ActivityStatusComponent").(*components.ActivityStatusComponent).IsComplete = true
+				for _, p := range battle_C.Players {
+					b.characterHelper.UpdateCharacter(p)
+				}
 			}
 		}
 	}
 }
-
-// func (b *Battle) GetDescription() string {
-// 	descr := ""
-// 	for _, e := range b.enemies {
-// 		name_C := e.GetComponent("NameComponent").(*components.NameComponent)
-// 		descr += (name_C.GetName() + "\n")
-// 	}
-// 	return fmt.Sprintf("⚔ %s", descr)
-// }
 
 /* Handles attacks and abilities from all entities in the battle */
 func (b *BattleSystem) handleAttacks(entity *entity.Entity, battle_C *components.SharedBattleComponent) {

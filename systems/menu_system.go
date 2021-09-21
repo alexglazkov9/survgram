@@ -33,6 +33,9 @@ func (ms *MenuSystem) Update(dt float64) {
 			bot.MENU_OPTION_NPCS,
 			bot.MENU_OPTION_HIDEOUT,
 			bot.MENU_OPTION_MAP,
+
+			bot.CHARACTER_INVENTORY,
+
 			bot.MENU_BACK,
 
 			bot.EXPEDITION_START,
@@ -58,6 +61,27 @@ func (ms *MenuSystem) Update(dt float64) {
 		var msg tgbotapi.Chattable
 		log.Println(u.Message.Text)
 		switch u.Message.Text {
+		//INVENTORY
+		case bot.CHARACTER_INVENTORY:
+			player_C := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
+			inventory_C := chrctr.GetComponent("InventoryComponent").(*components.InventoryComponent)
+			tgkb := &misc.TGInlineKeyboard{Columns: 2}
+
+			for _, item_bundle := range inventory_C.GetItems() {
+				cb_data := misc.CallbackData{Action: "", Payload: ""}
+				tgkb.AddButton(
+					fmt.Sprintf("%s (%d)", item_bundle.GetItem().GetName(), item_bundle.Qty),
+					cb_data.JSON(),
+				)
+			}
+			for i := len(inventory_C.Items); i < inventory_C.Slots; i++ {
+				cb_data := misc.CallbackData{Action: "", Payload: ""}
+				tgkb.AddButton("-", cb_data.JSON())
+			}
+
+			msg_t := tgbotapi.NewMessage(player_C.ChatID, "Inventory")
+			msg_t.ReplyMarkup = tgkb.Generate()
+			msg = msg_t
 		//MAP
 		case bot.MENU_OPTION_MAP:
 			player_C, _ := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
@@ -100,6 +124,8 @@ func (ms *MenuSystem) Update(dt float64) {
 			expdtn.AddComponent(expdtnComp)
 
 			msg = GetExpeditionQuickMenu(chrctr)
+		case bot.MENU_OPTION_CHARACTER:
+			msg = GetCharacterMenu(chrctr)
 		case bot.MENU_OPTION_EXPEDITION:
 			msg = GetExpeditionMenu(chrctr)
 		case bot.MENU_OPTION_HIDEOUT:
@@ -113,9 +139,11 @@ func (ms *MenuSystem) Update(dt float64) {
 			if !ok {
 				continue
 			}
+			bot.GetInstance().GetBot().Send(msg)
+			continue
 		}
 		bot.GetInstance().GetBot().Send(msg)
 		menu_C.Menus.Push(msg)
-
+		log.Println(len(menu_C.Menus))
 	}
 }

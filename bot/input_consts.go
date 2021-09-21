@@ -1,6 +1,7 @@
 package bot
 
 const (
+	MAIN_MENU = "MainMenu"
 	//Main menu
 	MENU_OPTION_EXPEDITION = "Expedition"
 	MENU_OPTION_NPCS       = "NPCs"
@@ -8,6 +9,11 @@ const (
 	MENU_OPTION_HIDEOUT    = "Hideout"
 	MENU_OPTION_MAP        = "Map"
 	MENU_BACK              = "🔙Back"
+
+	//CHARACTER
+	CHARACTER_CHARACTER = "Character"
+	CHARACTER_INVENTORY = "Inventory"
+	CHARACTER_SKILLS    = "Skills"
 
 	//HIDEOUT
 	HIDEOUT_STORAGE        = "Storage"

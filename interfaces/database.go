@@ -11,4 +11,5 @@ type IDatabase interface {
 type CharacterHelper interface {
 	GetCharacter(telegramID int) *entity.Entity
 	CreateCharacter(telegramID int, chatID int64, name string) bool
+	UpdateCharacter(e *entity.Entity)
 }

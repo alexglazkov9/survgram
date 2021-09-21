@@ -41,7 +41,7 @@ func New(bot *tgbotapi.BotAPI) *Game {
 	instance.Expeditions = &activities.Expeditions{LootManager: instance.LootManager, CharacterManager: instance.CharacterManager}
 
 	//Systems
-	instance.battleSystem = systems.NewBattleSystem(instance.manager)
+	instance.battleSystem = systems.NewBattleSystem(instance.manager, instance.CharacterManager)
 	instance.commandsSystem = systems.NewCommandsSystem(instance.manager, instance.CharacterManager)
 	instance.locationSystem = systems.NewLocationSystem(instance.manager, instance.CharacterManager)
 	instance.expeditionSystem = systems.NewExpeditionSystem(instance.manager, instance.CharacterManager)
