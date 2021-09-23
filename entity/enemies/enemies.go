@@ -9,6 +9,7 @@ import (
 
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/entity/components"
+	"github.com/alexglazkov9/survgram/items"
 )
 
 var once sync.Once
@@ -45,7 +46,6 @@ func (ic *EnemiesCollection) SetManager(manager *entity.Manager) {
 }
 
 func (ic *EnemiesCollection) GetEnemyById(id int) entity.Entity {
-
 	rawEnemy := ic.rawEnemies[id]
 	enemy := parseEntity(rawEnemy, ic.manager)
 
@@ -76,15 +76,26 @@ func parseEntity(raw interface{}, manager *entity.Manager) *entity.Entity {
 			enemy.AddComponent(&comp)
 		case "NPCComponent":
 			var comp components.NPCComponent
-			json.Unmarshal(jsonElement, &comp)
-			// ldc := components.LootDropConfig{Chance: 0.1, PossibleLoot: items.ItemBundle{ID: 1, Qty: 3}}
-			// comp = components.NPCComponent{
-			// 	PossibleLoot: []components.LootDropConfig{ldc},
-			// }
-			for i, cfg := range element.(map[string]interface{})["PossibleLoot"].([]interface{}) {
-				min := int(cfg.(map[string]interface{})["possibleLoot"].(map[string]interface{})["qty_min"].(float64))
-				max := int(cfg.(map[string]interface{})["possibleLoot"].(map[string]interface{})["qty_max"].(float64))
-				comp.PossibleLoot[i].PossibleLoot.Qty = rand.Intn(max-min) + min
+			comp.PossibleLoot = make([]components.LootDropConfig, len(element.(map[string]interface{})["Drops"].([]interface{})))
+			for i, cfg := range element.(map[string]interface{})["Drops"].([]interface{}) {
+				if cfg.(map[string]interface{})["id"] == nil {
+					continue
+				}
+				min := int(cfg.(map[string]interface{})["qty_min"].(float64))
+				max := int(cfg.(map[string]interface{})["qty_max"].(float64))
+				var qty int
+				if min == max {
+					qty = max
+				} else {
+					qty = rand.Intn(max-min) + min
+				}
+				comp.PossibleLoot[i] = components.LootDropConfig{
+					PossibleLoot: items.ItemBundle{
+						ID:  int(cfg.(map[string]interface{})["id"].(float64)),
+						Qty: qty,
+					},
+					Chance: cfg.(map[string]interface{})["drop_chance"].(float64),
+				}
 			}
 			enemy.AddComponent(&comp)
 		}

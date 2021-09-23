@@ -8,13 +8,11 @@ import (
 	"github.com/alexglazkov9/survgram/entity/combat"
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/interfaces"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 const UPDATE_PERIOD float64 = 2
 
 type BattleSystem struct {
-	Bot       *tgbotapi.BotAPI
 	currentDt float64
 
 	manager         *entity.Manager

@@ -7,7 +7,6 @@ import (
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/items"
-	"github.com/alexglazkov9/survgram/items/loot"
 	"github.com/alexglazkov9/survgram/misc"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -15,7 +14,6 @@ import (
 type GatheringActivity struct {
 	Bot                *tgbotapi.BotAPI
 	IsActivityComplete bool
-	LootDispenser      *loot.LootDispenser
 	SelectedResource   items.IItem
 
 	WrongActionPicked bool
@@ -29,11 +27,11 @@ type GatheringActivity struct {
 	count int
 }
 
-func NewGatheringActivity(bot *tgbotapi.BotAPI, lm *loot.LootDispenser, spawn_chances []SpawnChance) *GatheringActivity {
+func NewGatheringActivity(bot *tgbotapi.BotAPI, spawn_chances []SpawnChance) *GatheringActivity {
 	messages := make(map[int]tgbotapi.Message)
 	itm_id := spawn_chances[rand.Intn(len(spawn_chances))].Id
 	selected_resource := items.GetItemCollection().GetItemById(itm_id)
-	actvty := &GatheringActivity{Bot: bot, LootDispenser: lm, messages: messages, SelectedResource: selected_resource, currentState: PREACTIVITY}
+	actvty := &GatheringActivity{Bot: bot, messages: messages, SelectedResource: selected_resource, currentState: PREACTIVITY}
 
 	return actvty
 }
@@ -64,12 +62,12 @@ func (ga *GatheringActivity) Update(dt float64) {
 		}
 	case POSTACTIVITY:
 		still_looting := false
-		for _, p := range ga.players {
-			player_C := p.GetComponent("PlayerComponent").(*components.PlayerComponent)
-			if ga.LootDispenser.IsPlayerLooting(player_C.TelegramID) {
-				still_looting = true
-			}
-		}
+		// for _, p := range ga.players {
+		// 	//player_C := p.GetComponent("PlayerComponent").(*components.PlayerComponent)
+		// 	// if ga.LootDispenser.IsPlayerLooting(player_C.TelegramID) {
+		// 	// 	still_looting = true
+		// 	// }
+		// }
 		if !still_looting {
 			ga.IsActivityComplete = true
 		}
@@ -113,7 +111,7 @@ func (ga *GatheringActivity) endActivity() {
 			text = "Failed"
 		} else {
 			text = "Success"
-			ga.LootDispenser.Add(p, []items.ItemBundle{{ga.SelectedResource.GetID(), 1}})
+			// ga.LootDispenser.Add(p, []items.ItemBundle{{ga.SelectedResource.GetID(), 1}})
 		}
 		msg := tgbotapi.NewEditMessageText(player_C.ChatID, ga.messages[player_C.TelegramID].MessageID, text)
 

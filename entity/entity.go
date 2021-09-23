@@ -18,7 +18,7 @@ type Entity struct {
 	MongoID primitive.ObjectID `bson:"_id"`
 	ID      int
 
-	manager *Manager
+	Manager *Manager
 }
 
 func (entity Entity) GetID() int {
@@ -26,9 +26,9 @@ func (entity Entity) GetID() int {
 }
 
 func (entity *Entity) SetManager(m *Manager) {
-	entity.manager = m
-	entity.manager.entities = append(entity.manager.entities, entity)
-	entity.manager.entitiesByID[EntityID(entity.ID)] = entity
+	entity.Manager = m
+	entity.Manager.entities = append(entity.Manager.entities, entity)
+	entity.Manager.entitiesByID[EntityID(entity.ID)] = entity
 }
 
 func (entity *Entity) AddComponent(componentdata IComponent) *Entity {
@@ -36,25 +36,25 @@ func (entity *Entity) AddComponent(componentdata IComponent) *Entity {
 	//Remove package name and * from the name
 	component_type = component_type[strings.IndexByte(component_type, '.')+1:]
 
-	if entity.manager.components[ComponentType(component_type)] == nil {
-		entity.manager.components[ComponentType(component_type)] = &Component{}
-		entity.manager.components[ComponentType(component_type)].data = make(map[EntityID]IComponent)
+	if entity.Manager.components[ComponentType(component_type)] == nil {
+		entity.Manager.components[ComponentType(component_type)] = &Component{}
+		entity.Manager.components[ComponentType(component_type)].data = make(map[EntityID]IComponent)
 	}
-	entity.manager.components[ComponentType(component_type)].data[EntityID(entity.ID)] = componentdata
+	entity.Manager.components[ComponentType(component_type)].data[EntityID(entity.ID)] = componentdata
 	componentdata.SetParent(entity)
 
 	return entity
 }
 
 func (entity *Entity) RemoveComponent(comp_type ComponentType) *Entity {
-	delete(entity.manager.components[comp_type].data, EntityID(entity.ID))
+	delete(entity.Manager.components[comp_type].data, EntityID(entity.ID))
 
 	return entity
 }
 
 func (entity Entity) HasComponent(comp_type ComponentType) bool {
-	if _, ok := entity.manager.components[comp_type]; ok {
-		if _, ok := entity.manager.components[comp_type].data[EntityID(entity.ID)]; ok {
+	if _, ok := entity.Manager.components[comp_type]; ok {
+		if _, ok := entity.Manager.components[comp_type].data[EntityID(entity.ID)]; ok {
 			return true
 		}
 	}
@@ -62,7 +62,7 @@ func (entity Entity) HasComponent(comp_type ComponentType) bool {
 }
 
 func (entity Entity) GetComponent(comp_type ComponentType) interface{} {
-	data := entity.manager.components[comp_type].data[EntityID(entity.ID)]
+	data := entity.Manager.components[comp_type].data[EntityID(entity.ID)]
 
 	return data
 }

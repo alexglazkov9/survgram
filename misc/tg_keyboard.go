@@ -9,6 +9,7 @@ type TGInlineKeyboard struct {
 	buttons       []tgbotapi.InlineKeyboardButton
 	footerButtons []tgbotapi.InlineKeyboardButton
 	Columns       int
+	IsClosable    bool
 }
 
 func (tk TGInlineKeyboard) Generate() *tgbotapi.InlineKeyboardMarkup {
@@ -40,6 +41,12 @@ func (tk TGInlineKeyboard) Generate() *tgbotapi.InlineKeyboardMarkup {
 	//Setup footer buttons
 	if len(tk.footerButtons) > 0 {
 		kb_markup.InlineKeyboard = append(kb_markup.InlineKeyboard, tk.footerButtons)
+	}
+
+	//Setup footer buttons
+	if tk.IsClosable {
+		cbData := CallbackData{Action: WINDOW_CLOSE}
+		kb_markup.InlineKeyboard = append(kb_markup.InlineKeyboard, tgbotapi.NewInlineKeyboardRow(tgbotapi.NewInlineKeyboardButtonData("❌Close", cbData.JSON())))
 	}
 
 	return &kb_markup

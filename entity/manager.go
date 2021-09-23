@@ -31,7 +31,7 @@ func NewManager() *Manager {
 func (manager *Manager) NewEntity() *Entity {
 	entity := &Entity{
 		ID:      manager.nextId,
-		manager: manager,
+		Manager: manager,
 	}
 	manager.nextId++
 

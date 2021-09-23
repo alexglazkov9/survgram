@@ -21,6 +21,13 @@ const (
 	GATHERING_INCORRECT = "GI"
 	//Crafting table
 	CRAFTING_TABLE_RECIPE_SELECTED = "CTRS"
+	//Inventory window
+	INVENTORY_ITEM_SELECTED = "IIS"
+	INVENTORY_ITEM_USE      = "IIU"
+	INVENTORY_DROP_ITEM     = "IDI"
+
+	//COMMON
+	WINDOW_CLOSE = "WC"
 )
 
 //CallbackData - type used to wrap data for inline keyboard buttons

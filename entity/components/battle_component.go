@@ -30,11 +30,6 @@ type SharedBattleComponent struct {
 	NextUpdateTimer  float64
 }
 
-func (ac *SharedBattleComponent) Clone() entity.IComponent {
-	copy := *ac
-	return &copy
-}
-
 /* Returns list of all enemies(entities on the other side) of the entity holding the component in the battle,
 pass true to return ALIVE enemies only */
 func (bc SharedBattleComponent) GetEnemiesForEntity(e *entity.Entity, alive ...bool) []*entity.Entity {
@@ -191,7 +186,7 @@ func (bc *SharedBattleComponent) EndBattle() {
 							drop = append(drop, cfg.PossibleLoot)
 						}
 					}
-					lootDispenser_C.AddItems(drop)
+					lootDispenser_C.AddItems(drop...)
 					p.AddComponent(lootDispenser_C)
 				}
 			}
@@ -220,6 +215,8 @@ func (bc *SharedBattleComponent) AddPlayer(e *entity.Entity) {
 	bc.Players = append(bc.Players, e)
 }
 
+/* Generates a status text of the battle that is used to display in the battle message,
+text includes names and health of all entities in the battle */
 func (bc SharedBattleComponent) generateStatusText() string {
 	var playerStatus string
 	for _, p := range bc.Players {

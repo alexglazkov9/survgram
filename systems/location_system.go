@@ -65,11 +65,12 @@ func (ls *LocationSystem) Update(dt float64) {
 			player_C.CurrentLocation = *location_C.Destination
 			location_C.Destination = nil
 			e.RemoveComponent("PlayerActivityComponent")
+			ls.characterHelper.UpdateCharacter(e)
 			menu_C := e.GetComponent("MenuComponent").(*components.MenuComponent)
-			msg := GetMainMenu(e)
+			msg := GetMainMenu(e).(components.Menu)
 			menu_C.Menus.Clear()
 			menu_C.Menus.Push(msg)
-			bot.GetInstance().GetBot().Send(msg)
+			bot.GetInstance().GetBot().Send(msg.Msg)
 		}
 	}
 }

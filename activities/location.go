@@ -2,8 +2,6 @@ package activities
 
 import (
 	"math/rand"
-
-	"github.com/alexglazkov9/survgram/items/loot"
 )
 
 type Location struct {
@@ -14,7 +12,7 @@ type Location struct {
 }
 
 /* Creates activity from one of the ActivityConfig assigned to this location and returns it */
-func (l Location) GetActivity(lm *loot.LootDispenser) ActivityConfig {
+func (l Location) GetActivity() ActivityConfig {
 	act_index := rand.Intn(len(l.PossibleActivities))
 	return l.PossibleActivities[act_index]
 }

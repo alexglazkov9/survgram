@@ -12,6 +12,7 @@ import (
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/entity/enemies"
 	"github.com/alexglazkov9/survgram/interfaces"
+	"github.com/alexglazkov9/survgram/items"
 	"github.com/alexglazkov9/survgram/misc"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -57,11 +58,14 @@ func (es *ExpeditionSystem) Update(dt float64) {
 
 			selectedActivityId, _ := strconv.Atoi(cbData.Payload)
 			act := expedition_C.GeneratedActivities[selectedActivityId]
+			log.Println(act.Type)
 			switch act.Type {
-			case components.BATTLE:
+			case components.BATTLE_ACTIVITY:
 				chrctr := es.characterHelper.GetCharacter(u.CallbackQuery.From.ID)
 				player_C := chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent)
-				e := enemies.GetInstance().GetEnemyById(act.SpawneeId)
+				//TODO fix hardcoded 0 if makes sense
+				spawnee := act.Spawnees[0]
+				e := enemies.GetInstance().GetEnemyById(spawnee.Id)
 
 				battleC := &components.SharedBattleComponent{
 					CurrentState: components.PREACTIVITY,
@@ -81,7 +85,31 @@ func (es *ExpeditionSystem) Update(dt float64) {
 
 				expedition_C.CurrentActivity = battle
 				expedition_C.State = components.ACTIVITY_RUNNING
+			case components.GATHERING_ACTIVITY:
+				chrctr := es.characterHelper.GetCharacter(u.CallbackQuery.From.ID)
+				spawnee := act.Spawnees[0]
+				gatheringActivityC := &components.GatheringActivityComponent{
+					CurrentState:       components.PREACTIVITY,
+					Messages:           make(map[int]tgbotapi.Message),
+					IsActivityComplete: false,
+					Players:            make([]*entity.Entity, 0),
+					Resource: items.ItemBundle{
+						ID:  spawnee.Id,
+						Qty: spawnee.Qty,
+					},
+				}
+				gatheringActivityC.Players = append(gatheringActivityC.Players, chrctr)
+				statusC := &components.ActivityStatusComponent{
+					IsComplete: false,
+				}
 
+				gatheringActivity := es.manager.NewEntity()
+				gatheringActivity.AddComponent(gatheringActivityC)
+				gatheringActivity.AddComponent(statusC)
+
+				expedition_C.CurrentActivity = gatheringActivity
+				expedition_C.State = components.ACTIVITY_RUNNING
+				log.Println("Activity added")
 			}
 		case misc.EXPEDITION_CONTINUE:
 			expedition_C.State = components.STARTING
@@ -120,8 +148,8 @@ func (es *ExpeditionSystem) Update(dt float64) {
 				for i := 0; i < ACTIVITIES_OPTIONS_NUMBER; i++ {
 					pos_act := loc.PossibleActivities[rand.Intn(len(loc.PossibleActivities))]
 					activity_config := components.ActivityConfig{
-						Type:      pos_act.Type,
-						SpawneeId: GetSpawneeId(pos_act.SpawnChances),
+						Type:     pos_act.Type,
+						Spawnees: []components.SpawneeConfig{GetSpawneeCfg(pos_act.SpawnChances)},
 					}
 					expedition_C.GeneratedActivities = append(expedition_C.GeneratedActivities, activity_config)
 					cbData := misc.CallbackData{Action: misc.ACTIVITY_SELECTED, ID: strconv.Itoa(e.GetID()), Payload: fmt.Sprint(i)}
@@ -159,7 +187,7 @@ func (es *ExpeditionSystem) Update(dt float64) {
 }
 
 /*Helper function that returns id of the mob to spawn from the list of probabilities*/
-func GetSpawneeId(spawn_chances []activities.SpawnChance) int {
+func GetSpawneeCfg(spawn_chances []activities.SpawnChance) components.SpawneeConfig {
 	cmltv := make([]float64, len(spawn_chances)) //cumulative
 	for i, sc := range spawn_chances {
 		if i == 0 {
@@ -171,10 +199,14 @@ func GetSpawneeId(spawn_chances []activities.SpawnChance) int {
 
 	rnd_f := rand.Float64()
 	for i, v := range cmltv {
-		log.Println(v)
 		if rnd_f <= v {
-			return spawn_chances[i].Id
+
+			return components.SpawneeConfig{
+				Id:  spawn_chances[i].Id,
+				Qty: 1,
+			}
 		}
 	}
-	return -1
+
+	return components.SpawneeConfig{}
 }

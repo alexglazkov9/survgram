@@ -9,14 +9,19 @@ import (
 type ActivityType string
 
 const (
-	FISHING   ActivityType = "fishing"
-	BATTLE    ActivityType = "battle"
-	GATHERING ActivityType = "gathering"
+	FISHING_ACTIVITY   ActivityType = "fishing"
+	BATTLE_ACTIVITY    ActivityType = "battle"
+	GATHERING_ACTIVITY ActivityType = "gathering"
 )
 
+type SpawneeConfig struct {
+	Id  int
+	Qty int
+}
+
 type ActivityConfig struct {
-	Type      ActivityType
-	SpawneeId int
+	Type     ActivityType
+	Spawnees []SpawneeConfig
 }
 
 type ExpeditionState string

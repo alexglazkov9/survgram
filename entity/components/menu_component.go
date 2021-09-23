@@ -1,6 +1,9 @@
 package components
 
-import tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+import (
+	"github.com/alexglazkov9/survgram/entity"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+)
 
 type MenuComponent struct {
 	BaseComponent `bson:"-" json:"-"`
@@ -10,10 +13,10 @@ type MenuComponent struct {
 
 type Menu struct {
 	Msg         tgbotapi.Chattable
-	MenuOptions map[string]interface{}
+	MenuOptions map[string]func(*entity.Entity) interface{}
 }
 
-type Stack []tgbotapi.Chattable
+type Stack []Menu
 
 // IsEmpty: check if stack is empty
 func (s *Stack) IsEmpty() bool {
@@ -21,14 +24,14 @@ func (s *Stack) IsEmpty() bool {
 }
 
 // Push a new value onto the stack
-func (s *Stack) Push(kb tgbotapi.Chattable) {
+func (s *Stack) Push(kb Menu) {
 	*s = append(*s, kb) // Simply append the new value to the end of the stack
 }
 
 // Remove and return top element of stack. Return false if stack is empty.
-func (s *Stack) Pop() (tgbotapi.Chattable, bool) {
+func (s *Stack) Pop() (Menu, bool) {
 	if s.IsEmpty() {
-		return tgbotapi.MessageConfig{}, false
+		return Menu{}, false
 	} else {
 		index := len(*s) - 1   // Get the index of the top most element.
 		element := (*s)[index] // Index into the slice and obtain the element.
@@ -38,9 +41,9 @@ func (s *Stack) Pop() (tgbotapi.Chattable, bool) {
 }
 
 // Return top element of stack. Return false if stack is empty.
-func (s *Stack) Top() (tgbotapi.Chattable, bool) {
+func (s *Stack) Top() (Menu, bool) {
 	if s.IsEmpty() {
-		return tgbotapi.MessageConfig{}, false
+		return Menu{}, false
 	} else {
 		index := len(*s) - 1   // Get the index of the top most element.
 		element := (*s)[index] // Index into the slice and obtain the element.

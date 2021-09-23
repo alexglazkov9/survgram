@@ -1,83 +1,2977 @@
 [
-    {
-        "id": 1,
-        "components": {
-            "AttackComponent": {
-                "AttackDamage": 1
-            },
-            "HealthComponent": {
-                "MaxHealthPoints": 30,
-                "HealthPoints": 30
-            },
-            "NameComponent": {
-                "Name": "Kuchuk"
-            },
-            "NPCComponent": {
-                "PossibleLoot": [
-                    {
-                        "possibleLoot": {
-                            "id": 1,
-                            "qty_min": 1,
-                            "qty_max": 3
-                        },
-                        "chance": 1
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "id": 2,
-        "components": {
-            "AttackComponent": {
-                "AttackDamage": 1
-            },
-            "HealthComponent": {
-                "MaxHealthPoints": 30,
-                "HealthPoints": 30
-            },
-            "NameComponent": {
-                "Name": "Mushuq"
-            },
-            "NPCComponent": {
-                "PossibleLoot": [
-                    {
-                        "possibleLoot": {
-                            "id": 1,
-                            "qty_min": 1,
-                            "qty_max": 3
-                        },
-                        "chance": 1
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "id": 3,
-        "components": {
-            "AttackComponent": {
-                "AttackDamage": 1
-            },
-            "HealthComponent": {
-                "MaxHealthPoints": 30,
-                "HealthPoints": 30
-            },
-            "NameComponent": {
-                "Name": "Sichqon"
-            },
-            "NPCComponent": {
-                "PossibleLoot": [
-                    {
-                        "possibleLoot": {
-                            "id": 1,
-                            "qty_min": 1,
-                            "qty_max": 3
-                        },
-                        "chance": 1
-                    }
-                ]
-            }
-        }
-    }
+   {
+      "id": 1,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Small Kobold"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1065,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1071,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1021,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 853,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 997,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 37,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 38,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 39,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 40,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 41,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 67,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 68,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 69,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 70,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 71,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 337,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 338,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 339,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 340,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 341,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 2,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Annoying Kobold"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1065,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1071,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1021,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 997,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 865,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 97,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 98,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 99,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 100,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 101,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 127,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 128,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 129,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 130,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 131,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 697,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 698,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 699,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 700,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 701,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 4,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Dungeon Bat"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1021,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1059,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 859,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 985,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 907,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 937,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 217,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 218,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 219,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 220,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 221,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 247,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 248,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 249,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 250,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 251,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 307,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 308,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 309,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 310,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 311,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 5,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Underground Worm"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1059,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1025,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 871,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 979,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 913,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 943,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 277,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 278,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 279,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 280,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 281,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 307,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 308,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 309,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 310,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 311,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 367,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 368,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 369,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 370,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 371,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 6,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Spider"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1025,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 871,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 973,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 895,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 955,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 337,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 338,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 339,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 340,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 341,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 367,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 368,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 369,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 370,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 371,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 277,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 278,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 279,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 280,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 281,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 8,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Snake"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1025,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 937,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 979,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 913,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 877,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 397,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 398,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 399,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 400,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 401,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 427,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 428,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 429,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 430,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 431,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 667,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 668,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 669,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 670,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 671,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 9,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Forest Viper"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1029,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1009,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 889,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 967,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 919,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 931,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 457,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 458,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 459,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 460,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 461,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 487,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 488,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 489,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 490,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 491,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 247,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 248,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 249,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 250,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 251,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 10,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 3
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Stone Golem"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 1065,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1071,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1029,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1077,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 955,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1009,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 901,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 517,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 518,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 519,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 520,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 521,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 547,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 548,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 549,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 550,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 551,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 607,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 608,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 609,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 610,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 611,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 11,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Wolf"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1029,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1009,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 889,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 919,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 961,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 925,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 577,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 578,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 579,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 580,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 581,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 607,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 608,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 609,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 610,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 611,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 637,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 638,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 639,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 640,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 641,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 12,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Bandit"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1065,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1071,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1077,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1033,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1015,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 157,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 158,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 159,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 160,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 161,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 187,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 188,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 189,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 190,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 191,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 397,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 398,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 399,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 400,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 401,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 13,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Outlaw"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1065,
+                  "drop_chance": 0.12,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1071,
+                  "drop_chance": 0.12,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1077,
+                  "drop_chance": 0.12,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1033,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1015,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 667,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 668,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 669,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 670,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 671,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 697,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 698,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 699,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 700,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 701,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 637,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 638,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 639,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 640,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 641,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 15,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Giant Rat"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1033,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 973,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 895,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 877,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 949,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 727,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 728,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 729,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 730,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 731,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 757,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 758,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 759,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 760,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 761,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 427,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 428,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 429,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 430,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 431,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 16,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Bear"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1059,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 967,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 901,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 949,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 883,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 787,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 788,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 789,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 790,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 791,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 817,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 818,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 819,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 820,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 821,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 517,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 518,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 519,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 520,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 521,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 727,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 728,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 729,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 730,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 731,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 17,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Tiger"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1059,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 907,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 943,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 961,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 883,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 787,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 788,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 789,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 790,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 791,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 817,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 818,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 819,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 820,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 821,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 457,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 458,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 459,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 460,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 461,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 18,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 1
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Sabretooth Tiger"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1059,
+                  "drop_chance": 0.12,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1037,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 865,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 985,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1003,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 37,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 38,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 39,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 40,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 41,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 187,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 188,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 189,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 190,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 191,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 487,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 488,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 489,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 490,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 491,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 547,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 548,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 549,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 550,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 551,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 19,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 3
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Timber Wolf"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1037,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 859,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1003,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 991,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 67,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 68,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 69,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 70,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 71,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 97,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 98,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 99,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 100,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 101,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 757,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 758,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 759,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 760,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 761,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   },
+   {
+      "id": 20,
+      "components": {
+         "AttackComponent": {
+            "AttackDamage": 2
+         },
+         "HealthComponent": {
+            "MaxHealthPoints": 20,
+            "HealthPoints": 20
+         },
+         "NameComponent": {
+            "Name": "Boar"
+         },
+         "NPCComponent": {
+            "Drops": [
+               {
+                  "id": 25,
+                  "drop_chance": 0.8,
+                  "qty_min": 1,
+                  "qty_max": 3
+               },
+               {
+                  "id": 1037,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 853,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 931,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 925,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 1003,
+                  "drop_chance": 0.1,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 991,
+                  "drop_chance": 0.15,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 127,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 128,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 129,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 130,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 131,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 157,
+                  "drop_chance": 0.05,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 158,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 159,
+                  "drop_chance": 0.03,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 160,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 161,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 577,
+                  "drop_chance": 0.08,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 578,
+                  "drop_chance": 0.06,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 579,
+                  "drop_chance": 0.04,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 580,
+                  "drop_chance": 0.02,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": 581,
+                  "drop_chance": 0.01,
+                  "qty_min": 1,
+                  "qty_max": 1
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               },
+               {
+                  "id": null,
+                  "drop_chance": null,
+                  "qty_min": null,
+                  "qty_max": null
+               }
+            ]
+         }
+      }
+   }
 ]

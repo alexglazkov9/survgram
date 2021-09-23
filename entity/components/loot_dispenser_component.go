@@ -33,12 +33,12 @@ func (ldc *LootDispenserComponent) Clone() entity.IComponent {
 	return &copy
 }
 
-func (ldc *LootDispenserComponent) AddItems(lootDrop []items.ItemBundle) {
+func (ldc *LootDispenserComponent) AddItems(lootDrop ...items.ItemBundle) {
 	ldc.LootDrop = append(ldc.LootDrop, lootDrop...)
 }
 
 func (ldc LootDispenserComponent) GenerateInlineKeyboard() *tgbotapi.InlineKeyboardMarkup {
-	tg_kb := misc.TGInlineKeyboard{}
+	tg_kb := misc.TGInlineKeyboard{Columns: 2}
 
 	//Header
 	if ldc.SelectedItem != nil {
@@ -49,9 +49,12 @@ func (ldc LootDispenserComponent) GenerateInlineKeyboard() *tgbotapi.InlineKeybo
 	tg_kb.AddHeaderButton("🔼Pick Up All", cbData.JSON())
 	//Loot
 	for _, bundle := range ldc.LootDrop {
-		itm := items.GetItemCollection().GetItemById(bundle.ID)
-		cbData := misc.CallbackData{Action: misc.SELECT_LOOT_ITEM, ID: fmt.Sprint(ldc.Parent.ID), Payload: fmt.Sprint(itm.GetID())}
-		tg_kb.AddButton(fmt.Sprintf("%s (%d)", itm.GetName(), bundle.Qty), cbData.JSON())
+		log.Println("HERERE!!!!")
+		log.Println(ldc.Parent)
+		log.Println(bundle)
+		log.Println(bundle.GetItem().GetID())
+		cbData := misc.CallbackData{Action: misc.SELECT_LOOT_ITEM, ID: fmt.Sprint(ldc.Parent.ID), Payload: fmt.Sprint(bundle.GetItem().GetID())}
+		tg_kb.AddButton(fmt.Sprintf("%s (%d)", bundle.GetItem().GetName(), bundle.Qty), cbData.JSON())
 	}
 	//Dismiss
 	cbData = misc.CallbackData{Action: misc.DISMISS_LOOT, ID: fmt.Sprint(ldc.Parent.ID)}
