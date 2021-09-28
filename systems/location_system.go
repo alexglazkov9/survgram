@@ -60,9 +60,8 @@ func (ls *LocationSystem) Update(dt float64) {
 		}
 
 		location_C.TravelTime += dt
-		if location_C.TravelTime >= 15 {
-			player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-			player_C.CurrentLocation = *location_C.Destination
+		if location_C.TravelTime >= 5 {
+			location_C.CurrentLocation = *location_C.Destination
 			location_C.Destination = nil
 			e.RemoveComponent("PlayerActivityComponent")
 			ls.characterHelper.UpdateCharacter(e)

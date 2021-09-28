@@ -7,24 +7,33 @@ import (
 
 const (
 	GO_TO = "GT"
+
 	//Loot actions
 	PICK_UP_ITEM      = "PUI"
 	PICK_UP_ALL_ITEMS = "PUAI"
 	SELECT_LOOT_ITEM  = "SLI"
 	DISMISS_LOOT      = "DL"
+
 	//Expedition actions
-	EXPEDITION_CONTINUE = "EC"
-	EXPEDITION_LEAVE    = "EL"
-	ACTIVITY_SELECTED   = "AS"
+	EXPEDITION_CONTINUE          = "EC"
+	EXPEDITION_LEAVE             = "EL"
+	EXPEDITION_ACTIVITY_SELECTED = "EAS"
+
 	//Gathering Actions
 	GATHERING_CORRECT   = "GC"
 	GATHERING_INCORRECT = "GI"
+
 	//Crafting table
 	CRAFTING_TABLE_RECIPE_SELECTED = "CTRS"
+
 	//Inventory window
 	INVENTORY_ITEM_SELECTED = "IIS"
 	INVENTORY_ITEM_USE      = "IIU"
 	INVENTORY_DROP_ITEM     = "IDI"
+
+	//Character window
+	CHARACTER_SELECT_TAB         = "CST"
+	CHARACTER_EQUIPMENT_SELECTED = "CES"
 
 	//COMMON
 	WINDOW_CLOSE = "WC"

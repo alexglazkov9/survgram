@@ -3,6 +3,7 @@ package bot
 import (
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/alexglazkov9/survgram/misc"
@@ -41,16 +42,23 @@ func (b *Bot) GetBot() *tgbotapi.BotAPI {
 }
 
 func (b *Bot) HandleUpdate(update tgbotapi.Update) {
-
+	//Callbacks
 	if update.CallbackQuery != nil {
 		cbData := misc.CallbackData{}
 		cbData.FromJSON(update.CallbackQuery.Data)
 		b.updates[cbData.Action] = append(b.updates[cbData.Action], &update)
+		return
 	}
-
-	//Possbile seprate commands handling to make commands case insensetive
+	//Commands
+	if update.Message.IsCommand() {
+		cmd := strings.Split(update.Message.Text, " ")[0]
+		b.updates[cmd] = append(b.updates[cmd], &update)
+		return
+	}
+	//Messages
 	if update.Message != nil && len(update.Message.Text) > 0 {
 		b.updates[update.Message.Text] = append(b.updates[update.Message.Text], &update)
+		return
 	}
 }
 

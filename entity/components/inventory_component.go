@@ -1,7 +1,6 @@
 package components
 
 import (
-	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/items"
 )
 
@@ -32,27 +31,39 @@ func (ic *InventoryComponent) AddItems(itms ...items.ItemBundle) {
 	}
 }
 
-func (ic *InventoryComponent) GetItems(args ...items.ItemType) []items.ItemBundle {
+func (ic *InventoryComponent) GetItems(args ...items.ItemType) []*items.ItemBundle {
 	if len(args) == 0 {
-		itms := make([]items.ItemBundle, len(ic.Items))
+		itms := make([]*items.ItemBundle, len(ic.Items))
 		for i, itm := range ic.Items {
-			itms[i] = *itm
+			itms[i] = itm
 		}
 		return itms
 	}
 
-	itms := make([]items.ItemBundle, 0)
+	itms := make([]*items.ItemBundle, 0)
 	for _, itm := range ic.Items {
 		if containsType(args, itm.GetItem().GetType()) {
-			itms = append(itms, *itm)
+			itms = append(itms, itm)
 		}
 	}
 	return itms
 }
 
-func (ac *InventoryComponent) Clone() entity.IComponent {
-	copy := *ac
-	return &copy
+func (ic *InventoryComponent) RemoveItem(b *items.ItemBundle) {
+	for i, bundle := range ic.Items {
+		if b == bundle {
+			ic.Items = append(ic.Items[:i], ic.Items[i+1:]...)
+		}
+	}
+}
+
+func (ic *InventoryComponent) TryFind(id int) (*items.ItemBundle, bool) {
+	for _, bundle := range ic.GetItems() {
+		if id == bundle.ID {
+			return bundle, true
+		}
+	}
+	return nil, false
 }
 
 func containsType(s []items.ItemType, e items.ItemType) bool {

@@ -2,6 +2,7 @@ package systems
 
 import (
 	"log"
+	"strings"
 
 	"github.com/alexglazkov9/survgram/bot"
 	"github.com/alexglazkov9/survgram/entity"
@@ -21,23 +22,27 @@ func NewCommandsSystem(manager *entity.Manager, characterMgr interfaces.Characte
 	return sys
 }
 
-func (b *CommandsSystem) Update(dt float64) {
+func (cs *CommandsSystem) Update(dt float64) {
 	for {
 		u := bot.GetInstance().PopUpdate("/menu", "/reg")
 		if u == nil {
 			break
 		}
-		chrctr := b.characterManager.GetCharacter(u.Message.From.ID)
-		if chrctr == nil {
-			//TODO Handle missing character
-			continue
-		}
-		switch u.Message.Text {
+		chrctr := cs.characterManager.GetCharacter(u.Message.From.ID)
+		cmd := strings.Split(u.Message.Text, " ")[0]
+
+		switch cmd {
 		case "/menu":
-			SendMainMenuKeyboard(chrctr)
+			if chrctr != nil {
+				SendMainMenuKeyboard(chrctr)
+			}
 		case "/reg":
+
 			log.Println(u.Message.From.ID, u.Message.Chat.ID)
-			//.characterManager.CreateCharacter(u.Message.From.ID, u.Message.Chat.ID, "Rustam")
+			if chrctr == nil {
+				name := strings.Split(u.Message.Text, " ")[1]
+				cs.characterManager.CreateCharacter(u.Message.From.ID, u.Message.Chat.ID, name)
+			}
 		}
 	}
 }

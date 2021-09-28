@@ -23,7 +23,8 @@ func SendMainMenuKeyboard(e *entity.Entity) {
 
 func GetMainMenu(e *entity.Entity) interface{} {
 	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
+	loc := activities.GetLocations().GetLocation(location_C.CurrentLocation)
 	txt := fmt.Sprintf("You are at the %s", loc.Name)
 	kb := tgbotapi.NewReplyKeyboard()
 	kb.Keyboard = append(kb.Keyboard, tgbotapi.NewKeyboardButtonRow(
@@ -54,24 +55,25 @@ func GetMainMenu(e *entity.Entity) interface{} {
 
 func GetExpeditionMenu(e *entity.Entity) interface{} {
 	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
-	msgTxt := ""
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
+	loc := activities.GetLocations().GetLocation(location_C.CurrentLocation)
+	msg_txt := ""
 	if len(loc.PossibleActivities) == 0 { //If no activities, don't show Expedition menu
-		msgTxt = "There are no activities available in this location\n"
-		msg := tgbotapi.NewMessage(player_C.ChatID, msgTxt)
+		msg_txt = "There are no activities available in this location\n"
+		msg := tgbotapi.NewMessage(player_C.ChatID, msg_txt)
 		bot.GetInstance().GetBot().Send(msg)
 		return nil
 	}
-	msgTxt = "Possible activities in this location:\n"
+	msg_txt = "Possible activities in this location:\n"
 	for _, act := range loc.PossibleActivities {
-		msgTxt += fmt.Sprintf("%.0f%% %s \n", act.ActivityChance*100, strings.Title(string(act.Type)))
+		msg_txt += fmt.Sprintf("%.0f%% %s \n", act.ActivityChance*100, strings.Title(string(act.Type)))
 	}
 	kb := tgbotapi.NewReplyKeyboard(tgbotapi.NewKeyboardButtonRow(
 		tgbotapi.NewKeyboardButton(bot.EXPEDITION_START),
 		tgbotapi.NewKeyboardButton(bot.EXPEDITION_ACTIVITIES_INFO),
 		tgbotapi.NewKeyboardButton(bot.MENU_BACK),
 	))
-	msg := tgbotapi.NewMessage(player_C.ChatID, msgTxt)
+	msg := tgbotapi.NewMessage(player_C.ChatID, msg_txt)
 	msg.ReplyMarkup = kb
 
 	menu := components.Menu{
@@ -126,7 +128,7 @@ func GetCharacterMenu(e *entity.Entity) interface{} {
 		Msg:         msg,
 		MenuOptions: make(map[string]func(*entity.Entity) interface{}),
 	}
-	//menu.MenuOptions[bot.CHARACTER_CHARACTER] = nil
+	menu.MenuOptions[bot.CHARACTER_CHARACTER] = DisplayCharacter
 	menu.MenuOptions[bot.CHARACTER_INVENTORY] = DisplayInventory
 	//menu.MenuOptions[bot.CHARACTER_SKILLS] = nil
 	return menu
@@ -134,7 +136,8 @@ func GetCharacterMenu(e *entity.Entity) interface{} {
 
 func GetExpeditionQuickMenu(e *entity.Entity) interface{} {
 	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
+	loc := activities.GetLocations().GetLocation(location_C.CurrentLocation)
 	msg := tgbotapi.NewMessage(player_C.ChatID, fmt.Sprintf("%s at %s", resources.EXPEDITION_ENTERED_TEXT, loc.Name))
 	kb := tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
@@ -166,8 +169,8 @@ func GetQuickMenuKeyboard() tgbotapi.ReplyKeyboardMarkup {
 }
 
 func StartExpedition(e *entity.Entity) interface{} {
-	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
+	loc := activities.GetLocations().GetLocation(location_C.CurrentLocation)
 	if e.HasComponent("PlayerActivityComponent") { //check if player is busy
 		return nil
 	}
@@ -188,9 +191,9 @@ func StartExpedition(e *entity.Entity) interface{} {
 
 func DisplayMap(e *entity.Entity) interface{} {
 	player_C, _ := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
 	//Add destinations to the keyboard
-	loc := activities.GetLocations().GetLocation(player_C.CurrentLocation)
+	loc := activities.GetLocations().GetLocation(location_C.CurrentLocation)
 	kb := misc.TGInlineKeyboard{Columns: 2, IsClosable: true}
 	for _, dest := range loc.Destinations {
 		cbData := misc.CallbackData{Action: misc.GO_TO, Payload: fmt.Sprint(dest.GetID())}
@@ -211,5 +214,14 @@ func DisplayInventory(e *entity.Entity) interface{} {
 		SelectedItemID: nil,
 	}
 	e.AddComponent(inventoryWindow_C)
+	return nil
+}
+
+func DisplayCharacter(e *entity.Entity) interface{} {
+	character_window_C := &components.CharacterWindowComponent{
+		IsSent:     false,
+		CurrentTab: components.CHARACTER,
+	}
+	e.AddComponent(character_window_C)
 	return nil
 }

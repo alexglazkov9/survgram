@@ -37,7 +37,11 @@ func NewExpeditionSystem(manager *entity.Manager, characterHelper interfaces.Cha
 func (es *ExpeditionSystem) Update(dt float64) {
 	/*Handle input*/
 	for {
-		u := bot.GetInstance().PopUpdate(misc.ACTIVITY_SELECTED, misc.EXPEDITION_CONTINUE, misc.EXPEDITION_LEAVE)
+		u := bot.GetInstance().PopUpdate(
+			misc.EXPEDITION_ACTIVITY_SELECTED,
+			misc.EXPEDITION_CONTINUE,
+			misc.EXPEDITION_LEAVE,
+		)
 		if u == nil {
 			break
 		}
@@ -51,7 +55,7 @@ func (es *ExpeditionSystem) Update(dt float64) {
 		expedition_C := ent.GetComponent("ExpeditionComponent").(*components.ExpeditionComponent)
 
 		switch cbData.Action {
-		case misc.ACTIVITY_SELECTED:
+		case misc.EXPEDITION_ACTIVITY_SELECTED:
 			if expedition_C.CurrentActivity != nil { //ignore input if user is already in the activity
 				continue
 			}
@@ -89,10 +93,10 @@ func (es *ExpeditionSystem) Update(dt float64) {
 				chrctr := es.characterHelper.GetCharacter(u.CallbackQuery.From.ID)
 				spawnee := act.Spawnees[0]
 				gatheringActivityC := &components.GatheringActivityComponent{
-					CurrentState:       components.PREACTIVITY,
-					Messages:           make(map[int]tgbotapi.Message),
-					IsActivityComplete: false,
-					Players:            make([]*entity.Entity, 0),
+					CurrentState: components.PREACTIVITY,
+					IsSuccesful:  true,
+					Messages:     make(map[int]tgbotapi.Message),
+					Players:      make([]*entity.Entity, 0),
 					Resource: items.ItemBundle{
 						ID:  spawnee.Id,
 						Qty: spawnee.Qty,
@@ -109,7 +113,6 @@ func (es *ExpeditionSystem) Update(dt float64) {
 
 				expedition_C.CurrentActivity = gatheringActivity
 				expedition_C.State = components.ACTIVITY_RUNNING
-				log.Println("Activity added")
 			}
 		case misc.EXPEDITION_CONTINUE:
 			expedition_C.State = components.STARTING
@@ -152,7 +155,7 @@ func (es *ExpeditionSystem) Update(dt float64) {
 						Spawnees: []components.SpawneeConfig{GetSpawneeCfg(pos_act.SpawnChances)},
 					}
 					expedition_C.GeneratedActivities = append(expedition_C.GeneratedActivities, activity_config)
-					cbData := misc.CallbackData{Action: misc.ACTIVITY_SELECTED, ID: strconv.Itoa(e.GetID()), Payload: fmt.Sprint(i)}
+					cbData := misc.CallbackData{Action: misc.EXPEDITION_ACTIVITY_SELECTED, ID: strconv.Itoa(e.GetID()), Payload: fmt.Sprint(i)}
 					tgkb.AddButton(string(activity_config.Type), cbData.JSON())
 				}
 				msg := tgbotapi.NewMessage(player_C.ChatID, "Select the activity: ")

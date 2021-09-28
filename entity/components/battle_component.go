@@ -2,7 +2,6 @@ package components
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 
 	"github.com/alexglazkov9/survgram/bot"
@@ -20,7 +19,8 @@ const (
 )
 
 type SharedBattleComponent struct {
-	BaseComponent    `bson:"-" json:"-"`
+	BaseComponent `bson:"-" json:"-"`
+
 	IsBattleComplete bool
 	Enemies          []*entity.Entity
 	Players          []*entity.Entity
@@ -152,10 +152,8 @@ func (bc *SharedBattleComponent) StartBattle() {
 		player_C := p.GetComponent("PlayerComponent").(*PlayerComponent)
 		var msg tgbotapi.Chattable
 		if _, ok := bc.Messages[player_C.TelegramID]; ok {
-			log.Println("editing")
 			msg = tgbotapi.NewEditMessageText(player_C.ChatID, bc.Messages[player_C.TelegramID].MessageID, bc.generateStatusText())
 		} else {
-			log.Println("new")
 			msg = tgbotapi.NewMessage(player_C.ChatID, bc.generateStatusText())
 		}
 		bc.Messages[player_C.TelegramID], _ = bot.GetInstance().GetBot().Send(msg)
@@ -174,11 +172,6 @@ func (bc *SharedBattleComponent) EndBattle() {
 			for _, e := range bc.Enemies {
 				npc_C, npc_C_ok := e.GetComponent("NPCComponent").(*NPCComponent)
 				if npc_C_ok {
-					/* Creates a LootDispenserComponent and adds loot to be dropped to it. On the next update LootDispenser system
-					will iterate over all enitites with this component and distribute loot */
-					lootDispenser_C := &LootDispenserComponent{
-						State: ADDED,
-					}
 					var drop []items.ItemBundle
 					for _, cfg := range npc_C.PossibleLoot {
 						chance := rand.Float64()
@@ -186,8 +179,15 @@ func (bc *SharedBattleComponent) EndBattle() {
 							drop = append(drop, cfg.PossibleLoot)
 						}
 					}
-					lootDispenser_C.AddItems(drop...)
-					p.AddComponent(lootDispenser_C)
+					/* Creates a LootDispenserComponent and adds loot to be dropped to it. On the next update LootDispenser system
+					will iterate over all enitites with this component and distribute loot */
+					if len(drop) > 0 {
+						lootDispenser_C := &LootDispenserComponent{
+							State: ADDED,
+						}
+						lootDispenser_C.AddItems(drop...)
+						p.AddComponent(lootDispenser_C)
+					}
 				}
 			}
 		}

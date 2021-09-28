@@ -4,6 +4,6 @@ type PlayerLocationComponent struct {
 	BaseComponent `bson:"-" json:"-"`
 
 	CurrentLocation int
-	Destination     *int
-	TravelTime      float64
+	Destination     *int    `bson:"-" json:"-"`
+	TravelTime      float64 `bson:"-" json:"-"`
 }

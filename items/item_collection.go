@@ -27,6 +27,7 @@ func GetItemCollection() *ItemCollection {
 
 		var item_struct IItem
 		for _, itm := range itms.([]interface{}) {
+			log.Println(int(itm.(map[string]interface{})["id"].(float64)))
 			switch itm.(map[string]interface{})["type"].(string) {
 			case string(WEAPON):
 				item_struct = &Weapon{
@@ -71,14 +72,41 @@ func GetItemCollection() *ItemCollection {
 					// Output:      int(itm.(map[string]interface{})["output"].(float64)),
 				}
 			case string(EQUIPMENT):
-				item_struct = &Equipment{
-					BaseItem: BaseItem{
-						ID:     int(itm.(map[string]interface{})["id"].(float64)),
-						Name:   itm.(map[string]interface{})["name"].(string),
-						Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
-						Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
-						Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
-					},
+				//TODO Fix BELT having no armor
+				if EquipmentType(itm.(map[string]interface{})["equipment_type"].(string)) == BELT {
+					item_struct = &Equipment{
+						BaseItem: BaseItem{
+							ID:     int(itm.(map[string]interface{})["id"].(float64)),
+							Name:   itm.(map[string]interface{})["name"].(string),
+							Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
+							Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
+							Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
+						},
+						EquipmentType: EquipmentType(itm.(map[string]interface{})["equipment_type"].(string)),
+						Armor:         0,
+						ArmorType:     MAGICAL,
+						Intellect:     int(itm.(map[string]interface{})["int"].(float64)),
+						Strength:      int(itm.(map[string]interface{})["str"].(float64)),
+						Agility:       int(itm.(map[string]interface{})["agi"].(float64)),
+						MinLvlReq:     int(itm.(map[string]interface{})["min_lvl"].(float64)),
+					}
+				} else {
+					item_struct = &Equipment{
+						BaseItem: BaseItem{
+							ID:     int(itm.(map[string]interface{})["id"].(float64)),
+							Name:   itm.(map[string]interface{})["name"].(string),
+							Type:   ItemType(itm.(map[string]interface{})["type"].(string)),
+							Tier:   int(itm.(map[string]interface{})["tier"].(float64)),
+							Rarity: Rarity(itm.(map[string]interface{})["rarity"].(string)),
+						},
+						EquipmentType: EquipmentType(itm.(map[string]interface{})["equipment_type"].(string)),
+						Armor:         int(itm.(map[string]interface{})["armor"].(float64)),
+						ArmorType:     DamageType(itm.(map[string]interface{})["armor_type"].(string)),
+						Intellect:     int(itm.(map[string]interface{})["int"].(float64)),
+						Strength:      int(itm.(map[string]interface{})["str"].(float64)),
+						Agility:       int(itm.(map[string]interface{})["agi"].(float64)),
+						MinLvlReq:     int(itm.(map[string]interface{})["min_lvl"].(float64)),
+					}
 				}
 			case string(TOOL):
 				item_struct = &Tool{

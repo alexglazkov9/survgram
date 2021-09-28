@@ -28,6 +28,26 @@ const (
 	LEGENDARY Rarity = "legendary"
 )
 
+type EquipmentType string
+
+const (
+	HEAD   EquipmentType = "head"
+	BELT   EquipmentType = "belt"
+	BODY   EquipmentType = "body"
+	HANDS  EquipmentType = "hand"
+	LEGS   EquipmentType = "legs"
+	FEET   EquipmentType = "feet"
+	RING   EquipmentType = "ring"
+	AMULET EquipmentType = "amulet"
+)
+
+type DamageType string
+
+const (
+	MAGICAL  DamageType = "magical"
+	PHYSICAL DamageType = "physical"
+)
+
 type IItem interface {
 	GetID() int
 	GetName() string
@@ -46,6 +66,8 @@ type ItemBundle struct {
 func (ib ItemBundle) GetItem() IItem {
 	return GetItemCollection().GetItemById(ib.ID)
 }
+
+/* BaseItem */
 
 type BaseItem struct {
 	ID          int
@@ -103,10 +125,12 @@ func (i BaseItem) GetFormattedItem(include_markdown bool) string {
 	return text
 }
 
+/* Resource */
 type Resource struct {
 	BaseItem
 }
 
+/* Weapon */
 type Weapon struct {
 	BaseItem
 
@@ -120,6 +144,17 @@ type Weapon struct {
 	MinLvlReq int
 }
 
+func (i Weapon) GetFormattedItem(include_markdown bool) string {
+	var text string
+	if include_markdown {
+		text = fmt.Sprintf("*INT:* %d\n*AGI:* %d\n*STR:* %d\n", i.Intellect, i.Agility, i.Strength)
+	} else {
+		text = fmt.Sprintf("INT: %d\nAGI: %d\nSTR: %d\n", i.Intellect, i.Agility, i.Strength)
+	}
+	return i.BaseItem.GetFormattedItem(include_markdown) + text
+}
+
+/* Recipe */
 type Recipe struct {
 	BaseItem
 
@@ -127,22 +162,52 @@ type Recipe struct {
 	Output      int
 }
 
+/* Equipment */
 type Equipment struct {
 	BaseItem
+
+	EquipmentType EquipmentType
+
+	Armor     int
+	ArmorType DamageType
+
+	Intellect int
+	Strength  int
+	Agility   int
+
+	MinLvlReq int
 }
 
+func (i Equipment) GetFormattedItem(include_markdown bool) string {
+	var text string
+	if include_markdown {
+		text = fmt.Sprintf("*INT:* %d\n*AGI:* %d\n*STR:* %d\n", i.Intellect, i.Agility, i.Strength)
+	} else {
+		text = fmt.Sprintf("INT: %d\nAGI: %d\nSTR: %d\n", i.Intellect, i.Agility, i.Strength)
+	}
+	return i.BaseItem.GetFormattedItem(include_markdown) + text
+}
+
+func (i Equipment) GetEquipmentType() EquipmentType {
+	return i.EquipmentType
+}
+
+/* Tool */
 type Tool struct {
 	BaseItem
 }
 
+/* Backpack */
 type Backpack struct {
 	BaseItem
 }
 
+/* Improver */
 type Improver struct {
 	BaseItem
 }
 
+/* Consumable */
 type Consumable struct {
 	BaseItem
 }

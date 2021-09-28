@@ -10,7 +10,6 @@ import (
 	"github.com/alexglazkov9/survgram/entity/combat/effect"
 	"github.com/alexglazkov9/survgram/entity/components"
 	"github.com/alexglazkov9/survgram/interfaces"
-	"github.com/alexglazkov9/survgram/items"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -48,8 +47,10 @@ func (d Database) AddCharacter(c *entity.Entity) bool {
 	defer cancel()
 
 	name_C := c.GetComponent("NameComponent").(*components.NameComponent)
+	cmpnts := getComponentsMap(c)
+
 	log.Println("Inserting new character: " + name_C.Name)
-	_, err := d.client.Database("survgram_dev").Collection("characters").InsertOne(ctx, *c)
+	_, err := d.client.Database("survgram_dev").Collection("characters").InsertOne(ctx, bson.D{{"components", cmpnts}})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,23 +64,9 @@ func (d Database) UpdateCharacter(c *entity.Entity) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	name_C := c.GetComponent("NameComponent").(*components.NameComponent)
-	health_C := c.GetComponent("HealthComponent").(*components.HealthComponent)
-	player_C := c.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	inventory_C := c.GetComponent("InventoryComponent").(*components.InventoryComponent)
-	attack_C := c.GetComponent("AttackComponent").(*components.AttackComponent)
-	ability_C := c.GetComponent("AbilityComponent").(*components.AbilityComponent)
+	cmpnts := getComponentsMap(c)
 
-	var cmpnts map[string]entity.IComponent
-	cmpnts = make(map[string]entity.IComponent)
-	cmpnts["NameComponent"] = name_C
-	cmpnts["HealthComponent"] = health_C
-	cmpnts["PlayerComponent"] = player_C
-	cmpnts["InventoryComponent"] = inventory_C
-	cmpnts["AttackComponent"] = attack_C
-	cmpnts["AbilityComponent"] = ability_C
-
-	log.Println("Updateing character: " + name_C.Name)
+	log.Println("Updating character")
 	_, err := d.client.Database("survgram_dev").Collection("characters").UpdateByID(ctx, c.MongoID, bson.D{
 		{"$set", bson.D{{"components", cmpnts}}},
 	})
@@ -96,7 +83,7 @@ func parseCharacter(raw primitive.M, manager *entity.Manager) *entity.Entity {
 	chrctr := manager.NewEntity()
 	chrctr.MongoID = raw["_id"].(primitive.ObjectID)
 	for key, element := range raw["components"].(primitive.M) {
-		// To benefit from built-in parses, primitive.M component is converted
+		// To benefit from built-in parser, primitive.M component is converted
 		// to bson and later converted into struct of the proper component type
 		bsonElement, _ := bson.Marshal(element)
 
@@ -128,12 +115,27 @@ func parseCharacter(raw primitive.M, manager *entity.Manager) *entity.Entity {
 		case "InventoryComponent":
 			var comp components.InventoryComponent
 			bson.Unmarshal(bsonElement, &comp)
-			comp.AddItems(items.ItemBundle{ID: 4, Qty: 1})
+			chrctr.AddComponent(&comp)
+		case "PlayerLocationComponent":
+			var comp components.PlayerLocationComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "StatsComponent":
+			var comp components.StatsComponent
+			bson.Unmarshal(bsonElement, &comp)
+			chrctr.AddComponent(&comp)
+		case "PlayerEquipmentComponent":
+			var comp components.PlayerEquipmentComponent
+			comp.Equipment = make([]*components.ItemID, 10)
+			bson.Unmarshal(bsonElement, &comp)
 			chrctr.AddComponent(&comp)
 		}
 	}
+
+	chrctr.AddComponent(&components.MenuComponent{})
 	chrctr.AddComponent(&components.EffectsComponent{})
 
+	/*TODO REmove this*/
 	fireball := &combat.Ability{
 		Energy_cost: 15,
 		Effects: []interfaces.IEffect{
@@ -155,14 +157,34 @@ func parseCharacter(raw primitive.M, manager *entity.Manager) *entity.Entity {
 			},
 		},
 	}
-	chrctr.GetComponent("AbilityComponent").(*components.AbilityComponent).Ability = *fireball
-	chrctr.AddComponent(
-		&components.PlayerLocationComponent{
-			CurrentLocation: chrctr.GetComponent("PlayerComponent").(*components.PlayerComponent).CurrentLocation,
-		},
-	)
-	chrctr.AddComponent(
-		&components.MenuComponent{},
-	)
+	chrctr.GetComponent("AbilityComponent").(*components.AbilityComponent).Ability = fireball
+	/*END TODO Remove this*/
+
 	return chrctr
+}
+
+func getComponentsMap(e *entity.Entity) map[string]entity.IComponent {
+	name_C := e.GetComponent("NameComponent").(*components.NameComponent)
+	health_C := e.GetComponent("HealthComponent").(*components.HealthComponent)
+	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
+	inventory_C := e.GetComponent("InventoryComponent").(*components.InventoryComponent)
+	attack_C := e.GetComponent("AttackComponent").(*components.AttackComponent)
+	ability_C := e.GetComponent("AbilityComponent").(*components.AbilityComponent)
+	location_C := e.GetComponent("PlayerLocationComponent").(*components.PlayerLocationComponent)
+	stats_C := e.GetComponent("StatsComponent").(*components.StatsComponent)
+	equipment_C := e.GetComponent("PlayerEquipmentComponent").(*components.PlayerEquipmentComponent)
+
+	var cmpnts map[string]entity.IComponent
+	cmpnts = make(map[string]entity.IComponent)
+	cmpnts["NameComponent"] = name_C
+	cmpnts["HealthComponent"] = health_C
+	cmpnts["PlayerComponent"] = player_C
+	cmpnts["InventoryComponent"] = inventory_C
+	cmpnts["AttackComponent"] = attack_C
+	cmpnts["AbilityComponent"] = ability_C
+	cmpnts["PlayerLocationComponent"] = location_C
+	cmpnts["StatsComponent"] = stats_C
+	cmpnts["PlayerEquipmentComponent"] = equipment_C
+
+	return cmpnts
 }

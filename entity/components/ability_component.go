@@ -9,7 +9,7 @@ type AbilityComponent struct {
 	BaseComponent `bson:"-" json:"-"`
 
 	Energy  int `bson:"-"`
-	Ability combat.Ability
+	Ability *combat.Ability
 }
 
 func (ac *AbilityComponent) GainEnergy(amt int) {
@@ -17,6 +17,9 @@ func (ac *AbilityComponent) GainEnergy(amt int) {
 }
 
 func (ac *AbilityComponent) IsReadyToCast() bool {
+	if ac.Ability == nil {
+		return false
+	}
 	return ac.Energy >= ac.Ability.Energy_cost
 }
 

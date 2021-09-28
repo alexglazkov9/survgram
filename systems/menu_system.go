@@ -1,8 +1,6 @@
 package systems
 
 import (
-	"log"
-
 	"github.com/alexglazkov9/survgram/bot"
 	"github.com/alexglazkov9/survgram/entity"
 	"github.com/alexglazkov9/survgram/entity/components"
@@ -73,8 +71,6 @@ func (ms *MenuSystem) Update(dt float64) {
 
 		//Handle the selected menu option
 		menu, ok := menu_C.Menus.Top()
-		log.Println(u.Message.Text)
-		log.Printf("found: %t", ok)
 		if ok {
 			action, ok := menu.MenuOptions[u.Message.Text]
 			if ok {

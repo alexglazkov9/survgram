@@ -1,7 +1,7 @@
 package systems
 
 import (
-	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/alexglazkov9/survgram/bot"
@@ -13,6 +13,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+/* Handles InlineKeyboard menus and so called windows, e.g. Inventory, Character, etc */
 type WindowsSystem struct {
 	manager         *entity.Manager
 	characterHelper interfaces.CharacterHelper
@@ -25,32 +26,45 @@ func NewWindowsSystem(manager *entity.Manager, characterHelper interfaces.Charac
 }
 
 func (ws *WindowsSystem) Update(dt float64) {
+	//Handle WINDOW_CLOSE
 	for {
 		u := bot.GetInstance().PopUpdate(
-			misc.INVENTORY_ITEM_SELECTED,
-			misc.INVENTORY_DROP_ITEM,
 			misc.WINDOW_CLOSE,
 		)
 		if u == nil {
 			break
 		}
+		bot.GetInstance().GetBot().DeleteMessage(tgbotapi.NewDeleteMessage(u.CallbackQuery.Message.Chat.ID, u.CallbackQuery.Message.MessageID))
+	}
+	//Handle INVENTORY window
+	for {
+		u := bot.GetInstance().PopUpdate(
+			misc.INVENTORY_ITEM_SELECTED,
+			misc.INVENTORY_DROP_ITEM,
+			misc.INVENTORY_ITEM_USE,
+		)
+		if u == nil {
+			break
+		}
+
 		chrctr := ws.characterHelper.GetCharacter(u.CallbackQuery.From.ID)
-		if chrctr == nil {
-			//TODO Handle missing character
+		if chrctr == nil || !chrctr.HasComponent("InventoryWindowComponent") {
+			//Delete msg from the chat
+			bot.GetInstance().GetBot().AnswerCallbackQuery(tgbotapi.NewCallback(u.CallbackQuery.ID, "This message is expired"))
+			bot.GetInstance().GetBot().DeleteMessage(tgbotapi.NewDeleteMessage(u.CallbackQuery.Message.Chat.ID, u.CallbackQuery.Message.MessageID))
 			continue
 		}
+
 		cbData := misc.CallbackData{}
 		cbData.FromJSON(u.CallbackQuery.Data)
-		if cbData.Action == misc.WINDOW_CLOSE {
-			bot.GetInstance().GetBot().DeleteMessage(tgbotapi.NewDeleteMessage(u.CallbackQuery.Message.Chat.ID, u.CallbackQuery.Message.MessageID))
-		}
+
+		inventoryWindow_C := chrctr.GetComponent("InventoryWindowComponent").(*components.InventoryWindowComponent)
 
 		switch cbData.Action {
 		case misc.INVENTORY_ITEM_SELECTED:
-			inventoryWindow_C := chrctr.GetComponent("InventoryWindowComponent").(*components.InventoryWindowComponent)
 			select_item_id, _ := strconv.Atoi(cbData.Payload)
 			inventoryWindow_C.SelectedItemID = &select_item_id
-			bot.GetInstance().GetBot().Send(editInventoryMessage(chrctr, u))
+			inventoryWindow_C.SendUpdate()
 		case misc.INVENTORY_DROP_ITEM:
 			itm_id, _ := strconv.Atoi(cbData.Payload)
 			inventory_C := chrctr.GetComponent("InventoryComponent").(*components.InventoryComponent)
@@ -61,88 +75,85 @@ func (ws *WindowsSystem) Update(dt float64) {
 					break
 				}
 			}
-			inventoryWindow_C := chrctr.GetComponent("InventoryWindowComponent").(*components.InventoryWindowComponent)
 			inventoryWindow_C.SelectedItemID = nil
-			bot.GetInstance().GetBot().Send(editInventoryMessage(chrctr, u))
+			inventoryWindow_C.SendUpdate()
+		case misc.INVENTORY_ITEM_USE:
+			itm_id, _ := strconv.Atoi(cbData.Payload)
+			if components.ItemID(itm_id).GetItem().GetType() == items.EQUIPMENT || components.ItemID(itm_id).GetItem().GetType() == items.WEAPON {
+				inventory_C := chrctr.GetComponent("InventoryComponent").(*components.InventoryComponent)
+				bundle, ok := inventory_C.TryFind(itm_id)
+				log.Println("fetched from inventopry")
+				if ok {
+					equipment_C := chrctr.GetComponent("PlayerEquipmentComponent").(*components.PlayerEquipmentComponent)
+					log.Println("equiping item")
+					ok := equipment_C.TryEquip(components.ItemID(bundle.ID))
+
+					if !ok {
+						bot.GetInstance().GetBot().AnswerCallbackQuery(tgbotapi.NewCallback(u.CallbackQuery.ID, "⚠Could not equip item!"))
+					} else {
+						bundle.Qty--
+						if bundle.Qty <= 0 {
+							inventory_C.RemoveItem(bundle)
+						}
+						log.Println("equiping item ok")
+						inventoryWindow_C.SendUpdate()
+					}
+				}
+			}
 		}
 	}
+
+	//Handle CHARACTER window
+	for {
+		u := bot.GetInstance().PopUpdate(
+			misc.CHARACTER_SELECT_TAB,
+			misc.CHARACTER_EQUIPMENT_SELECTED,
+		)
+		if u == nil {
+			break
+		}
+
+		chrctr := ws.characterHelper.GetCharacter(u.CallbackQuery.From.ID)
+		if chrctr == nil || !chrctr.HasComponent("CharacterWindowComponent") {
+			//Delete msg from the chat
+			bot.GetInstance().GetBot().AnswerCallbackQuery(tgbotapi.NewCallback(u.CallbackQuery.ID, "This message is expired"))
+			bot.GetInstance().GetBot().DeleteMessage(tgbotapi.NewDeleteMessage(u.CallbackQuery.Message.Chat.ID, u.CallbackQuery.Message.MessageID))
+			continue
+		}
+
+		cbData := misc.CallbackData{}
+		cbData.FromJSON(u.CallbackQuery.Data)
+
+		characterWindow_C := chrctr.GetComponent("CharacterWindowComponent").(*components.CharacterWindowComponent)
+
+		switch cbData.Action {
+		case misc.CHARACTER_SELECT_TAB:
+
+			tab, _ := strconv.Atoi(cbData.Payload)
+			if characterWindow_C.CurrentTab != components.CharacterWindowTab(tab) {
+				characterWindow_C.CurrentTab = components.CharacterWindowTab(tab)
+				characterWindow_C.SendUpdate()
+			}
+		case misc.CHARACTER_EQUIPMENT_SELECTED:
+			item_id, _ := strconv.Atoi(cbData.Payload)
+			characterWindow_C.SelectedItem = (*components.ItemID)(&item_id)
+		}
+	}
+
+	//Handle InventoryWindowComponent update
 	for _, e := range ws.manager.QueryEntities("InventoryWindowComponent") {
 		inventoryWindow_C := e.GetComponent("InventoryWindowComponent").(*components.InventoryWindowComponent)
 		if !inventoryWindow_C.IsSent {
-
-			bot.GetInstance().GetBot().Send(generateInventoryMessage(e))
+			inventoryWindow_C.SendUpdate()
 			inventoryWindow_C.IsSent = true
 		}
 	}
-}
-
-func editInventoryMessage(e *entity.Entity, u *tgbotapi.Update) tgbotapi.Chattable {
-	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	inventory_C := e.GetComponent("InventoryComponent").(*components.InventoryComponent)
-	inventoryWindow_C := e.GetComponent("InventoryWindowComponent").(*components.InventoryWindowComponent)
-
-	var text string
-	text = "Inventory"
-	tgkb := &misc.TGInlineKeyboard{Columns: 2, IsClosable: true}
-
-	if inventoryWindow_C.SelectedItemID != nil {
-		cb_data := misc.CallbackData{Action: misc.INVENTORY_DROP_ITEM, Payload: fmt.Sprint(*inventoryWindow_C.SelectedItemID)}
-		tgkb.AddHeaderButton("🚮Drop Item", cb_data.JSON())
-	}
-
-	for _, item_bundle := range inventory_C.GetItems() {
-		if inventoryWindow_C.SelectedItemID != nil && item_bundle.ID == *inventoryWindow_C.SelectedItemID {
-			//Add EQUIP button if Weapon or Equipment
-			if item_bundle.GetItem().GetType() == items.EQUIPMENT || item_bundle.GetItem().GetType() == items.WEAPON {
-				cb_data := misc.CallbackData{Action: misc.INVENTORY_ITEM_USE, Payload: fmt.Sprint(item_bundle.ID)}
-				tgkb.AddHeaderButton("🔼Equip", cb_data.JSON())
-			}
-			text = item_bundle.GetItem().GetFormattedItem(true)
-			cb_data := misc.CallbackData{Action: misc.INVENTORY_ITEM_SELECTED, Payload: fmt.Sprint(item_bundle.ID)}
-			tgkb.AddButton(
-				fmt.Sprintf("👁%s (%d)", item_bundle.GetItem().GetName(), item_bundle.Qty),
-				cb_data.JSON(),
-			)
-		} else {
-			cb_data := misc.CallbackData{Action: misc.INVENTORY_ITEM_SELECTED, Payload: fmt.Sprint(item_bundle.ID)}
-			tgkb.AddButton(
-				fmt.Sprintf("%s (%d)", item_bundle.GetItem().GetName(), item_bundle.Qty),
-				cb_data.JSON(),
-			)
+	//Handle CharacterWindowComponent update
+	for _, e := range ws.manager.QueryEntities("CharacterWindowComponent") {
+		characterWindow_C := e.GetComponent("CharacterWindowComponent").(*components.CharacterWindowComponent)
+		if !characterWindow_C.IsSent {
+			characterWindow_C.SendUpdate()
+			characterWindow_C.IsSent = true
 		}
 	}
-	for i := len(inventory_C.Items); i < inventory_C.Slots; i++ {
-		cb_data := misc.CallbackData{Action: "", Payload: ""}
-		tgkb.AddButton("-", cb_data.JSON())
-	}
-
-	msg := tgbotapi.NewEditMessageText(player_C.ChatID, u.CallbackQuery.Message.MessageID, text)
-	msg.ReplyMarkup = tgkb.Generate()
-	msg.ParseMode = "markdown"
-	return msg
-}
-
-func generateInventoryMessage(e *entity.Entity) tgbotapi.Chattable {
-	player_C := e.GetComponent("PlayerComponent").(*components.PlayerComponent)
-	inventory_C := e.GetComponent("InventoryComponent").(*components.InventoryComponent)
-
-	text := "Inventory"
-	tgkb := &misc.TGInlineKeyboard{Columns: 2, IsClosable: true}
-
-	for _, item_bundle := range inventory_C.GetItems() {
-		cb_data := misc.CallbackData{Action: misc.INVENTORY_ITEM_SELECTED, Payload: fmt.Sprint(item_bundle.ID)}
-		tgkb.AddButton(
-			fmt.Sprintf("%s (%d)", item_bundle.GetItem().GetName(), item_bundle.Qty),
-			cb_data.JSON(),
-		)
-	}
-	for i := len(inventory_C.Items); i < inventory_C.Slots; i++ {
-		cb_data := misc.CallbackData{Action: "", Payload: ""}
-		tgkb.AddButton("-", cb_data.JSON())
-	}
-
-	msg := tgbotapi.NewMessage(player_C.ChatID, text)
-	msg.ReplyMarkup = tgkb.Generate()
-	msg.ParseMode = "markdown"
-	return msg
 }

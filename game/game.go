@@ -35,7 +35,11 @@ func New(bot *tgbotapi.BotAPI) *Game {
 	instance := &Game{}
 	instance.manager = entity.NewManager()
 	instance.Bot = bot
-	instance.CharacterManager = database.NewCharacterManager(database.GetInstance(), activities.GetLocations().GetStartLocation(), instance.manager)
+	instance.CharacterManager = database.NewCharacterManager(
+		database.GetInstance(),
+		activities.GetLocations().GetStartLocation(),
+		instance.manager,
+	)
 
 	//Systems
 	instance.battleSystem = systems.NewBattleSystem(instance.manager, instance.CharacterManager)
@@ -61,12 +65,10 @@ func New(bot *tgbotapi.BotAPI) *Game {
 		instance.windowsSystem.Update(dt)
 	})
 
-	instance.Engine.Start()
 	enemies.GetInstance().SetManager(instance.manager)
 	items.GetItemCollection()
+
+	instance.Engine.Start()
+
 	return instance
-}
-
-func (g Game) HandleInput(update tgbotapi.Update) {
-
 }
