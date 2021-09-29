@@ -1,0 +1,1130 @@
+[
+    {
+        "id": 1,
+        "name": "Wimborne",
+        "destinations": [
+            2,
+            3,
+            4,
+            5,
+            8
+        ],
+        "possibleactivities": []
+    },
+    {
+        "id": 2,
+        "name": "The Collapsing Cavern",
+        "destinations": [
+            1
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 1,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 2,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 3,
+                        "chance": 0.05
+                    },
+                    {
+                        "id": 4,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 5,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 6,
+                        "chance": 0.20
+                    },
+                    {
+                        "id": 7,
+                        "chance": 0.05
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 7,
+                        "chance": 0.5
+                    },
+                    {
+                        "id": 8,
+                        "chance": 0.5
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Whispering Valley",
+        "destinations": [
+            1,
+            10
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 8,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 9,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 10,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 11,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 12,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 13,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 14,
+                        "chance": 0.05
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 31,
+                        "chance": 0.4
+                    },
+                    {
+                        "id": 32,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 13,
+                        "chance": 0.4
+                    },
+                    {
+                        "id": 14,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Old Forest",
+        "destinations": [
+            1,
+            5,
+            8,
+            15
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 15,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 16,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 17,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 18,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 19,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 20,
+                        "chance": 0.15
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 1,
+                        "chance": 0.8
+                    },
+                    {
+                        "id": 13,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 31,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Buxbourg's Pier",
+        "destinations": [
+            1,
+            4,
+            6
+        ],
+        "possibleactivities": [
+            {
+                "type": "fishing",
+                "activitychance": 1,
+                "spawnchances": [
+                    {
+                        "id": 19,
+                        "chance": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Buxbourg Lake",
+        "destinations": [
+            5,
+            7
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 21,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 22,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 23,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 24,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 25,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 26,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 27,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 28,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "fishing",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 20,
+                        "chance": 0.9
+                    },
+                    {
+                        "id": 21,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Neverharbor",
+        "destinations": [
+            6
+        ],
+        "possibleactivities": []
+    },
+    {
+        "id": 8,
+        "name": "Stokefall's Pier",
+        "destinations": [
+            1,
+            4,
+            9
+        ],
+        "possibleactivities": [
+            {
+                "type": "fishing",
+                "activitychance": 1,
+                "spawnchances": [
+                    {
+                        "id": 19,
+                        "chance": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Stokefall Falls",
+        "destinations": [
+            10,
+            19
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 29,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 30,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 31,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 32,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 33,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 34,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "fishing",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 20,
+                        "chance": 0.5
+                    },
+                    {
+                        "id": 21,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 22,
+                        "chance": 0.2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Whimsical Grasslands",
+        "destinations": [
+            3,
+            9,
+            11
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 35,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 36,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 37,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 38,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 39,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 40,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 32,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 33,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 2,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 3,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 14,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 15,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Lilypad Abyss",
+        "destinations": [
+            10,
+            12
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 41,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 42,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 43,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 44,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 45,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 46,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 15,
+                        "chance": 0.25
+                    },
+                    {
+                        "id": 16,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 3,
+                        "chance": 0.4
+                    },
+                    {
+                        "id": 4,
+                        "chance": 0.2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "The Serpent Swamp",
+        "destinations": [
+            11,
+            13
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 47,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 48,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 49,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 50,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 51,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 52,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 16,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 17,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 4,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 5,
+                        "chance": 0.2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Alnora Caverns",
+        "destinations": [
+            12
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 53,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 54,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 55,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 56,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 57,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 58,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 3,
+                        "chance": 0.7
+                    },
+                    {
+                        "id": 4,
+                        "chance": 0.3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Rosewind",
+        "destinations": [
+            15,
+            19
+        ],
+        "possibleactivities": [
+        ]
+    },
+    {
+        "id": 15,
+        "name": "The Oasis of Gardens",
+        "destinations": [
+            4,
+            14,
+            16,
+            22
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 59,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 60,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 61,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 62,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 63,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 64,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 2,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 32,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 33,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 14,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 15,
+                        "chance": 0.2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "name": "The Shimmering Aqueduct",
+        "destinations": [
+            15,
+            17
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 83,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 84,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 85,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 86,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 87,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 88,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 4,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 5,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 16,
+                        "chance": 0.25
+                    },
+                    {
+                        "id": 17,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 34,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 35,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "name": "The Quivering Fields",
+        "destinations": [
+            16,
+            18
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 89,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 90,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 91,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 92,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 93,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 94,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 5,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 6,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 17,
+                        "chance": 0.25
+                    },
+                    {
+                        "id": 18,
+                        "chance": 0.15
+                    },
+                    {
+                        "id": 35,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 36,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "name": "Northville",
+        "destinations": [
+            17
+        ],
+        "possibleactivities": [
+            {
+                "type": "fishing",
+                "activitychance": 1,
+                "spawnchances": [
+                    {
+                        "id": 21,
+                        "chance": 0.35
+                    },
+                    {
+                        "id": 22,
+                        "chance": 0.25
+                    },
+                    {
+                        "id": 23,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 24,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "name": "The Thunderstorm Canyon",
+        "destinations": [
+            9,
+            20
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 65,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 66,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 67,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 68,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 69,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 70,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 8,
+                        "chance": 0.3
+                    },
+                    {
+                        "id": 9,
+                        "chance": 0.4
+                    },
+                    {
+                        "id": 10,
+                        "chance": 0.3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "name": "The Sharp-Peaked Mountains",
+        "destinations": [
+            19,
+            21
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 71,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 72,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 73,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 74,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 75,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 76,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 9,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 10,
+                        "chance": 0.6
+                    },
+                    {
+                        "id": 11,
+                        "chance": 0.2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "name": "The Grave Hollow",
+        "destinations": [
+            20
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 77,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 78,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 79,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 80,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 81,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 82,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 10,
+                        "chance": 0.4
+                    },
+                    {
+                        "id": 11,
+                        "chance": 0.5
+                    },
+                    {
+                        "id": 12,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "name": "The Voiceless Savanna",
+        "destinations": [
+            15,
+            23
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 1,
+                "spawnchances": [
+                    {
+                        "id": 95,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 96,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 97,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 98,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 99,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 100,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Carloy Cavern",
+        "destinations": [
+            22
+        ],
+        "possibleactivities": [
+            {
+                "type": "battle",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 101,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 102,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 103,
+                        "chance": 0.1
+                    },
+                    {
+                        "id": 104,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 105,
+                        "chance": 0.2
+                    },
+                    {
+                        "id": 106,
+                        "chance": 0.1
+                    }
+                ]
+            },
+            {
+                "type": "gathering",
+                "activitychance": 0.5,
+                "spawnchances": [
+                    {
+                        "id": 11,
+                        "chance": 0.85
+                    },
+                    {
+                        "id": 12,
+                        "chance": 0.1
+                    }
+                ]
+            }
+        ]
+    }
+]

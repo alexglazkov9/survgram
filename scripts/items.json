@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Rusty Sword",
+        "damage": "",
+        "type": "weapon",
+        "damage_type": "physical",
+        "weapon_type": "sword",
+        "price": "",
+        "tier": 1,
+        "rarity": "Common",
+        "base_attack_\nspeed": "",
+        "int": 0,
+        "str": 1,
+        "agi": 1,
+        "attack_speed": "",
+        "crit_chance": "",
+        "dodge_chance": "",
+        "min_lvl_req": "",
+        "item_id": 1
+    },
+    {
+        "name": "Rusty Sword",
+        "type": "weapon",
+        "damage": "",
+        "damage_type": "physical",
+        "weapon_type": "sword",
+        "price": "",
+        "tier": 1,
+        "rarity": "Uncommon",
+        "base_attack_\nspeed": "",
+        "int": 0,
+        "str": 1,
+        "agi": 1,
+        "attack_speed": "",
+        "crit_chance": "",
+        "dodge_chance": "",
+        "min_lvl_req": "",
+        "item_id": 2
+    }
+]
